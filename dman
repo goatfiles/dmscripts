@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+#
+# Script name: dman
+# Description: Search for a manpage or get a random one.
+# Dependencies: dmenu, xargs
+# GitLab: https://www.gitlab.com/dwt1/dmscripts
+# Contributors: Derek Taylor
+
+# Defining the terminal emulator to use.
+DMTERM="st -e"
+
+# An array of options to choose.
+declare -a options=(
+"Search manpages"
+"Random manpage"
+"Quit"
+)
+
+# Piping the above array into dmenu.
+# We use "printf '%s\n'" to format the array one item to a line.
+choice=$(printf '%s\n' "${options[@]}" | dmenu -i -p 'Manpages:')
+
+# What to do when/if we choose one of the options.
+case "$choice" in
+	'Search manpages')
+        man -k . | awk '{$3="-"; print $0}' | \
+        dmenu -i -l 20 -p 'Search for:' | \
+        awk '{print $2, $1}' | tr -d '()' | xargs $DMTERM man
+	;;
+	'Random manpage')
+        man -k . | awk '{print $1}' | shuf -n 1 | \
+        dmenu -i -l 20 -p 'Random manpage:' | xargs $DMTERM man
+	;;
+	'Quit')
+		echo "Program terminated." && exit 1
+	;;
+	*)
+		exit 1
+	;;
+esac
