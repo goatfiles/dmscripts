@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Script name: dmpower
-# Description: Dmenu as a reddit viewer.
+# Description: Dmenu as a reddit viewer using reddio.
 # Dependencies: dmenu, reddio, zenity
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # Contributors: Derek Taylor
