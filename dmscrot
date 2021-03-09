@@ -1,124 +1,84 @@
 #!/usr/bin/env bash
+set -euo pipefail
 #
 # Script name: dmscrot
 # Description: Choose type of screenshot to take with maim.
 # Dependencies: dmenu, main, tee, xdotool, xclip
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # Contributors: Derek Taylor
+#               Simon Ingelsson
 
 # Specifying a directory to save our screenshots.
-# Make sure the directory exists.
 SCROTDIR="$HOME/Screenshots"
+# Makes sure the directory exists.
+mkdir -p ${SCROTDIR}
 
-# An array of options to choose.
-# Note that options for monitor 1, 2 and 3 work only if you have
-# 3 monitors (of course) that are set to 1920x1080 resolution.
-declare -a options=(
+
+# FIX: STAMP will be set to the time when this script was executed and not when the actual screenshot is taken
+STAMP=$(date '+%Y%m%d-%H%M%S')
+
+MAIM_ARGS=""
+MAIM_FILE=""
+
+# Get monitors and their settings for maim
+DISPLAYS=$(xrandr --listactivemonitors | grep '+' | awk {'print $4, $3'} | awk -F'[x/+* ]' '{print $1,$2"x"$4"+"$6"+"$7}')
+
+# What modes do we have
+declare -a modes=(
 "Fullscreen"
 "Active window"
 "Selected region"
-"Fullscreen (copy only)"
-"Active window (copy only)"
-"Selected region (copy only)"
-"Fullscreen (screenshot plus copy)"
-"Active window (screenshot plus copy)"
-"Selected region (screenshot plus copy)"
-"Monitor 1"
-"Monitor 2"
-"Monitor 3"
-"Monitor 1 (copy only)"
-"Monitor 2 (copy only)"
-"Monitor 3 (copy only)"
-"Monitor 1 (screenshot plus copy)"
-"Monitor 2 (screenshot plus copy)"
-"Monitor 3 (screenshot plus copy)"
-"Quit"
 )
 
-# Piping the above array into dmenu.
-# We use "printf '%s\n'" to format the array one item to a line.
-choice=$(printf '%s\n' "${options[@]}" | dmenu -i -l 20 -p 'Take screenshot of:')
+# Add monitor data 
 
-# What to do when/if we choose one of the options.
-case "$choice" in
-	'Fullscreen')
-		maim "$SCROTDIR"/scrot-full-"$(date '+%Y%m%d-%H%M%S')".png
-	;;
-	'Active window')
-		maim -i "$(xdotool getactivewindow)" "$SCROTDIR"/scrot-window-"$(date '+%Y%m%d-%H%M%S')".png
-	;;
-	'Selected region')
-		maim -s "$SCROTDIR"/scrot-region-"$(date '+%Y%m%d-%H%M%S')".png
-	;;
-	'Fullscreen (copy only)')
-		maim | \
-		xclip -selection clipboard -t image/png
-	;;
-	'Active window (copy only)')
-		maim -i "$(xdotool getactivewindow)" | \
-		xclip -selection clipboard -t image/png
-	;;
-	'Selected region (copy only)')
-		maim -s | \
-		xclip -selection clipboard -t image/png
-	;;
-	'Fullscreen (screenshot plus copy)')
-		maim | \
-		tee "$SCROTDIR"/scrot-full-"$(date '+%Y%m%d-%H%M%S')".png | \
-		xclip -selection clipboard -t image/png
-	;;
-	'Active window (screenshot plus copy)')
-		maim -i "$(xdotool getactivewindow)" | \
-		tee "$SCROTDIR"/scrot-window-"$(date '+%Y%m%d-%H%M%S')".png | \
-		xclip -selection clipboard -t image/png
-	;;
-	'Selected region (screenshot plus copy)')
-		maim -s | \
-		tee "$SCROTDIR"/scrot-region-"$(date '+%Y%m%d-%H%M%S')".png | \
-		xclip -selection clipboard -t image/png
-	;;
-	'Monitor 1')
-		maim -g 1920x1080+0+0  "$SCROTDIR"/scrot-mon1-"$(date '+%Y%m%d-%H%M%S')".png
-	;;
-	'Monitor 2')
-		maim -g 1920x1080+1920+0  "$SCROTDIR"/scrot-mon2-"$(date '+%Y%m%d-%H%M%S')".png
-	;;
-	'Monitor 3')
-		maim -g 1920x1080+3840+0  "$SCROTDIR"/scrot-mon3-"$(date '+%Y%m%d-%H%M%S')".png
-	;;
-	'Monitor 1 (copy only)')
-		maim -g 1920x1080+0+0  | \
-		xclip -selection clipboard -t image/png
-	;;
-	'Monitor 2 (copy only)')
-		maim -g 1920x1080+1920+0 | \
-		xclip -selection clipboard -t image/png
-	;;
-	'Monitor 3 (copy only)')
-		maim -g 1920x1080+3840+0 | \
-		xclip -selection clipboard -t image/png
-	;;
-	'Monitor 1 (screenshot plus copy)')
-		maim -g 1920x1080+0+0  | \
-		tee "$SCROTDIR"/scrot-mon1-"$(date '+%Y%m%d-%H%M%S')".png | \
-		xclip -selection clipboard -t image/png
-	;;
-	'Monitor 2 (screenshot plus copy)')
-		maim -g 1920x1080+1920+0 | \
-		tee "$SCROTDIR"/scrot-mon2-"$(date '+%Y%m%d-%H%M%S')".png | \
-		xclip -selection clipboard -t image/png
-	;;
-	'Monitor 3 (screenshot plus copy)')
-		maim -g 1920x1080+3840+0 | \
-		tee "$SCROTDIR"/scrot-mon3-"$(date '+%Y%m%d-%H%M%S')".png | \
-		xclip -selection clipboard -t image/png
-	;;
-	'Quit')
-		echo "Program terminated." && exit 0
-	;;
-    # It is a common practice to use the wildcard asterisk symbol (*) as a final
-	# pattern to define the default case. This pattern will always match.
-	*)
-		exit 0
-	;;
+IFS=$'\n'
+declare -A DISP
+for i in ${DISPLAYS}; do 
+  name=$(echo ${i}|awk '{print $1}')
+  rest="$(echo ${i}|awk '{print $2}')"
+  modes[${#modes[@]}]="${name}"
+  DISP[${name}]="${rest}"
+done
+unset IFS
+
+target=$(printf '%s\n' "${modes[@]}" | dmenu -i -l 20 -p 'Take screenshot of:') || exit 1
+case "$target" in
+  'Fullscreen')
+    MAIM_ARGS=""
+    MAIM_FILE="${SCROTDIR}/scrot-full-${STAMP}.png"
+  ;;
+  'Active window')
+    active_window=$(xdotool getactivewindow)
+    MAIM_ARGS="-i ${active_window}"
+    MAIM_FILE="${SCROTDIR}/scrot-window-${STAMP}.png"
+  ;;
+  'Selected region')
+    MAIM_ARGS="-s"
+    MAIM_FILE="${SCROTDIR}/scrot-region-${STAMP}.png"
+  ;;
+  *)
+    MAIM_ARGS="-g ${DISP[${target}]}"
+    MAIM_FILE="${SCROTDIR}/scrot-${target}-${STAMP}.png"
+  ;;
 esac
+
+declare -a destination=( "Clipboard" "File" "Both" )
+dest=$(printf '%s\n' "${destination[@]}" | dmenu -i -l 20 -p 'Destination:') || exit 1
+case "$dest" in
+  'Clipboard')
+    maim ${MAIM_ARGS} | xclip -selection clipboard -t image/png
+  ;;
+  'File')
+    maim ${MAIM_ARGS} "${MAIM_FILE}"
+    echo $?
+  ;;
+  'Both')
+    maim ${MAIM_ARGS} | tee "${MAIM_FILE}" | xclip -selection clipboard -t image/png
+  ;;
+  *)
+    exit 1
+  ;;
+esac
+
+exit 0
