@@ -11,7 +11,7 @@ set -euo pipefail
 # Specifying a directory to save our screenshots.
 SCROTDIR="$HOME/Screenshots"
 # Makes sure the directory exists.
-mkdir -p ${SCROTDIR}
+mkdir -p "${SCROTDIR}"
 
 
 # FIX: STAMP will be set to the time when this script was executed and not when the actual screenshot is taken
@@ -21,7 +21,7 @@ MAIM_ARGS=""
 MAIM_FILE=""
 
 # Get monitors and their settings for maim
-DISPLAYS=$(xrandr --listactivemonitors | grep '+' | awk {'print $4, $3'} | awk -F'[x/+* ]' '{print $1,$2"x"$4"+"$6"+"$7}')
+DISPLAYS=$(xrandr --listactivemonitors | grep '+' | awk '{print $4, $3}' | awk -F'[x/+* ]' '{print $1,$2"x"$4"+"$6"+"$7}')
 
 # What modes do we have
 declare -a modes=(
@@ -31,7 +31,6 @@ declare -a modes=(
 )
 
 # Add monitor data 
-
 IFS=$'\n'
 declare -A DISP
 for i in ${DISPLAYS}; do 
@@ -63,15 +62,15 @@ case "$target" in
   ;;
 esac
 
-declare -a destination=( "Clipboard" "File" "Both" )
+declare -a destination=( "File" "Clipboard" "Both" )
 dest=$(printf '%s\n' "${destination[@]}" | dmenu -i -l 20 -p 'Destination:') || exit 1
 case "$dest" in
-  'Clipboard')
-    maim ${MAIM_ARGS} | xclip -selection clipboard -t image/png
-  ;;
   'File')
     maim ${MAIM_ARGS} "${MAIM_FILE}"
     echo $?
+  ;;
+  'Clipboard')
+    maim ${MAIM_ARGS} | xclip -selection clipboard -t image/png
   ;;
   'Both')
     maim ${MAIM_ARGS} | tee "${MAIM_FILE}" | xclip -selection clipboard -t image/png
