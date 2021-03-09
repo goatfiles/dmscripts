@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -euo pipefail
 #
 # Script name: dmscrot
 # Description: Choose type of screenshot to take with maim.
@@ -8,11 +7,15 @@ set -euo pipefail
 # Contributors: Derek Taylor
 #               Simon Ingelsson
 
+# Set with the flags "-e", "-u","-o pipefail" cause the script to fail
+# if certain things happen, which is a good thing.  Otherwise, we can
+# get hidden bugs that are hard to discover.
+set -euo pipefail
+
 # Specifying a directory to save our screenshots.
 SCROTDIR="$HOME/Screenshots"
 # Makes sure the directory exists.
 mkdir -p "${SCROTDIR}"
-
 
 # FIX: STAMP will be set to the time when this script was executed and not when the actual screenshot is taken
 STAMP=$(date '+%Y%m%d-%H%M%S')
