@@ -4,7 +4,7 @@
 # Description: Search various search engines (inspired by surfraw).
 # Dependencies: dmenu and a web browser
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
-# Contributors: Derek Taylor
+# Contributors: Derek Taylor, Ali Furkan Yıldız
 
 # Defining our web browser.
 DMBROWSER="brave"
