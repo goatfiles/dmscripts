@@ -58,7 +58,7 @@ choice=$(printf '%s\n' "${options[@]}" | dmenu -i -l 20 -p 'Edit config:')
 
 # What to do when/if we choose 'quit'.
 if [[ "$choice" == "quit" ]]; then
-    echo "Program terminated." && exit 1
+    echo "Program terminated." && exit 0
 
 # What to do when/if we choose a file to edit.
 elif [ "$choice" ]; then
