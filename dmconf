@@ -4,6 +4,7 @@
 # Description: Choose from a list of configuration files to edit.
 # Dependencies: dmenu
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
 
 # Defining the text editor to use.

@@ -4,6 +4,7 @@
 # Description: Search for a process to kill.
 # Dependencies: dmenu
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
 
 # Running ps to get running processes and display in dmenu.

@@ -4,6 +4,7 @@
 # Description: Search for a manpage or get a random one.
 # Dependencies: dmenu, xargs
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
 
 # Defining the terminal emulator to use.

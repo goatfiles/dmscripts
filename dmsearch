@@ -4,6 +4,7 @@
 # Description: Search various search engines (inspired by surfraw).
 # Dependencies: dmenu and a web browser
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
 #               Ali Furkan Yıldız
 

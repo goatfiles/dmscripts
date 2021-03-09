@@ -4,6 +4,7 @@
 # Description: Logout, shutdown, reboot or lock screen.
 # Dependencies: dmenu, systemd, slock
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
 
 # An array of options to choose.

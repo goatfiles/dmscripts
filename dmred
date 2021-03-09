@@ -4,6 +4,7 @@
 # Description: Dmenu as a reddit viewer using reddio.
 # Dependencies: dmenu, reddio, zenity
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
 
 # An array of subreddits to choose.
