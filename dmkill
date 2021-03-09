@@ -12,7 +12,7 @@ selected="$(ps --user "$(id -u)" -F | \
 
 if [[ -n $selected ]]; then
 
-    answer="$(echo -e "Yes\nNo" | dmenu -i -l 20 -p "Kill $selected?")"
+    answer="$(echo -e "No\nYes" | dmenu -i -p "Kill $selected?")"
 
     if [[ $answer == "Yes" ]]; then
         selpid="$(awk '{print $1}' <<< $selected)"; 
