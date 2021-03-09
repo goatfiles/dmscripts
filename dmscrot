@@ -3,7 +3,7 @@ set -euo pipefail
 #
 # Script name: dmscrot
 # Description: Choose type of screenshot to take with maim.
-# Dependencies: dmenu, main, tee, xdotool, xclip
+# Dependencies: dmenu, maim, tee, xdotool, xclip
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # Contributors: Derek Taylor
 #               Simon Ingelsson
