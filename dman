@@ -32,9 +32,9 @@ case "$choice" in
         dmenu -i -l 20 -p 'Random manpage:' | xargs $DMTERM man
 	;;
 	'Quit')
-		echo "Program terminated." && exit 1
+		echo "Program terminated." && exit 0
 	;;
 	*)
-		exit 1
+		exit 0
 	;;
 esac

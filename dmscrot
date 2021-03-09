@@ -114,11 +114,11 @@ case "$choice" in
 		xclip -selection clipboard -t image/png
 	;;
 	'Quit')
-		echo "Program terminated." && exit 1
+		echo "Program terminated." && exit 0
 	;;
     # It is a common practice to use the wildcard asterisk symbol (*) as a final
 	# pattern to define the default case. This pattern will always match.
 	*)
-		exit 1
+		exit 0
 	;;
 esac

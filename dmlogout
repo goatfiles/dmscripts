@@ -49,7 +49,7 @@ case $choice in
         fi
 
         if [[ $answer == "No" ]]; then
-            echo "User chose not to reboot." && exit 1
+            echo "User chose not to reboot." && exit 0
         fi
         ;;
     'Shutdown')
@@ -60,7 +60,7 @@ case $choice in
         fi
 
         if [[ $answer == "No" ]]; then
-            echo "User chose not to shutdown." && exit 1
+            echo "User chose not to shutdown." && exit 0
         fi
         ;;
     'Suspend')
@@ -71,11 +71,11 @@ case $choice in
         fi
 
         if [[ $answer == "No" ]]; then
-            echo "User chose not to suspend." && exit 1
+            echo "User chose not to suspend." && exit 0
         fi
         ;;
 	'Quit')
-		echo "Program terminated." && exit 1
+		echo "Program terminated." && exit 0
 	;;
 	*)
 		exit 1
