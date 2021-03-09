@@ -7,8 +7,8 @@
 # Contributors: Derek Taylor
 
 # Defining the text editor to use.
-# DMENUEDITOR="vim"
-# DMENUEDITOR="nvim"
+# DMENUEDITOR="st -e vim"
+# DMENUEDITOR="st -e nvim"
 DMEDITOR="emacsclient -c -a emacs"
 
 # An array of options to choose.
