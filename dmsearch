@@ -62,7 +62,7 @@ done
 
 # Searching the chosen engine.
 while [ -z "$query" ]; do
-query=$(dmenu -i -l 20 -p "Searching $engine:")
+query=$(echo "$engine" | dmenu -p 'Enter search query:')
 done
 
 # Display search results in web browser
