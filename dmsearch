@@ -4,7 +4,8 @@
 # Description: Search various search engines (inspired by surfraw).
 # Dependencies: dmenu and a web browser
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
-# Contributors: Derek Taylor, Ali Furkan Yıldız
+# Contributors: Derek Taylor
+#               Ali Furkan Yıldız
 
 # Defining our web browser.
 DMBROWSER="brave"
@@ -34,6 +35,8 @@ declare -a options=(
 "googleimages - https://www.google.com/search?hl=en&tbm=isch&q="
 "googlenews - https://news.google.com/search?q="
 "imdb - https://www.imdb.com/find?q="
+"lbry - https://lbry.tv/$/search?q="
+"odysee - https://odysee.com/$/search?q="
 "reddit - https://www.reddit.com/search/?q="
 "slashdot - https://slashdot.org/index2.pl?fhfilter="
 "socialblade - https://socialblade.com/youtube/user/"
