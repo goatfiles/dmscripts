@@ -2,20 +2,45 @@
 #
 # Script name: dmpower
 # Description: Logout, shutdown, reboot or lock screen.
-# Dependencies: dmenu, systemd, slock
+# Dependencies: dmenu, systemd, slock, notify-send
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
-# Contributors: Derek Taylor
+# Contributors: Derek Taylor, 
+#               Simon Ingelsson
+
+# Define LOCKER in .xprofile to set to different LOCKER program
+LOCKER="${LOCKER:-slock}"
+
+# use notify-send if run in dumb term
+OUTPUT="echo"
+if [[ ${TERM} == 'dumb' ]]; then
+    OUTPUT="notify-send"
+fi
+
+declare -a MANAGERS=(
+"awesome"
+"bspwm"
+"dwm"
+"spectrwm"
+"xmonad"
+"qtile"
+)
 
 # An array of options to choose.
 declare -a options=(
-"Logout"
 "Lock screen"
+"Logout"
 "Reboot"
 "Shutdown"
 "Suspend"
 "Quit"
 )
+
+
+yesno(){
+    # shellcheck disable=SC2005
+    echo "$(echo -e "No\nYes" | dmenu -i -p "${1}")"
+}
 
 # Piping the above array into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
@@ -24,63 +49,44 @@ choice=$(printf '%s\n' "${options[@]}" | dmenu -i -p 'Shutdown menu:')
 # What to do when/if we choose one of the options.
 case $choice in
     'Logout')
-        answer="$(echo -e "No\nYes" | dmenu -i -p "Logout?")"
-
-        if [[ $answer == "Yes" ]]; then
-            killall awesome || echo "Process was not running."
-            killall bspwm || echo "Process was not running."
-            killall dwm || echo "Process was not running."
-            killall qtile || echo "Process was not running."
-            killall spectrwm || echo "Process was not running."
-            killall xmonad || echo "Process was not running."
-        fi
-
-        if [[ $answer == "No" ]]; then
-            echo "User chose not to logout." && exit 1
+        if [[ $(yesno "Logout?") == "Yes" ]]; then
+            for manager in "${MANAGERS[@]}"; do 
+                killall "${manager}" || ${OUTPUT} "Process ${manager} was not running."
+            done
+        else
+            ${OUTPUT} "User chose not to logout." && exit 1
         fi
         ;;
     'Lock screen')
-        slock
+        ${LOCKER}
         ;;
     'Reboot')
-        answer="$(echo -e "No\nYes" | dmenu -i -p "Reboot?")"
-
-        if [[ $answer == "Yes" ]]; then
+        if [[ $(yesno "Reboot?") == "Yes" ]]; then
             systemctl reboot
-        fi
-
-        if [[ $answer == "No" ]]; then
-            echo "User chose not to reboot." && exit 0
+        else
+            ${OUTPUT} "User chose not to reboot." && exit 0
         fi
         ;;
     'Shutdown')
-        answer="$(echo -e "No\nYes" | dmenu -i -p "Shutdown?")"
-
-        if [[ $answer == "Yes" ]]; then
+        if [[ $(yesno "Shutdown?") == "Yes" ]]; then
             systemctl poweroff
-        fi
-
-        if [[ $answer == "No" ]]; then
-            echo "User chose not to shutdown." && exit 0
+        else
+            ${OUTPUT} "User chose not to shutdown." && exit 0
         fi
         ;;
     'Suspend')
-        answer="$(echo -e "No\nYes" | dmenu -i -p "Suspend?")"
-
-        if [[ $answer == "Yes" ]]; then
+        if [[ $(yesno "Suspend?") == "Yes" ]]; then
             systemctl suspend
-        fi
-
-        if [[ $answer == "No" ]]; then
-            echo "User chose not to suspend." && exit 0
+        else
+            ${OUTPUT} "User chose not to suspend." && exit 0
         fi
         ;;
-	'Quit')
-		echo "Program terminated." && exit 0
-	;;
+  'Quit')
+    ${OUTPUT} "Program terminated." && exit 0
+  ;;
     # It is a common practice to use the wildcard asterisk symbol (*) as a final
-	# pattern to define the default case. This pattern will always match.
-	*)
-		exit 0
-	;;
+  # pattern to define the default case. This pattern will always match.
+  *)
+    exit 0
+  ;;
 esac
