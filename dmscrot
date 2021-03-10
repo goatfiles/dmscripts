@@ -18,8 +18,9 @@ SCROTDIR="$HOME/Screenshots"
 # Makes sure the directory exists.
 mkdir -p "${SCROTDIR}"
 
-# FIX: STAMP will be set to the time when this script was executed and not when the actual screenshot is taken
-STAMP=$(date '+%Y%m%d-%H%M%S')
+getStamp() {
+  date '+%Y%m%d-%H%M%S'
+}
 
 MAIM_ARGS=""
 MAIM_FILE=""
@@ -34,12 +35,12 @@ declare -a modes=(
 "Selected region"
 )
 
-# Add monitor data 
+# Add monitor data
 IFS=$'\n'
 declare -A DISP
-for i in ${DISPLAYS}; do 
-  name=$(echo ${i}|awk '{print $1}')
-  rest="$(echo ${i}|awk '{print $2}')"
+for i in ${DISPLAYS}; do
+  name=$(echo "${i}" | awk '{print $1}')
+  rest="$(echo "${i}" | awk '{print $2}')"
   modes[${#modes[@]}]="${name}"
   DISP[${name}]="${rest}"
 done
@@ -49,20 +50,20 @@ target=$(printf '%s\n' "${modes[@]}" | dmenu -i -l 20 -p 'Take screenshot of:') 
 case "$target" in
   'Fullscreen')
     MAIM_ARGS=""
-    MAIM_FILE="${SCROTDIR}/scrot-full-${STAMP}.png"
+    MAIM_FILE="${SCROTDIR}/scrot-full-$(getStamp).png"
   ;;
   'Active window')
     active_window=$(xdotool getactivewindow)
     MAIM_ARGS="-i ${active_window}"
-    MAIM_FILE="${SCROTDIR}/scrot-window-${STAMP}.png"
+    MAIM_FILE="${SCROTDIR}/scrot-window-$(getStamp).png"
   ;;
   'Selected region')
     MAIM_ARGS="-s"
-    MAIM_FILE="${SCROTDIR}/scrot-region-${STAMP}.png"
+    MAIM_FILE="${SCROTDIR}/scrot-region-$(getStamp).png"
   ;;
   *)
     MAIM_ARGS="-g ${DISP[${target}]}"
-    MAIM_FILE="${SCROTDIR}/scrot-${target}-${STAMP}.png"
+    MAIM_FILE="${SCROTDIR}/scrot-${target}-$(getStamp).png"
   ;;
 esac
 
@@ -71,7 +72,6 @@ dest=$(printf '%s\n' "${destination[@]}" | dmenu -i -l 20 -p 'Destination:') || 
 case "$dest" in
   'File')
     maim ${MAIM_ARGS} "${MAIM_FILE}"
-    echo $?
   ;;
   'Clipboard')
     maim ${MAIM_ARGS} | xclip -selection clipboard -t image/png
