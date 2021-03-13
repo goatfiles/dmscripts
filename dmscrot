@@ -47,7 +47,7 @@ for i in ${DISPLAYS}; do
 done
 unset IFS
 
-target=$(printf '%s\n' "${modes[@]}" | dmenu -i -l 20 -p 'Take screenshot of:') || exit 1
+target=$(printf '%s\n' "${modes[@]}" | dmenu -i -l 20 -p 'Take screenshot of:' "$@") || exit 1
 case "$target" in
   'Fullscreen')
     FILE_TYPE="full"
@@ -68,7 +68,7 @@ case "$target" in
 esac
 
 declare -a destination=( "File" "Clipboard" "Both" )
-dest=$(printf '%s\n' "${destination[@]}" | dmenu -i -l 20 -p 'Destination:') || exit 1
+dest=$(printf '%s\n' "${destination[@]}" | dmenu -i -l 20 -p 'Destination:' "$@" ) || exit 1
 case "$dest" in
   'File')
     # shellcheck disable=SC2086

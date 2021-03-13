@@ -26,7 +26,7 @@ declare -a subreddit_list=(
 )
 # Picking a subreddit from the above subreddit_list.
 while [ -z "$subreddit" ]; do
-    subreddit=$(printf '%s\n' "${subreddit_list[@]}" | dmenu -i -l 20 -p "Choose a subreddit:") || exit
+    subreddit=$(printf '%s\n' "${subreddit_list[@]}" | dmenu -i -l 20 -p "Choose a subreddit:" "$@") || exit
 done
 
 # Show the last 20 posts (titles and ids) from the chosen subreddit.
@@ -34,7 +34,7 @@ done
 # in its shebang, which would cause fish shell users some problems.
 while [ -z "$post_title" ]; do
     post_title=$(bash reddio print -f '$num. $title $id$nl' -l 20 "$subreddit" | \
-    dmenu -i -l 20 -p 'Last 20 posts on '"$subreddit") || exit
+    dmenu -i -l 20 -p 'Last 20 posts on '"$subreddit" "$@") || exit
 done
 
 # Display contents of chosen post in a zenity text box.
