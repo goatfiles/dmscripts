@@ -54,6 +54,7 @@ options[wikipedia]="https://en.wikipedia.org/wiki/"
 options[wiktionary]="https://en.wiktionary.org/wiki/"
 options[wolfram]="https://www.wolframalpha.com/input/?i="
 options[youtube]="https://www.youtube.com/results?search_query="
+options[quit]=""
 
 # Picking a search engine.
 while [ -z "$engine" ]; do
