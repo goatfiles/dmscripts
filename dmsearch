@@ -63,9 +63,7 @@ done
 
 # Searching the chosen engine.
 while [ -z "$query" ]; do
-    if [[ "$engine" == "quit" ]]; then
-        query=$(echo "$engine" | dmenu -p 'Enter search query:') || exit
-    fi
+    query=$(echo "$engine" | dmenu -p 'Enter search query:') || exit
 done
 
 # Display search results in web browser
