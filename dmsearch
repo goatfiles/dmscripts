@@ -54,7 +54,6 @@ options[wikipedia]="https://en.wikipedia.org/wiki/"
 options[wiktionary]="https://en.wiktionary.org/wiki/"
 options[wolfram]="https://www.wolframalpha.com/input/?i="
 options[youtube]="https://www.youtube.com/results?search_query="
-options[quit]=""
 
 # Picking a search engine.
 while [ -z "$engine" ]; do
@@ -65,8 +64,6 @@ done
 # Searching the chosen engine.
 while [ -z "$query" ]; do
     if [[ "$engine" == "quit" ]]; then
-        echo "Program terminated." && exit 0
-    else
         query=$(echo "$engine" | dmenu -p 'Enter search query:') || exit
     fi
 done
