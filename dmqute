@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#
+# Script name: dmqute
+# Description: Search your qutebrowswer bookmarks and quickmarks.
+# Dependencies: dmenu, qutebrowser
+# GitLab: https://www.gitlab.com/dwt1/dmscripts
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
+# Contributors: Derek Taylor
+
+# Defining location of bookmarks and quickmarks file
+BMFILE="$HOME/.config/qutebrowser/bookmarks/urls"
+QBFILE="$HOME/.config/qutebrowser/quickmarks"
+
+# A separator that will appear in between quickmarks and bookmarks.
+SEPARATOR="----------"
+
+# Read array of options to choose.
+readarray -t bmarks < "$BMFILE"
+readarray -t qmarks < "$QBFILE"
+
+# Sort the bookmark and quickmark lists so that the url is the last field.
+# We will awk print the last field later.
+bmlist=$(printf '%s\n' "${bmarks[@]}" | awk '{print $2" - "$1}')
+qmlist=$(printf '%s\n' "${qmarks[@]}" | awk '{print "["$1"] - "$NF}' | sort)
+
+# Piping the above array into dmenu.
+# We use "printf '%s\n'" to format the array one item to a line.
+# The urls are listed quickmarks first, then the SEPARATOR, and then bookmarks.
+choice=$(printf '%s\n' "$qmlist" "$SEPARATOR" "$bmlist" | dmenu -i -l 20 -p 'Qutebrowser open:') || exit
+
+# What to do if the separator is chosen from the list.
+# We simply launch qutebrowser without any url arguments.
+if [ "$choice" == "$SEPARATOR" ]; then
+    qutebrowser
+# What to do when/if we choose a bookmark/quickmark to view.
+elif [ "$choice" ]; then
+	url=$(echo "${choice}" | awk '{print $NF}') || exit
+	qutebrowser "$url"
+# What to do if we just escape without choosing anything.
+else
+    echo "Program terminated." && exit 0
+fi
