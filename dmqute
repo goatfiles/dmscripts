@@ -23,13 +23,13 @@ SEPARATOR="----------"
 readarray -t bmarks < "$BMFILE"
 readarray -t qmarks < "$QBFILE"
 
-# Sort the bookmark and quickmark lists so that the url is the last field.
+# Sort the bookmark, quickmark and history lists so that the url is the last field.
 # We will awk print the last field later.
 # History list is formed by grep'ing "http" from the history table.
 bmlist=$(printf '%s\n' "${bmarks[@]}" | awk '{print $2" - "$1}')
 qmlist=$(printf '%s\n' "${qmarks[@]}" | awk '{print "["$1"] - "$NF}' | sort)
 histlist=$(printf '%s\n' "$(sqlite3 "$HISTDB" "SELECT * FROM history;")" | \
-    grep http | awk -F "|" '{print $1}')
+    grep http | awk -F "|" '{for (i=2; i<=NF; i++) printf $i " "; print $NF" - "$1}')
 
 # Piping the above lists into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
