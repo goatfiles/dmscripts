@@ -7,11 +7,16 @@
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
 
-# Defining location of bookmarks and quickmarks file
+# Defining location of bookmarks file
 BMFILE="$HOME/.config/qutebrowser/bookmarks/urls"
+
+# Defining location of quickmarks file
 QBFILE="$HOME/.config/qutebrowser/quickmarks"
 
-# A separator that will appear in between quickmarks and bookmarks.
+# Defining location of history database
+HISTDB="$HOME/.local/share/qutebrowser/history.sqlite"
+
+# A separator that will appear in between quickmarks, bookmarks and history urls.
 SEPARATOR="----------"
 
 # Read array of options to choose.
@@ -20,19 +25,22 @@ readarray -t qmarks < "$QBFILE"
 
 # Sort the bookmark and quickmark lists so that the url is the last field.
 # We will awk print the last field later.
+# History list is formed by grep'ing "http" from the history table.
 bmlist=$(printf '%s\n' "${bmarks[@]}" | awk '{print $2" - "$1}')
 qmlist=$(printf '%s\n' "${qmarks[@]}" | awk '{print "["$1"] - "$NF}' | sort)
+histlist=$(printf '%s\n' $(sqlite3 "$HISTDB" "SELECT * FROM history;") | \
+    grep http)
 
-# Piping the above array into dmenu.
+# Piping the above lists into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
 # The urls are listed quickmarks first, then the SEPARATOR, and then bookmarks.
-choice=$(printf '%s\n' "$qmlist" "$SEPARATOR" "$bmlist" | dmenu -i -l 20 -p 'Qutebrowser open:') || exit
+choice=$(printf '%s\n' "$qmlist" "$SEPARATOR" "$bmlist" "$SEPARATOR" "$histlist" | dmenu -i -l 20 -p 'Qutebrowser open:') || exit
 
 # What to do if the separator is chosen from the list.
 # We simply launch qutebrowser without any url arguments.
 if [ "$choice" == "$SEPARATOR" ]; then
     qutebrowser
-# What to do when/if we choose a bookmark/quickmark to view.
+# What to do when/if we choose a url to view.
 elif [ "$choice" ]; then
 	url=$(echo "${choice}" | awk '{print $NF}') || exit
 	qutebrowser "$url"
