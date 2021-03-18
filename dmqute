@@ -34,7 +34,7 @@ histlist=$(printf '%s\n' "$(sqlite3 "$HISTDB" "SELECT * FROM history;")" | \
 # Piping the above lists into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
 # The urls are listed quickmarks first, then the SEPARATOR, and then bookmarks.
-choice=$(printf '%s\n' "$qmlist" "$SEPARATOR" "$bmlist" "$SEPARATOR" "$histlist" | dmenu -i -l 20 -p 'Qutebrowser open:') || exit
+choice=$(printf '%s\n' "$qmlist" "$SEPARATOR" "$bmlist" "$SEPARATOR" "$histlist" | dmenu -i -l 20 -p 'Qutebrowser open:') "$@" || exit
 
 # What to do if the separator is chosen from the list.
 # We simply launch qutebrowser without any url arguments.
