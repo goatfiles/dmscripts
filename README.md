@@ -9,7 +9,7 @@ The scripts included in this repo are:
 + dmconf - Choose from a list of configuration files to edit.
 + dmlogout - Logout, shutdown, reboot or lock screen.
 + dmkill - Search for a process to kill.
-+ dmqute - Search your qutebrowser bookmarks and quickmarks.
++ dmqute - Search your qutebrowser bookmarks, quickmarks and history urls.
 + dmred - Dmenu as a reddit viewer using reddio. *STILL A WORK IN PROGRESS
 + dmsearch - Search various search engines (inspired by surfraw).
 
