@@ -39,12 +39,12 @@ declare -a options=(
 
 yesno(){
     # shellcheck disable=SC2005
-    echo "$(echo -e "No\nYes" | dmenu -i -p "${1}")"
+    echo "$(echo -e "No\nYes" | dmenu -i -p "${1}" "$@")"
 }
 
 # Piping the above array into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
-choice=$(printf '%s\n' "${options[@]}" | dmenu -i -p 'Shutdown menu:')
+choice=$(printf '%s\n' "${options[@]}" | dmenu -i -p 'Shutdown menu:' "$@")
 
 # What to do when/if we choose one of the options.
 case $choice in

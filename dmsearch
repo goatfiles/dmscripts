@@ -57,13 +57,13 @@ options[youtube]="https://www.youtube.com/results?search_query="
 
 # Picking a search engine.
 while [ -z "$engine" ]; do
-    engine=$(printf '%s\n' "${!options[@]}" | sort | dmenu -i -l 20 -p 'Choose search engine:') || exit
+    engine=$(printf '%s\n' "${!options[@]}" | sort | dmenu -i -l 20 -p 'Choose search engine:') "$@" || exit
     url=$(echo "${options["${engine}"]}") || exit
 done
 
 # Searching the chosen engine.
 while [ -z "$query" ]; do
-    query=$(echo "$engine" | dmenu -p 'Enter search query:') || exit
+    query=$(echo "$engine" | dmenu -p 'Enter search query:') "$@" || exit
 done
 
 # Display search results in web browser
