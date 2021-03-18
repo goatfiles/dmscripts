@@ -28,8 +28,8 @@ readarray -t qmarks < "$QBFILE"
 # History list is formed by grep'ing "http" from the history table.
 bmlist=$(printf '%s\n' "${bmarks[@]}" | awk '{print $2" - "$1}')
 qmlist=$(printf '%s\n' "${qmarks[@]}" | awk '{print "["$1"] - "$NF}' | sort)
-histlist=$(printf '%s\n' $(sqlite3 "$HISTDB" "SELECT * FROM history;") | \
-    grep http)
+histlist=$(printf '%s\n' "$(sqlite3 "$HISTDB" "SELECT * FROM history;")" | \
+    grep http | awk -F "|" '{print $1}')
 
 # Piping the above lists into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
