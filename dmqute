@@ -11,7 +11,7 @@
 BMFILE="$HOME/.config/qutebrowser/bookmarks/urls"
 
 # Defining location of quickmarks file
-QBFILE="$HOME/.config/qutebrowser/quickmarks"
+QMFILE="$HOME/.config/qutebrowser/quickmarks"
 
 # Defining location of history database
 HISTDB="$HOME/.local/share/qutebrowser/history.sqlite"
@@ -21,7 +21,7 @@ SEPARATOR="----------"
 
 # Read array of options to choose.
 readarray -t bmarks < "$BMFILE"
-readarray -t qmarks < "$QBFILE"
+readarray -t qmarks < "$QMFILE"
 
 # Sort the bookmark, quickmark and history lists so that the url is the last field.
 # We will awk print the last field later.
