@@ -8,7 +8,9 @@
 # Contributors: Derek Taylor
 
 # Defining the terminal emulator to use.
-DMTERM="st -e"
+TERMINAL="${TERMINAL:-st}"
+DMTERM="${TERMINAL} -e"
+
 
 # An array of options to choose.
 declare -a options=(
@@ -23,19 +25,21 @@ choice=$(printf '%s\n' "${options[@]}" | dmenu -i -p 'Manpages:' "$@")
 
 # What to do when/if we choose one of the options.
 case "$choice" in
-	'Search manpages')
+  'Search manpages')
+        # shellcheck disable=SC2086
         man -k . | awk '{$3="-"; print $0}' | \
         dmenu -i -l 20 -p 'Search for:' | \
         awk '{print $2, $1}' | tr -d '()' | xargs $DMTERM man
-	;;
-	'Random manpage')
+  ;;
+  'Random manpage')
+        # shellcheck disable=SC2086
         man -k . | awk '{print $1}' | shuf -n 1 | \
         dmenu -i -l 20 -p 'Random manpage:' | xargs $DMTERM man
-	;;
-	'Quit')
-		echo "Program terminated." && exit 0
-	;;
-	*)
-		exit 0
-	;;
+  ;;
+  'Quit')
+    echo "Program terminated." && exit 0
+  ;;
+  *)
+    exit 0
+  ;;
 esac

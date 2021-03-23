@@ -28,8 +28,8 @@ readarray -t qmarks < "$QBFILE"
 # History list is formed by grep'ing "http" from the history table.
 bmlist=$(printf '%s\n' "${bmarks[@]}" | awk '{print $2" - "$1}')
 qmlist=$(printf '%s\n' "${qmarks[@]}" | awk '{print "["$1"] - "$NF}' | sort)
-histlist=$(printf '%s\n' "$(sqlite3 "$HISTDB" "SELECT * FROM history;")" | \
-    grep http | awk -F "|" '{for (i=2; i<=NF; i++) printf $i " "; print $NF" - "$1}')
+SQL="SELECT h.title, h.url FROM history as h where url like 'http%';"
+histlist=$(printf '%s\n' "$(sqlite3 "$HISTDB" "${SQL}")"  |  awk -F "|" '{print $1" - "$NF}')
 
 # Piping the above lists into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
@@ -38,12 +38,13 @@ choice=$(printf '%s\n' "$qmlist" "$SEPARATOR" "$bmlist" "$SEPARATOR" "$histlist"
 
 # What to do if the separator is chosen from the list.
 # We simply launch qutebrowser without any url arguments.
+# shellcheck disable=SC2154
 if [ "$choice" == "$SEPARATOR" ]; then
     qutebrowser
 # What to do when/if we choose a url to view.
 elif [ "$choice" ]; then
-	url=$(echo "${choice}" | awk '{print $NF}') || exit
-	qutebrowser "$url"
+  url=$(echo "${choice}" | awk '{print $NF}') || exit
+  qutebrowser "$url"
 # What to do if we just escape without choosing anything.
 else
     echo "Program terminated." && exit 0
