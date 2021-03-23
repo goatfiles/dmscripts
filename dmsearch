@@ -9,7 +9,7 @@
 #               Ali Furkan Yıldız
 
 # Defining our web browser.
-DMBROWSER="brave"
+DMBROWSER="${BROWSER:-brave}"
 
 # An array of search engines.  You can edit this list to add/remove
 # search engines. The format must be: "engine_name]="url".
@@ -56,12 +56,14 @@ options[wolfram]="https://www.wolframalpha.com/input/?i="
 options[youtube]="https://www.youtube.com/results?search_query="
 
 # Picking a search engine.
+# shellcheck disable=SC2154
 while [ -z "$engine" ]; do
     engine=$(printf '%s\n' "${!options[@]}" | sort | dmenu -i -l 20 -p 'Choose search engine:') "$@" || exit
-    url=$(echo "${options["${engine}"]}") || exit
+    url="${options["${engine}"]}" || exit
 done
 
 # Searching the chosen engine.
+# shellcheck disable=SC2154
 while [ -z "$query" ]; do
     query=$(echo "$engine" | dmenu -p 'Enter search query:') "$@" || exit
 done

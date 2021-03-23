@@ -23,11 +23,11 @@ if [[ -n $selected ]]; then
     if [[ $answer == "Yes" ]]; then
         selpid="$(awk '{print $1}' <<< "$selected")";
         kill -9 "$selpid"
-		echo "Process $selected has been killed." && exit 0
+    echo "Process $selected has been killed." && exit 0
     fi
 
     if [[ $answer == "No" ]]; then
-		echo "Program terminated." && exit 0
+    echo "Program terminated." && exit 0
     fi
 fi
 

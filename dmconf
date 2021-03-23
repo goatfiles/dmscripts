@@ -7,10 +7,10 @@
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
 
-# Defining the text editor to use.
-# DMENUEDITOR="st -e vim"
-# DMENUEDITOR="st -e nvim"
-DMEDITOR="emacsclient -c -a emacs"
+TERMINAL="${TERMINAL:-st}"
+DMTERM="${TERMINAL} -e"
+
+DMEDITOR="${DMTERM} ${VISUAL:${EDITOR}}"
 
 # An array of options to choose.
 # You can edit this list to add/remove config files.
@@ -51,15 +51,22 @@ options[xmonad]="$HOME/.xmonad/README.org"
 options[xresources]="$HOME/.Xresources"
 options[zsh]="$HOME/.zshrc"
 
-# Piping the above array into dmenu.
+# Clean options array making sure that the files exits
+declare -A options_clean
+  for i in "${!options[@]}"; do
+    [[ -f ${options["${i}"]} ]] && options_clean["${i}"]=${options["${i}"]}
+  done
+
+
+# Piping the above array (cleaned) into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
-choice=$(printf '%s\n' "${!options[@]}" | dmenu -i -l 20 -p 'Edit config:' "$@")
+choice=$(printf '%s\n' "${!options_clean[@]}" | dmenu -i -l 20 -p 'Edit config:' "$@")
 
 
 # What to do when/if we choose a file to edit.
 if [ "$choice" ]; then
-	cfg=$(printf '%s\n' "${options["${choice}"]}")
-	$DMEDITOR "$cfg"
+  cfg=$(printf '%s\n' "${options_clean["${choice}"]}")
+  $DMEDITOR "$cfg"
 
 # What to do if we just escape without choosing anything.
 else
