@@ -10,6 +10,7 @@
 
 set -euo pipefail
 
+DMBROWSER="${BROWSER:-qutebrowser}"
 
 # Show from what browser the url entry is from
 SHOW_BROWSER=1
@@ -74,8 +75,8 @@ generateHistory() {
   # reverse each line and then sorting on url making sure they are uniq then restoring the lines
   rev "${HISTORY_CACHE_FILE}" | sort -u -t' ' -r -k1,1 |rev | sort  > "${HISTORY_CACHE_FILE}.sorted"
 
-}
 
+}
 
 # Read array of options to choose.
 readarray -t bmarks < "${BMFILE}"
@@ -99,17 +100,17 @@ histlist=$(cat "${HISTORY_CACHE_FILE}.sorted" )
 # Piping the lists into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
 # The urls are listed quickmarks first, then the SEPARATOR, and then bookmarks and lastly history
-choice=$(printf '%s\n' "$qmlist" "$SEPARATOR" "$bmlist" "$SEPARATOR" "$histlist" | dmenu -i -l 20 -p 'Qutebrowser open:') "$@" || exit
+choice=$(printf '%s\n' "$qmlist" "$SEPARATOR" "$bmlist" "$SEPARATOR" "$histlist" | dmenu -i -l 20 -p 'Qutebrowser open:' "$@" ) || exit
 
 # What to do if the separator is chosen from the list.
 # We simply launch qutebrowser without any url arguments.
 # shellcheck disable=SC2154
 if [ "$choice" == "$SEPARATOR" ]; then
-    qutebrowser
+    nohup ${DMBROWSER} >/dev/null 2>&1 &
 # What to do when/if we choose a url to view.
 elif [ "$choice" ]; then
   url=$(echo "${choice}" | awk '{print $NF}') || exit
-  qutebrowser "$url"
+  nohup ${DMBROWSER} "$url" >/dev/null 2>&1 &
 # What to do if we just escape without choosing anything.
 else
     echo "Program terminated." && exit 0
