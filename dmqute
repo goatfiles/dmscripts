@@ -10,6 +10,7 @@
 
 set -euo pipefail
 
+
 # Show from what browser the url entry is from
 SHOW_BROWSER=1
 
@@ -23,7 +24,7 @@ BMFILE="$HOME/.config/qutebrowser/bookmarks/urls"
 # Defining location of quickmarks file
 QMFILE="$HOME/.config/qutebrowser/quickmarks"
 # Defining location of history database
-SQLITE_SEPARATOR=' =%= '
+SQLITE_SEPARATOR='=%='
 
 # Do query against sqlite3 database expecting two columns (title, url)
 function cacheHistory() {
@@ -58,6 +59,17 @@ generateHistory() {
     SQL="SELECT title, url FROM history where url like 'http%';"
     cacheHistory "${QUTEBROWSER_HISTORY}" "${SQL}" "(qutebrowser)"
   fi
+
+  if [[ -d ~/.mozilla/firefox ]]; then 
+    SQL="PRAGMA encoding='UTF-8'; select p.title,p.url from moz_historyvisits as h, moz_places as p where p.id == h.place_id order by url"
+    cd ~/.mozilla/firefox ;
+    for db in "*/places.sqlite"; do
+      DB="$(realpath ${db})"
+      cacheHistory "${DB}" "${SQL}" "(firefox)"
+    done
+  fi
+
+
 
   # reverse each line and then sorting on url making sure they are uniq then restoring the lines
   rev "${HISTORY_CACHE_FILE}" | sort -u -t' ' -r -k1,1 |rev | sort  > "${HISTORY_CACHE_FILE}.sorted"
