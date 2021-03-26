@@ -51,7 +51,7 @@ options[xmonad]="$HOME/.xmonad/README.org"
 options[xresources]="$HOME/.Xresources"
 options[zsh]="$HOME/.zshrc"
 
-# Clean options array making sure that the files exits
+# Clean options array making sure that the files exist
 declare -A options_clean
   for i in "${!options[@]}"; do
     [[ -f ${options["${i}"]} ]] && options_clean["${i}"]=${options["${i}"]}
@@ -60,7 +60,7 @@ declare -A options_clean
 
 # Piping the above array (cleaned) into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
-choice=$(printf '%s\n' "${!options_clean[@]}" | dmenu -i -l 20 -p 'Edit config:' "$@")
+choice=$(printf '%s\n' "${!options_clean[@]}" | sort | dmenu -i -l 20 -p 'Edit config:' "$@")
 
 
 # What to do when/if we choose a file to edit.
