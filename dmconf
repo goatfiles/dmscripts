@@ -10,7 +10,8 @@
 TERMINAL="${TERMINAL:-st}"
 DMTERM="${TERMINAL} -e"
 
-DMEDITOR="${DMTERM} ${VISUAL:${EDITOR}}"
+#DMEDITOR="${DMTERM} ${VISUAL:${EDITOR}}"
+DMEDITOR="emacsclient -c -a emacs"
 
 # An array of options to choose.
 # You can edit this list to add/remove config files.
