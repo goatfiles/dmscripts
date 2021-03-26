@@ -7,11 +7,11 @@
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
 
-TERMINAL="${TERMINAL:-st}"
-DMTERM="${TERMINAL} -e"
-
-#DMEDITOR="${DMTERM} ${VISUAL:${EDITOR}}"
-DMEDITOR="emacsclient -c -a emacs"
+if [[ -z ${DMEDITOR} ]]; then
+  TERMINAL="${TERMINAL:-st}"
+  DMTERM="${TERMINAL} -e"
+  DMEDITOR="${DMTERM} ${VISUAL:${EDITOR}}"
+fi
 
 # An array of options to choose.
 # You can edit this list to add/remove config files.
