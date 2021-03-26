@@ -28,14 +28,17 @@ options[dwm]="$HOME/dwm-distrotube/config.def.h"
 options[dwmblocks]="$HOME/dwmblocks-distrotube/blocks.def.h"
 options[fish]="$HOME/.config/fish/config.fish"
 options[herbstluftwm]="$HOME/.config/herbstluftwm/autostart"
-options[i3]="$HOME/.i3/config"
+options[i3]="$HOME/.config/i3/config"
+options[ncmpcpp]="$HOME/.config/ncmpcpp/config"
 options[neovim]="$HOME/.config/nvim/init.vim"
 options[picom]="$HOME/.config/picom/picom.conf"
 options[polybar]="$HOME/.config/polybar/config"
 options[qtile]="$HOME/.config/qtile/config.py"
-options[quickmarks]="$HOME/.config/qutebrowser/quickmarks"
-options[qutebrowser]="$HOME/.config/qutebrowser/config.py"
+options[qutebrowser bookmarks]="$HOME/.config/qutebrowser/bookmarks/urls"
+options[qutebrowser quickmarks]="$HOME/.config/qutebrowser/quickmarks"
+options[qutebrowser config.py]="$HOME/.config/qutebrowser/config.py"
 options[spectrwm]="$HOME/.spectrwm.conf"
+options[ssh]="$HOME/.ssh/config"
 options[st]="$HOME/st-distrotube/config.def.h"
 options[stumpwm]="$HOME/.config/stumpwm/config"
 options[surf]="$HOME/surf-distrotube/config.def.h"
@@ -48,6 +51,7 @@ options[xmobar mon1 ]="$HOME/.config/xmobar/xmobarrc0"
 options[xmobar mon2]="$HOME/.config/xmobar/xmobarrc1"
 options[xmobar mon3]="$HOME/.config/xmobar/xmobarrc2"
 options[xmonad]="$HOME/.xmonad/README.org"
+options[xinitrc]="$HOME/.xinitrc"
 options[xresources]="$HOME/.Xresources"
 options[zsh]="$HOME/.zshrc"
 
@@ -56,7 +60,6 @@ declare -A options_clean
   for i in "${!options[@]}"; do
     [[ -f ${options["${i}"]} ]] && options_clean["${i}"]=${options["${i}"]}
   done
-
 
 # Piping the above array (cleaned) into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
