@@ -12,6 +12,7 @@ The scripts included in this repo are:
 + dmqute - Search your qutebrowser bookmarks, quickmarks and history urls.
 + dmred - Dmenu as a reddit viewer using reddio. *STILL A WORK IN PROGRESS
 + dmsearch - Search various search engines (inspired by surfraw).
++ dcolors - copy hex value of a color to your clipboard
 
 # Dependencies
 Of course, dmenu is a dependency for all of these scripts.  To see the dependencies of each individual script, check the top commented block of text in each script.
