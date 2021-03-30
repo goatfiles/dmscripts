@@ -66,8 +66,7 @@ case $choice in
         ;;
     'Reboot')
         if [[ "$(echo -e "No\nYes" | dmenu -i -p "${choice}?" "${@}" )" == "Yes" ]]; then
-            output "User choose ${choice}."
-            # systemctl reboot
+            systemctl reboot
         else
             output "User chose not to reboot." && exit 0
         fi
