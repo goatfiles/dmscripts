@@ -9,9 +9,7 @@
 #               Simon Ingelsson
 
 # Define LOCKER in .xprofile to set to different LOCKER program
-LOCKER="${LOCKER:-slock}"
-# export ARGS="$@"
-ARGS="${@}"
+: "${LOCKER:=slock}"
 
 # use notify-send if run in dumb term
 OUTPUT="echo"
