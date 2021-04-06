@@ -8,9 +8,8 @@
 # Contributors: Derek Taylor
 
 # Defining the terminal emulator to use.
-TERMINAL="${TERMINAL:-st}"
-DMTERM="${TERMINAL} -e"
-
+: "${TERMINAL:=st}"
+: "${DMTERM:=${TERMINAL} -e}"
 
 # An array of options to choose.
 declare -a options=(
