@@ -2,20 +2,16 @@
 #
 # Script name: dmconf
 # Description: Choose from a list of configuration files to edit.
-# Dependencies: dmenu
+# Dependencies: dmenu, emacsclient
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
+#               Simon Ingelsson
+# Usage:
+# to use other editor than emacsclient set DMEDITOR accordingly
+#   Example: `DMEDITOR="alacritty -e nvim" ./dmconf`
 
-# The following is breaking the script for me as an Emacs user.
-#if [[ -z ${DMEDITOR} ]]; then
-#  TERMINAL="${TERMINAL:-st}"
-#  DMTERM="${TERMINAL} -e"
-#  DMEDITOR="${DMTERM} ${VISUAL:${EDITOR}}"
-#fi
-
-# Since I actually use this script all the time, I have to have this working.
-DMEDITOR="emacsclient -c -a emacs"
+: "${DMEDITOR:=emacsclient -c -a emacs}"
 
 # An array of options to choose.
 # You can edit this list to add/remove config files.

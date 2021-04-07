@@ -2,7 +2,7 @@
 #
 # Script name: dmscrot
 # Description: Choose type of screenshot to take with maim.
-# Dependencies: dmenu, maim, tee, xdotool, xclip
+# Dependencies: dmenu, maim, tee, xdotool, xclip, xrandr
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
@@ -15,7 +15,8 @@
 set -euo pipefail
 
 # Specifying a directory to save our screenshots.
-SCROTDIR="$HOME/Screenshots"
+: "${SCROTDIR:=${HOME}/Screenshots}"
+
 # Makes sure the directory exists.
 mkdir -p "${SCROTDIR}"
 
