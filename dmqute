@@ -64,18 +64,14 @@ generateHistory() {
   if [[ -d ~/.mozilla/firefox ]]; then 
     SQL="PRAGMA encoding='UTF-8'; select p.title,p.url from moz_historyvisits as h, moz_places as p where p.id == h.place_id order by url"
     cd ~/.mozilla/firefox ;
-    for db in "*/places.sqlite"; do
-      DB="$(realpath ${db})"
+    for db in */places.sqlite; do
+      DB=$(realpath "${db}")
       cacheHistory "${DB}" "${SQL}" "(firefox)"
     done
   fi
 
-
-
   # reverse each line and then sorting on url making sure they are uniq then restoring the lines
   rev "${HISTORY_CACHE_FILE}" | sort -u -t' ' -r -k1,1 |rev | sort  > "${HISTORY_CACHE_FILE}.sorted"
-
-
 }
 
 # Read array of options to choose.
@@ -106,11 +102,11 @@ choice=$(printf '%s\n' "$qmlist" "$SEPARATOR" "$bmlist" "$SEPARATOR" "$histlist"
 # We simply launch qutebrowser without any url arguments.
 # shellcheck disable=SC2154
 if [ "$choice" == "$SEPARATOR" ]; then
-    nohup ${DMBROWSER} >/dev/null 2>&1 &
+    nohup "${DMBROWSER}" >/dev/null 2>&1 &
 # What to do when/if we choose a url to view.
 elif [ "$choice" ]; then
   url=$(echo "${choice}" | awk '{print $NF}') || exit
-  nohup ${DMBROWSER} "$url" >/dev/null 2>&1 &
+  nohup "${DMBROWSER}" "$url" >/dev/null 2>&1 &
 # What to do if we just escape without choosing anything.
 else
     echo "Program terminated." && exit 0

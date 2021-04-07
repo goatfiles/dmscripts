@@ -18,14 +18,15 @@ if [[ ${TERM} == 'dumb' ]]; then
 fi
 export OUTPUT
 
-declare -a MANAGERS=(
-"awesome"
-"bspwm"
-"dwm"
-"spectrwm"
-"xmonad"
-"qtile"
-)
+
+# look up what managers are used (makes it more dynamic)
+declare -a MANAGERS
+while IFS= read -r manager
+do
+    MANAGERS+=("${manager,,}")
+done < <(grep 'Name' /usr/share/xsessions/*.desktop | awk -F"=" '{print $2}')
+
+
 
 # An array of options to choose.
 declare -a options=(
