@@ -10,8 +10,6 @@
 
 # Define LOCKER in .xprofile to set to different LOCKER program
 LOCKER="${LOCKER:-slock}"
-# export ARGS="$@"
-ARGS="${@}"
 
 # use notify-send if run in dumb term
 OUTPUT="echo"
@@ -20,14 +18,15 @@ if [[ ${TERM} == 'dumb' ]]; then
 fi
 export OUTPUT
 
-declare -a MANAGERS=(
-"awesome"
-"bspwm"
-"dwm"
-"spectrwm"
-"xmonad"
-"qtile"
-)
+
+# look up what managers are used (makes it more dynamic)
+declare -a MANAGERS
+while IFS= read -r manager
+do
+    MANAGERS+=("${manager,,}")
+done < <(grep 'Name' /usr/share/xsessions/*.desktop | awk -F"=" '{print $2}')
+
+
 
 # An array of options to choose.
 declare -a options=(
