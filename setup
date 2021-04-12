@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+#
+# Script name: setup
+# Description: Downloads all the requried dependencies for all the scripts, i am not including dmenu as you may have a personal build you want to use.
+# Dependencies: dmenu, A-package-manager if yours is not listed please add it. 
+# GitLab: https://www.gitlab.com/dwt1/setup
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
+# Contributors: n-e0
+
+## I have tested the apt package manager and it works but i can't test pacman so if some could do that it would be great.
+
+## packages
+#xclip
+#xargs
+#systemd
+#slock
+#nottoy-send
+#quttorowser
+#redtoo
+#zentoy
+#maito
+#teeto
+#xdotool
+#xrandr
+
+pacman-install () {
+    sudo pacman -S xclip
+    sudo pacman -S xargs
+    sudo pacman -S systemd
+    sudo pacman -S slock
+    sudo pacman -S notify-notify-send
+    sudo pacman -S qutebrowser
+    sudo pacman -S reddio
+    sudo pacman -S zenity
+    sudo pacman -S maim
+    sudo pacman -S tee
+    sudo pacman -S xdotool
+    sudo pacman -S xrandr
+}
+
+apt-install () {
+    sudo apt install xclip
+   #sudo apt install xargs
+    sudo apt install systemd
+    sudo apt install slock
+    sudo apt install notify-send
+    sudo apt install qutebrowser
+    sudo apt install reddio
+    sudo apt install zenity
+    sudo apt install maim
+    sudo apt install tee
+    sudo apt install xdotool
+    sudo apt install x11-xserver-utils
+}
+
+
+declare -a packageman=(
+"Pacman"
+"Apt"
+"Quit"
+)
+
+choice=$(printf '%s\n' "${packageman[@]}" | dmenu -i -p 'Package Manager:' "$@")
+
+case "$choice" in
+  'Pacman')
+        pacman-install
+  ;;
+  'Apt')
+        apt-install
+  ;;
+  'Quit')
+    echo "Program terminated." && exit 0
+  ;;
+  *)
+    exit 0
+  ;;
+esac
