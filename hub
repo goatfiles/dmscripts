@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+#
+# Script name: hub
+# Description: a hub that you can execute all the other scripts from
+# Dependencies: dmenu, executable dmscripts, all the dependancies from dmscripts
+# GitLab: https://www.gitlab.com/dwt1/hub
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
+# Contributors: n-e0
+
+declare -A options
+    options[dman]="$HOME/Git-repos/dmscripts/dman"
+    options[dcolors]="$HOME/Git-repos/dmscripts/dcolors"
+    options[dmkill]="$HOME/Git-repos/dmscripts/dmkill"
+    options[dmlogout]="$HOME/Git-repos/dmscripts/dmlogout"
+    options[dmqute]="$HOME/Git-repos/dmscripts/dmqute"
+    options[dmred]="$HOME/Git-repos/dmscripts/dmred"
+    options[dmscrot]="$HOME/Git-repos/dmscripts/dmscrot"
+    options[dmsearch]="$HOME/Git-repos/dmscripts/dmsearch"
+
+declare -A options_clean
+    for i in "${!options[@]}"; do
+        [[ -f ${options["${i}"]} ]] && options_clean["${i}"]=${options["${i}"]}
+    done
+
+choice=$(printf '%s\n' "${!options_clean[@]}" | sort | dmenu -i -l 20 -p 'Run Script:' "$@")
+
+if [ "$choice" ]; then
+    cfg=$(printf '%s\n' "${options_clean["${choice}"]}")
+    bash "$cfg"
+
+else
+    echo "Program terminated." && exit 0
+fi
