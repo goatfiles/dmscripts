@@ -23,7 +23,8 @@
 #xdotool
 #xrandr
 
-pacman-install () {
+pacman-install () {      
+    echo "installing"
     sudo pacman -S xclip
     sudo pacman -S xargs
     sudo pacman -S systemd
@@ -36,43 +37,62 @@ pacman-install () {
     sudo pacman -S tee
     sudo pacman -S xdotool
     sudo pacman -S xrandr
+    echo "done installing"
+    make-executable
 }
 
 apt-install () {
-    sudo apt install xclip
-   #sudo apt install xargs
-    sudo apt install systemd
-    sudo apt install slock
-    sudo apt install notify-send
-    sudo apt install qutebrowser
-    sudo apt install reddio
-    sudo apt install zenity
-    sudo apt install maim
-    sudo apt install tee
-    sudo apt install xdotool
-    sudo apt install x11-xserver-utils
+    echo "installing"
+	sudo apt install xclip > /dev/null 2>&1
+   #sudo apt install xargs > /dev/null 2>&1
+    sudo apt install systemd > /dev/null 2>&1
+    sudo apt install slock > /dev/null 2>&1
+    sudo apt install notify-send > /dev/null 2>&1
+    sudo apt install qutebrowser > /dev/null 2>&1
+    sudo apt install reddio > /dev/null 2>&1
+    sudo apt install zenity > /dev/null 2>&1
+    sudo apt install maim > /dev/null 2>&1
+    sudo apt install tee > /dev/null 2>&1
+    sudo apt install xdotool > /dev/null 2>&1
+    sudo apt install x11-xserver-utils > /dev/null 2>&1
+    echo "done installing"
+    make-executable
 }
 
+make-executable () {
+    chmod 755 $path
+    echo "scripts in $path are executable"
+}
 
 declare -a packageman=(
-"Pacman"
-"Apt"
-"Quit"
+    "Pacman"
+    "Apt"
+    "Quit"
+)
+
+declare -a pathexample=(
+    "eg. /home/user/dmscripts"
 )
 
 choice=$(printf '%s\n' "${packageman[@]}" | dmenu -i -p 'Package Manager:' "$@")
+path=$(printf '%s\n' "${pathexample[@]}" | dmenu -i -p 'Enter Path To scripts directory:' "$@")
 
 case "$choice" in
-  'Pacman')
+
+	'Pacman')
+        echo "installing"
         pacman-install
-  ;;
-  'Apt')
+        
+    ;;
+    'Apt')
+        echo "instaling"
         apt-install
-  ;;
-  'Quit')
-    echo "Program terminated." && exit 0
-  ;;
-  *)
-    exit 0
-  ;;
+        
+    ;;
+    'Quit')
+        echo "Program terminated." && exit 0
+    ;;
+    *)
+        exit 0
+    ;;
 esac
