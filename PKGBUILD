@@ -1,9 +1,9 @@
 # Maintainer: Derek Taylor (DistroTube) <derek@distrotube.com>
-pkgname=dwt-dmscripts
+pkgname=dmscripts-git
 _pkgname=dmscripts
-pkgver=1.0.r80.4d9cd0c
+pkgver=1.0.r87.e78608e
 pkgrel=1
-pkgdesc="collection of dmenu scripts"
+pkgdesc="A collection of dmenu scripts"
 arch=('any')
 url="https://gitlab.com/dwt1/dmscripts.git"
 license=('GPL3')

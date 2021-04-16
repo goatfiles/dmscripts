@@ -26,17 +26,15 @@
 pacman-install () {      
     echo "installing"
     sudo pacman -S xclip
-    sudo pacman -S xargs
-    sudo pacman -S systemd
+    sudo pacman -S findutils
     sudo pacman -S slock
-    sudo pacman -S notify-notify-send
+    sudo pacman -S libnotify
     sudo pacman -S qutebrowser
-    sudo pacman -S reddio
+    yay -S reddio
     sudo pacman -S zenity
     sudo pacman -S maim
-    sudo pacman -S tee
     sudo pacman -S xdotool
-    sudo pacman -S xrandr
+    sudo pacman -S xorg-xrandr
     echo "done installing"
     make-executable
 }
