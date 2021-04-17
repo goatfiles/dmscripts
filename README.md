@@ -27,7 +27,7 @@ All you need to do is clone this repository and run setup.  Run the following co
 	cd dmscripts
 	bash setup
 
-You can run all the scripts from the hub you just need to change the paths for it to work
+You can run all the scripts from the hub.
 
 To run a script without using the hub:
 
