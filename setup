@@ -1,27 +1,26 @@
 #!/usr/bin/env bash
 #
 # Script name: setup
-# Description: Downloads all the requried dependencies for all the scripts, i am not including dmenu as you may have a personal build you want to use.
+ # Description: Downloads all the requried dependencies for all the scripts and copys the scripts to a folder of your choice and makes all the scripts executable
 # Dependencies: dmenu, A-package-manager if yours is not listed please add it. 
 # GitLab: https://www.gitlab.com/dwt1/setup
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: n-e0
 
-## I have tested the apt package manager and it works but i can't test pacman so if some could do that it would be great.
-
-## packages
-#xclip
-#xargs
-#systemd
-#slock
-#nottoy-send
-#quttorowser
-#redtoo
-#zentoy
-#maito
-#teeto
-#xdotool
-#xrandr
+package-names () {
+    echo xclip
+    echo xargs
+    echo systemd
+    echo slock
+    echo nottoy-send
+    echo quttorowser
+    echo redtoo
+    echo zentoy
+    echo maito
+    echo teeto
+    echo xdotool
+    echo xrandr
+}
 
 pacman-install () {      
     echo "installing"
@@ -42,25 +41,24 @@ pacman-install () {
 apt-install () {
     echo "installing"
 	sudo apt install xclip > /dev/null 2>&1
-   #sudo apt install xargs > /dev/null 2>&1
     sudo apt install systemd > /dev/null 2>&1
     sudo apt install slock > /dev/null 2>&1
     sudo apt install notify-send > /dev/null 2>&1
     sudo apt install qutebrowser > /dev/null 2>&1
-    sudo apt install reddio > /dev/null 2>&1
+    #sudo apt install reddio > /dev/null 2>&1
     sudo apt install zenity > /dev/null 2>&1
     sudo apt install maim > /dev/null 2>&1
-    sudo apt install tee > /dev/null 2>&1
     sudo apt install xdotool > /dev/null 2>&1
     sudo apt install x11-xserver-utils > /dev/null 2>&1
     echo "done installing"
     make-executable
 }
 
-make-executable () {
-    chmod 755 $path
-    echo "scripts in $path are executable"
-}
+
+declare -a yesno=(
+    "Yes"
+    "No"
+)
 
 declare -a packageman=(
     "Pacman"
@@ -73,17 +71,48 @@ declare -a pathexample=(
 )
 
 choice=$(printf '%s\n' "${packageman[@]}" | dmenu -i -p 'Package Manager:' "$@")
-path=$(printf '%s\n' "${pathexample[@]}" | dmenu -i -p 'Enter Path To scripts directory:' "$@")
+scriptpath="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
-case "$choice" in
+check-path () {
+    path=$(printf '%s\n' "${pathexample[@]}" | dmenu -i -p 'Enter Path To scripts directory:' "$@")
+    doespathexist=false
+    if [ -e $path/dman ] ; then
+        ls > /dev/null
+    else
+        confirm=$(printf '%s\n' "${yesno[@]}" | dmenu -i -p "Creating directory at $path are you sure?:" "$@")
+        case "$confirm" in
+            'Yes')
+                mkdir $path
+                cp "$scriptpath"/* "$path"
+
+            ;;
+            'No')
+                check-path
+
+            ;;
+            *)
+                check-path
+            ;;
+        esac
+    fi
+}
+
+make-executable () {
+    chmod 755 $path
+    echo "scripts in $path are executable"
+}
+
+main () {
+
+    check-path
+
+    case "$choice" in
 
 	'Pacman')
-        echo "installing"
         pacman-install
         
     ;;
     'Apt')
-        echo "instaling"
         apt-install
         
     ;;
@@ -93,4 +122,7 @@ case "$choice" in
     *)
         exit 0
     ;;
-esac
+    esac
+}
+
+main
