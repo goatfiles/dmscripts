@@ -21,13 +21,32 @@ Of course, dmenu is a dependency for all of these scripts.  To see the dependenc
 
 # Installation
 
-All you need to do is clone this repository and run setup.  Run the following commands:
+## Installation on Arch 
+
+If you are using Arch, clone the repository then go through the manual build process to install the scripts. Run the following commands:
+
+	git clone https://gitlab.com/dwt1/dmscripts.git
+	cd dmscripts
+	makepkg -cf
+	sudo pacman -U *.pkg.tar.zst	
+
+Alternatively, you could install dmscripts from the AUR using an AUR helper such as yay:
+
+	yay -S dmscripts-git
+
+Once installed, the scripts should behave like any other command and can be run by typing the script's name.
+
+## Installation on Other Distrobutions
+ 
+All you need to do is clone this repository and run setup. Run the following commands:
 
 	git clone https://gitlab.com/dwt1/dmscripts.git
 	cd dmscripts
 	bash setup
 
-You can run all the scripts from the hub.
+You can run all the scripts from the hub:
+
+	bash hub
 
 To run a script without using the hub:
 
