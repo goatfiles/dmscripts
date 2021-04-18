@@ -1,8 +1,13 @@
-#!/bin/bash
-# a simple dmenu script to quickly copy the color to your clip board 
-# helps during configuring new applications
-# edit the colors array to match your palette
-# dependency xclip
+#!/usr/bin/env bash
+#
+# Script name: dcolors
+# Description: Copy a color to your clipboard using dmenu, change the colors if needed
+# Dependencies: dmenu, xclip
+# GitLab: https://www.gitlab.com/dwt1/dmscripts
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
+# Contributors: sloopy3333
+#               Simon Ingelsson 
+#               HostGrady 
 
 declare -A colors
 colors[black]="#282a36"
