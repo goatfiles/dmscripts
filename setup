@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Script name: setup
- # Description: Downloads all the requried dependencies for all the scripts and copys the scripts to a folder of your choice and makes all the scripts executable
+# Description: Downloads all the requried dependencies for all the scripts and copys the scripts to a folder of your choice and makes all the scripts executable
 # Dependencies: dmenu, A-package-manager if yours is not listed please add it. 
 # GitLab: https://www.gitlab.com/dwt1/setup
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
@@ -12,12 +12,12 @@ package-names () {
     echo xargs
     echo systemd
     echo slock
-    echo nottoy-send
-    echo quttorowser
-    echo redtoo
-    echo zentoy
-    echo maito
-    echo teeto
+    echo notify-send
+    echo qutebrowser
+    echo reddio
+    echo zenity
+    echo maim
+#    echo teeto
     echo xdotool
     echo xrandr
 }
