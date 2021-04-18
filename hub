@@ -7,15 +7,17 @@
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: n-e0
 
+path="Git-repos/dmscripts"
+
 declare -A options
-    options[dman]="$HOME/Git-repos/dmscripts/dman"
-    options[dcolors]="$HOME/Git-repos/dmscripts/dcolors"
-    options[dmkill]="$HOME/Git-repos/dmscripts/dmkill"
-    options[dmlogout]="$HOME/Git-repos/dmscripts/dmlogout"
-    options[dmqute]="$HOME/Git-repos/dmscripts/dmqute"
-    options[dmred]="$HOME/Git-repos/dmscripts/dmred"
-    options[dmscrot]="$HOME/Git-repos/dmscripts/dmscrot"
-    options[dmsearch]="$HOME/Git-repos/dmscripts/dmsearch"
+    options[dman]="$HOME/$path/dman"
+    options[dcolors]="$HOME/$path/dcolors"
+    options[dmkill]="$HOME/$path/dmkill"
+    options[dmlogout]="$HOME/$path/dmlogout"
+    options[dmqute]="$HOME/$path/dmqute"
+    options[dmred]="$HOME/$path/dmred"
+    options[dmscrot]="$HOME/$path/dmscrot"
+    options[dmsearch]="$HOME/$path/dmsearch"
 
 declare -A options_clean
     for i in "${!options[@]}"; do
