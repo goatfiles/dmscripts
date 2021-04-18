@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Script name: dmpower
+# Script name: dmlogout
 # Description: Logout, shutdown, reboot or lock screen.
 # Dependencies: dmenu, systemd, slock, notify-send
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
