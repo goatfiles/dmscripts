@@ -36,7 +36,7 @@ Alternatively, you could install dmscripts from the AUR using an AUR helper such
 
 Once installed, the scripts should behave like any other command and can be run by typing the script's name.
 
-## Installation on Other Distrobutions
+## Installation on Other Linux Distributions
  
 All you need to do is clone this repository and run setup. Run the following commands:
 
