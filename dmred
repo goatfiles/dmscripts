@@ -6,24 +6,31 @@
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
+#               HostGrady
 
-# An array of subreddits to choose.
-declare -a subreddit_list=(
-"r/archlinux"
-"r/bash"
-"r/commandline"
-"r/emacs"
-"r/freesoftware"
-"r/linux"
-"r/linux4noobs"
-"r/linuxmasterrace"
-"r/linuxquestions"
-"r/suckless"
-"r/Ubuntu"
-"r/unixporn"
-"r/vim"
-"Quit"
-)
+# Defining our config location
+DMCONFIG="$HOME/.config/dmscripts/dmred"
+if [ -f "$DMCONFIG" ]; then 
+	source "$DMCONFIG"
+else
+# List of subreddits
+	declare -a subreddit_list=(
+	"r/archlinux"
+	"r/bash"
+	"r/commandline"
+	"r/emacs"
+	"r/freesoftware"
+	"r/linux"
+	"r/linux4noobs"
+	"r/linuxmasterrace"
+	"r/linuxquestions"
+	"r/suckless"
+	"r/Ubuntu"
+	"r/unixporn"
+	"r/vim"
+	"Quit"
+	)
+fi
 # Picking a subreddit from the above subreddit_list.
 while [ -z "$subreddit" ]; do
     subreddit=$(printf '%s\n' "${subreddit_list[@]}" | dmenu -i -l 20 -p "Choose a subreddit:" "$@") || exit

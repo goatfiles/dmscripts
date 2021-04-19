@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Ensure you have a quit option at the bottom
+declare -a subreddit_list=(
+"r/archlinux"
+"r/bash"
+"r/commandline"
+"r/emacs"
+"r/freesoftware"
+"r/linux"
+"r/linux4noobs"
+"r/linuxmasterrace"
+"r/linuxquestions"
+"r/suckless"
+"r/Ubuntu"
+"r/unixporn"
+"r/vim"
+"Quit"
+)
