@@ -5,7 +5,7 @@
 This is a collection of dmenu scripts that I have found useful in my day-to-day activities as a desktop Linux user.  These are scripts that I personally use but this repository is open to the community.  If you would like to contribute your own scripts or improve any existing scripts, I would be happy to review your merge requests.  All scripts should be written in Bash and should use "/usr/bin/env bash" as the shebang line rather than "/bin/sh" which is annoying for non-POSIX shell users like me (I use Fish).
 
 The scripts included in this repo are:
-+ dmsetup - Downloads dependencies and makes the scripts executable.
++ dm-setup - Downloads dependencies and makes the scripts executable.
 + dmhub - A hub from where you can run all the scripts from.
 + dman - Search for a manpage or get a random one.
 + dmconf - Choose from a list of configuration files to edit.
@@ -42,11 +42,11 @@ All you need to do is clone this repository and run setup. Run the following com
 
 	git clone https://gitlab.com/dwt1/dmscripts.git
 	cd dmscripts
-	bash setup
+	bash dm-setup
 
 You can run all the scripts from the hub:
 
-	bash hub
+	bash dmhub
 
 To run a script without using the hub:
 
