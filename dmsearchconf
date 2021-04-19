@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Default Browser
+# Replace "brave" with your preferred webbrowser
+DMBROWSER="${BROWSER:-brave}"
+
+# Declare Search Engines, see bottom line for syntax
+declare -A options
+options[google]="https://www.google.com/search?q="
+options[duckduckgo]="https://duckduckgo.com/?q="
+# options[dmenu name]="https://example.com/search?q="
