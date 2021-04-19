@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Script name: dcolors
+# Script name: dmcolors
 # Description: Copy a color to your clipboard using dmenu, change the colors if needed
 # Dependencies: dmenu, xclip
 # GitLab: https://www.gitlab.com/dwt1/dmscripts

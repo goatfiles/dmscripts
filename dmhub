@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Script name: hub
+# Script name: dmhub
 # Description: a hub that you can execute all the other scripts from
 # Dependencies: dmenu, executable dmscripts, all the dependancies from dmscripts
 # GitLab: https://www.gitlab.com/dwt1/hub

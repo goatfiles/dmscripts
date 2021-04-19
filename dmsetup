@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Script name: setup
+# Script name: dmsetup
 # Description: Downloads all the requried dependencies for all the scripts and copys the scripts to a folder of your choice and makes all the scripts executable
 # Dependencies: dmenu, A-package-manager if yours is not listed please add it. 
 # GitLab: https://www.gitlab.com/dwt1/setup
