@@ -11,7 +11,7 @@
 
 # Defining our config location
 # The configuration file must be a bash script and it is formatted the same as below
-DMCONFIG="$HOME/.config/dmscripts/dmsearchconf"
+DMCONFIG="$HOME/.config/dmscripts/dmsearch"
 
 # If our config location exists, it will execute the dmsearch config script
 # If not, the script has sample urls and a sample browser
