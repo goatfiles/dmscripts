@@ -23,38 +23,25 @@ package-names () {
 }
 
 pacman-install () {      
+# Note: Does not install reddio by default, if you would like reddio you need to uncomment either the yay or paru line
     echo "installing"
-    sudo pacman -S xclip
-    sudo pacman -S findutils
-    sudo pacman -S slock
-    sudo pacman -S libnotify
-    sudo pacman -S qutebrowser
-    yay -S reddio
-    sudo pacman -S zenity
-    sudo pacman -S maim
-    sudo pacman -S xdotool
-    sudo pacman -S xorg-xrandr
+    sudo pacman -S xclip findutils slock libnotify qutebrowser zenity maim xdotool xorg-xrandr
+#    yay -S xclip findutils slock libnotify qutebrowser reddio zenity maim xdotool xorg-xrandr
+#    paru -S xclip findutils slock libnotify qutebrowser reddio zenity maim xdotool xorg-xrandr
     echo "done installing"
     make-executable
 }
 
 apt-install () {
+# Note: Does not install reddio
     echo "installing"
-	sudo apt install xclip > /dev/null 2>&1
-    sudo apt install systemd > /dev/null 2>&1
-    sudo apt install slock > /dev/null 2>&1
-    sudo apt install notify-send > /dev/null 2>&1
-    sudo apt install qutebrowser > /dev/null 2>&1
-    #sudo apt install reddio > /dev/null 2>&1
-    sudo apt install zenity > /dev/null 2>&1
-    sudo apt install maim > /dev/null 2>&1
-    sudo apt install xdotool > /dev/null 2>&1
-    sudo apt install x11-xserver-utils > /dev/null 2>&1
+    sudo apt install xclip findutils systemd slock notify-send qutebrowser zenity maim xdotool x11-xserver-utils
     echo "done installing"
     make-executable
 }
 
 dnf-install () {      
+# Note: Does not install reddio    
     echo "installing"
     sudo dnf install xclip findutils slock libnotify qutebrowser zenity maim xdotool xrandr
     echo "done installing"
