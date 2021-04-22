@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 #
-# Script name: dmsetup
-# Description: Downloads all the requried dependencies for all the scripts and copys the scripts to a folder of your choice and makes all the scripts executable
+# Script name: dm-setup
+# Description: This script will setup/install the scripts from this repository and their dependencies. This script will not install dmenu because you may have a personal build you prefer. 
 # Dependencies: dmenu, A-package-manager if yours is not listed please add it. 
 # GitLab: https://www.gitlab.com/dwt1/setup
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: n-e0
+#               HostGrady
 
 package-names () {
     echo xclip
