@@ -108,10 +108,10 @@ main () {
     ;;
     'Apt')
         apt-install
-	;;
+    ;;
     'Dnf')
         dnf-install    
-	;;
+    ;;
     'Quit')
         echo "Program terminated." && exit 0
     ;;
