@@ -13,10 +13,10 @@ makedepends=()
 checkdepends=()
 optdepends=(
   'emacs: editor for dmconf '
-  'slock: used by dmlogout' 
-  'libnotify: used by dmlogout' 
+  'slock: used by dmlogout'
+  'libnotify: used by dmlogout'
   'qutebrowser: used by dmqute'
-  'reddio: used by dmred' 
+  'reddio: used by dmred'
   )
 provides=(dmscripts)
 conflicts=(dmscripts)
