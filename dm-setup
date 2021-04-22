@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 #
-# Script name: dmsetup
-# Description: Downloads all the requried dependencies for all the scripts and copys the scripts to a folder of your choice and makes all the scripts executable
+# Script name: dm-setup
+# Description: This script will setup/install the scripts from this repository and their dependencies. This script will not install dmenu because you may have a personal build you prefer. 
 # Dependencies: dmenu, A-package-manager if yours is not listed please add it. 
 # GitLab: https://www.gitlab.com/dwt1/setup
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: n-e0
+#               HostGrady
 
 package-names () {
     echo xclip
@@ -23,37 +24,30 @@ package-names () {
 }
 
 pacman-install () {      
+# Note: Does not install reddio by default, if you would like reddio you need to uncomment either the yay or paru line
     echo "installing"
-    sudo pacman -S xclip
-    sudo pacman -S findutils
-    sudo pacman -S slock
-    sudo pacman -S libnotify
-    sudo pacman -S qutebrowser
-    yay -S reddio
-    sudo pacman -S zenity
-    sudo pacman -S maim
-    sudo pacman -S xdotool
-    sudo pacman -S xorg-xrandr
+    sudo pacman -S xclip findutils slock libnotify qutebrowser zenity maim xdotool xorg-xrandr
+#    yay -S xclip findutils slock libnotify qutebrowser reddio zenity maim xdotool xorg-xrandr
+#    paru -S xclip findutils slock libnotify qutebrowser reddio zenity maim xdotool xorg-xrandr
     echo "done installing"
     make-executable
 }
 
 apt-install () {
+# Note: Does not install reddio
     echo "installing"
-	sudo apt install xclip > /dev/null 2>&1
-    sudo apt install systemd > /dev/null 2>&1
-    sudo apt install slock > /dev/null 2>&1
-    sudo apt install notify-send > /dev/null 2>&1
-    sudo apt install qutebrowser > /dev/null 2>&1
-    #sudo apt install reddio > /dev/null 2>&1
-    sudo apt install zenity > /dev/null 2>&1
-    sudo apt install maim > /dev/null 2>&1
-    sudo apt install xdotool > /dev/null 2>&1
-    sudo apt install x11-xserver-utils > /dev/null 2>&1
+    sudo apt install xclip findutils systemd slock notify-send qutebrowser zenity maim xdotool x11-xserver-utils
     echo "done installing"
     make-executable
 }
 
+dnf-install () {      
+# Note: Does not install reddio    
+    echo "installing"
+    sudo dnf install xclip findutils slock libnotify qutebrowser zenity maim xdotool xrandr
+    echo "done installing"
+    make-executable
+}
 
 declare -a yesno=(
     "Yes"
@@ -61,8 +55,9 @@ declare -a yesno=(
 )
 
 declare -a packageman=(
-    "Pacman"
     "Apt"
+    "Dnf"
+    "Pacman"
     "Quit"
 )
 
@@ -108,14 +103,15 @@ main () {
 
     case "$choice" in
 
-	'Pacman')
+    'Pacman')
         pacman-install
-        
     ;;
     'Apt')
         apt-install
-        
-    ;;
+	;;
+    'Dnf')
+        dnf-install    
+	;;
     'Quit')
         echo "Program terminated." && exit 0
     ;;
