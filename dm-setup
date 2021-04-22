@@ -54,6 +54,12 @@ apt-install () {
     make-executable
 }
 
+dnf-install () {      
+    echo "installing"
+    sudo dnf install xclip findutils slock libnotify qutebrowser zenity maim xdotool xrandr
+    echo "done installing"
+    make-executable
+}
 
 declare -a yesno=(
     "Yes"
@@ -61,8 +67,9 @@ declare -a yesno=(
 )
 
 declare -a packageman=(
-    "Pacman"
     "Apt"
+    "Dnf"
+    "Pacman"
     "Quit"
 )
 
@@ -108,14 +115,15 @@ main () {
 
     case "$choice" in
 
-	'Pacman')
+    'Pacman')
         pacman-install
-        
     ;;
     'Apt')
         apt-install
-        
-    ;;
+	;;
+    'Dnf')
+        dnf-install    
+	;;
     'Quit')
         echo "Program terminated." && exit 0
     ;;
