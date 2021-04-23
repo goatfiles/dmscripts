@@ -1,17 +1,18 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # script name: dm-pacman
 # Description: A software manager using dmenu
-# Dependencies : dmenu
+# Dependencies: dmenu, pacman
 # Contributors: Murtaza Udaipurwala
+#               HostGrady
 
 packageList="$HOME/.cache/packageList"
 
 refresh(){
     # only update the packageList once a day
-    [ "$(stat -c %y $packageList 2>/dev/null | cut -d' ' -f1)" != "$(date '+%Y-%m-%d')" ] &&
+    [ "$(stat -c %y "$packageList" 2>/dev/null | cut -d' ' -f1)" != "$(date '+%Y-%m-%d')" ] &&
         pacman -Si |
-        awk '/^Name/{name=$3} /^Description/{sub(/^.{18}/,"", $0); print name, " => ", $0}' > $HOME/.cache/packageList
+        awk '/^Name/{name=$3} /^Description/{sub(/^.{18}/,"", $0); print name, " => ", $0}' > "$HOME"/.cache/packageList
 }
 
 confirm(){
@@ -21,15 +22,15 @@ confirm(){
 
 install(){
     refresh
-    package=$(cat $packageList | dmenu -i -l 30 -p "Package to install") || exit
+    package=$(dmenu -i -l 30 -p "Package to install" < "$packageList") || exit
     confirm "Install this package?"
-    $TERMINAL -e sudo pacman -S --noconfirm $(echo $package | cut -d'=' -f1)
+    $TERMINAL -e sudo pacman -S --noconfirm $(echo "$package" | cut -d'=' -f1)
 }
 
 remove(){
     package=$(pacman -Qeq | dmenu -i -l 30 -p "Package to remove") || exit
     confirm "Remove this package?"
-    $TERMINAL sudo pacman -Rns --noconfirm $package
+    $TERMINAL sudo pacman -Rns --noconfirm "$package"
 }
 
 update(){
