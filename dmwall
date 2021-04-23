@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Script name: dmwall
 
@@ -11,12 +11,13 @@
 # Dependencies: dmenu, xwallpaper, sxiv
 
 # Contributors: Murtaza Udaipurwala
+#               HostGrady
 
 ## Usage
-# run sbg without any argument to get a dmenu prompt
-# sbg [optional arguments]
+# run dmwall without any argument to get a dmenu prompt
+# dmwall [optional arguments]
 # -h    Displays this help menu
-# -d    draws the wallpaper at startx. Add 'sbg -d' in your xinitrc
+# -d    draws the wallpaper at startx. Add 'dmwall -d' in your xinitrc
 # -r    randomly selects a wallpaper
 # -i    Go insane
 
@@ -29,38 +30,38 @@ location="$HOME/pix/wallpapers/"
 help(){
     printf "
     ## Usage
-    run sbg without any argument to select a wallpaper from $location\n
-    sbg [optional arguments]
+    run dmwall without any argument to select a wallpaper from $location\n
+    dmwall [optional arguments]
     -h\tDisplays this help menu
-    -d\tdraws the wallpaper at startx. Add 'sbg -d' in your xinitrc
+    -d\tdraws the wallpaper at startx. Add 'dmwall -d' in your xinitrc
     -r\trandomly selects a wallpaper
     -i\tGo insane
 "
 }
 
 change(){
-    xwallpaper --stretch $1 2>/dev/null
+    xwallpaper --stretch "$1" 2>/dev/null
 }
 
 shuffle(){
-    local wallpaper=$(ls $location | shuf -n 1)
+    local wallpaper=$(ls "$location" | shuf -n 1)
     echo "$location/$wallpaper"
 }
 
 setbg(){
-    wallpaper="$(sxiv -t -o $location)"
-    echo $wallpaper > $HOME/.cache/wall
+    wallpaper="$(sxiv -t -o "$location")"
+    echo "$wallpaper" > "$HOME"/.cache/wall
     change "$wallpaper"
 }
 
 # draw the wallpaper at startx
 draw(){
-    change "$(cat $HOME/.cache/wall)"
+    change "$(cat "$HOME"/.cache/wall)"
 }
 
 random(){
     wallpaper=$(shuffle)
-    echo $wallpaper > $HOME/.cache/wall
+    echo "$wallpaper" > "$HOME"/.cache/wall
     change "$wallpaper"
 }
 
@@ -74,7 +75,7 @@ goInsane(){
 
 # dmenu menu
 menu(){
-    options="set background\nrandom\ngo insane"
+#    options="set background\nrandom\ngo insane"
     input=$(printf "set background\nrandom\ngo insane" | dmenu -i -l 3) || exit
     case "$input" in
         "set background") setbg ;;
@@ -90,7 +91,7 @@ while getopts "hdrim" arg 2>/dev/null; do
         d) draw ;;
         r) random ;;
         i) goInsane ;;
-        *) echo "invalid option\nType sbg -h for help" ;;
+        *) printf "invalid option\nType dmwall -h for help" ;;
     esac
     noOpt=0
 done
