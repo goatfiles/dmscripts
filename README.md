@@ -17,6 +17,7 @@ The scripts included in this repo are:
 + dmcolors - Copy a color's hex value to your clipboard
 + dmwall - A wallpaper setting utility using dmenu, xwallpaper and sxiv
 + dm-pacman - A software store using dmenu
++ dm-usbmount - mount/unmount usb drives using dmenu. No fancy daemon required
 
 # Dependencies
 Of course, dmenu is a dependency for all of these scripts.  To see the dependencies of each individual script, check the top commented block of text in each script.
