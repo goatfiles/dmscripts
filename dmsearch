@@ -16,7 +16,8 @@ DMCONFIG="$HOME/.config/dmscripts/dmsearch"
 # If our config location exists, it will execute the dmsearch config script
 # If not, the script has sample urls and a sample browser
 if [ -f "$DMCONFIG" ]; then
-# SC1090 says there is a problem with this way dealing with the config, I have experienced no issues personally
+# No issues should arrise since it won't even be sourced if the file doesn't exist
+# shellcheck disable=SC1090	
 	source "$DMCONFIG" 
 else
 # Defining our web browser, by default we are using brave.
