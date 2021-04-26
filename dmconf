@@ -25,6 +25,7 @@ else
 	options[broot]="$HOME/.config/broot/conf.toml"
 	options[bspwm]="$HOME/.config/bspwm/bspwmrc"
 	options[doom emacs config.el]="$HOME/.config/doom/config.el"
+	options[doom emacs config.org]="$HOME/.config/doom/config.org"
 	options[doom emacs init.el]="$HOME/.config/doom/init.el"
 	options[doom emacs packages.el]="$HOME/.config/doom/packages.el"
 	options[dunst]="$HOME/.config/dunst/dunstrc"
