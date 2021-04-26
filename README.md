@@ -20,9 +20,12 @@ The scripts included in this repo are:
 + dm-usbmount - mount/unmount usb drives using dmenu. No fancy daemon required
 
 # Dependencies
+
 Of course, dmenu is a dependency for all of these scripts.  To see the dependencies of each individual script, check the top commented block of text in each script.
 
 # Installation
+
+Note: No current install method supports the sample config files, please see the configuration guide below if you wish to use a custom config file.
 
 ## Installation on Arch
 
@@ -58,3 +61,35 @@ To run a script without using the hub:
 Or:
 
 	./path/to/script
+
+# Configuration
+
+Currently, configuration can be done in a few ways:
++ Via the proper config files (recommended)
++ Via /etc/profile
++ Via editing the source code (not recommended)
+
+## Config files
+
+Currently the config files are not installed by default so in order to correctly install them, you need to move or copy them to the appropriate directory. Run the following commands:
+
+	git clone https://gitlab.com/dwt1/dmscripts.git
+	cd dmscripts
+	cp -riv config/ "$HOME"/.config/dmscripts
+
+The config files are bash scripts however they are very simple to understand and several comments are left which explains what everything in the config files do. If you are still confused, a general word of advice that you should just copy one of the lines in the config and modify it to see what it does.
+
+## /etc/profile
+
+By editing the file /etc/profile, you can add environment variables which will work accross the dmscripts. A few examples include:
+
+	: "${TERMINAL:=st}"
+	: "${DMTERM:=${TERMINAL} -e}"
+	: "${DMBROWSER=qutebrowser}"
+	: "${DMEDITOR="emacsclient -c -a emacs}"
+
+You can, of course, replace the variables with whatever you prefer. It's also worth noting that editing /etc/profile requires root permission, so you will need to elevate yourself if you wish to configure the scripts in this manner.
+
+## Editing the Source Code
+
+Being a free/libre software project, you may make modifications to the source code to fit your needs. If you need a refrence, look at the config files and variables in /etc/profile for a general idea on what to look for in the source code. Please submit patches and merge requests if you see any bugs or improve the source code while you are there.
