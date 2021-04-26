@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # script name: dm-usbmount
 # Description: mount/unmount usb drives using dmenu. No fancy daemon required
