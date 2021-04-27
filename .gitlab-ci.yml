@@ -1,0 +1,13 @@
+
+
+
+stages: 
+  - test
+
+shellcheck:
+  image: koalaman/shellcheck-alpine:latest
+  stage: test
+  script:
+    - shellcheck -x dmscrot
+  # only:
+  #   - merge_requests
