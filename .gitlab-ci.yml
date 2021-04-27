@@ -8,6 +8,6 @@ shellcheck:
   image: koalaman/shellcheck-alpine:latest
   stage: test
   script:
-    - shellcheck -x dmscrot
+    - shellcheck -x scripts/*
   # only:
   #   - merge_requests
