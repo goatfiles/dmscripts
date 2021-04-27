@@ -81,18 +81,14 @@ else
   options[googleDataset]="https://datasetsearch.research.google.com/search?query="
 fi
 
-# Picking a search engine.
-# shellcheck disable=SC2154
-while [ -z "$engine" ]; do
-    engine=$(printf '%s\n' "${!options[@]}" | sort | dmenu -i -l 20 -p 'Choose search engine:') "$@" || exit
-    url="${options["${engine}"]}" || exit
-done
+# Choosing  a search engine by name from array above.
+engine=$(printf '%s\n' "${!options[@]}" | sort | dmenu -i -l 20 -p 'Choose search engine:') "$@" || exit
+
+# Getting the url of the search engine we chose.
+url="${options["${engine}"]}"
 
 # Searching the chosen engine.
-# shellcheck disable=SC2154
-while [ -z "$query" ]; do
-    query=$(echo "$engine" | dmenu -p 'Enter search query:') "$@" || exit
-done
+query=$(echo "$engine" | dmenu -p 'Enter search query:')
 
 # Display search results in web browser
 $DMBROWSER "$url""$query"
