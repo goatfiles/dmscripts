@@ -24,7 +24,7 @@ install(){
     refresh
     package=$(dmenu -i -l 30 -p "Package to install" < "$packageList") || exit
     confirm "Install this package?"
-    $TERMINAL -e sudo pacman -S --noconfirm $(echo "$package" | cut -d'=' -f1)
+    $TERMINAL -e sudo pacman -S --noconfirm "$(echo "$package" | cut -d'=' -f1)"
 }
 
 remove(){
@@ -40,7 +40,7 @@ update(){
 
 cleanUp(){
     [ "$(pacman -Qdtq)" = "" ] && exit
-    $TERMINAL -e sudo pacman -Rns --noconfirm $(pacman -Qdtq)
+    $TERMINAL -e sudo pacman -Rns --noconfirm "$(pacman -Qdtq)"
 }
 
 menu(){

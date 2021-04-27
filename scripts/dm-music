@@ -67,16 +67,16 @@ queuePlaylist(){
     mpc -q clear
     mpc load "$playlist"
     mpc -q play 1
-    echo "$playlist" > "$HOME/.cache/current_playlist"
+    echo "$playlist" > "${HOME}/.cache/current_playlist"
 }
 
 currentPlaylist(){
-    playlist="$(cat $HOME/.cache/current_playlist)"
-    music_list="$(mpc playlist "$playlist")"
-    music="$(echo "$music_list" | dmenu -i -l 10 -p "Music to play")" || exit
+    playlist="$(cat "${HOME}/.cache/current_playlist")"
+    music_list="$(mpc playlist "${playlist}")"
+    music="$(echo "${music_list}" | dmenu -i -l 10 -p "Music to play")" || exit
     mpc -q clear
-    mpc load "$playlist" > /dev/null 2>&1
-    mpc play "$(echo "$music_list" | awk -v pattern="$music" '$0 ~ pattern { print NR; exit }')"
+    mpc load "${playlist}" > /dev/null 2>&1
+    mpc play "$(echo "${music_list}" | awk -v pattern="$music" '$0 ~ pattern { print NR; exit }')"
 }
 
 noOpt=1

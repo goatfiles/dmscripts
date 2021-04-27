@@ -8,6 +8,7 @@ shellcheck:
   image: koalaman/shellcheck-alpine:latest
   stage: test
   script:
+    - shellcheck -x dm-setup/
     - shellcheck -x scripts/*
   # only:
   #   - merge_requests
