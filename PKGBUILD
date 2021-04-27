@@ -1,7 +1,7 @@
 # Maintainer: Derek Taylor (DistroTube) <derek@distrotube.com>
 pkgname=dmscripts-git
 _pkgname=dmscripts
-pkgver=1.0.r98.a94bc1b
+pkgver=1.0.r156.f7f5309
 pkgrel=1
 pkgdesc="A collection of dmenu scripts"
 arch=('any')
@@ -36,13 +36,9 @@ pkgver() {
 
 package() {
   cd ${_pkgname}
-  install -Dm755 scripts/dman -t "${pkgdir}/usr/bin"
-  install -Dm755 scripts/dmconf -t "${pkgdir}/usr/bin"
-  install -Dm755 scripts/dmkill -t "${pkgdir}/usr/bin"
-  install -Dm755 scripts/dmlogout -t "${pkgdir}/usr/bin"
-  install -Dm755 scripts/dmqute -t "${pkgdir}/usr/bin"
-  install -Dm755 scripts/dmred -t "${pkgdir}/usr/bin"
-  install -Dm755 scripts/dmscrot -t "${pkgdir}/usr/bin"
-  install -Dm755 scripts/dmsearch -t "${pkgdir}/usr/bin"
+  # Make sure to install all scripts
+  for script in $(echo scripts/*); do 
+    install -Dm755 ${script} -t "${pkgdir}/usr/bin"
+  done
 }
 
