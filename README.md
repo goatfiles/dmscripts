@@ -2,8 +2,6 @@
 
 ![Screenshot of dmenu](https://gitlab.com/dwt1/dotfiles/raw/master/.screenshots/dmenu-distrotube01.png)
 
-This is a collection of dmenu scripts that I have found useful in my day-to-day activities as a desktop Linux user.  These are scripts that I personally use but this repository is open to the community.  If you would like to contribute your own scripts or improve any existing scripts, I would be happy to review your merge requests.  All scripts should be written in Bash and should use "/usr/bin/env bash" as the shebang line rather than "/bin/sh" which is annoying for non-POSIX shell users like me (I use Fish).
-
 The scripts included in this repo are:
 + dm-setup - Downloads dependencies and makes the scripts executable.
 + dmhub - A hub from where you can run all the scripts from.
@@ -20,7 +18,27 @@ The scripts included in this repo are:
 + dm-usbmount - mount/unmount usb drives using dmenu. No fancy daemon required
 + dm-music - Dmenu as your music player
 
-Currently, we would prefer if you took a look at our [TODO list](TODO.md) as we would like to ensure all scripts are stable and secure.
+# Contributing
+This is a collection of dmenu scripts that I have found useful in my day-to-day activities as a desktop Linux user.  Although initially this was just for my personal scripts, this project is now open to the community.  If you would like to contribute your own scripts or improve any existing scripts, I would be happy to review your merge requests.  All scripts submitted should meet the following guidelines:
+
+Scripts should be written in Bash and use the following shebang line:
+
+    #!/usr/bin/env bash
+    
+To avoid unintended errors, scripts should include the line: 
+
+    set -euo pipefail
+
+Before submitting, please run your script through shellcheck to check for potential errors.  Sometimes, you may get a shellcheck warning that you cannot fix because the "fix" would actually break the script.  If so, leave a comment in the script that will disable the shellcheck warning in the future.
+
+For example, to disable the SC2154 warning about referencing http_proxy:
+
+    # shellcheck disable=SC2154
+    echo "proxy=$http_proxy" | ...
+
+Also, please use consistent indentation, preferably four spaces rather than tabs.  
+
+Contributors are asked to look at our [TODO list](TODO.md) as we would like to ensure all scripts are stable and secure.
 
 # Dependencies
 
@@ -95,4 +113,4 @@ You can, of course, replace the variables with whatever you prefer. It's also wo
 
 ## Editing the Source Code
 
-Being a free/libre software project, you may make modifications to the source code to fit your needs. If you need a refrence, look at the config files and variables in /etc/profile for a general idea on what to look for in the source code. Please submit patches and merge requests if you see any bugs or improve the source code while you are there.
+Being a free/libre software project, you may make modifications to the source code to fit your needs. If you need a reference, look at the config files and variables in /etc/profile for a general idea on what to look for in the source code. Please submit patches and merge requests if you see any bugs or improve the source code while you are there.
