@@ -16,8 +16,8 @@ packageList="$HOME/.cache/packageList"
 refresh(){
     # only update the packageList once a day
     [ "$(stat -c %y "$packageList" 2>/dev/null | cut -d' ' -f1)" != "$(date '+%Y-%m-%d')" ] &&
-        pacman -Si |
-        awk '/^Name/{name=$3} /^Description/{sub(/^.{18}/,"", $0); print name, " => ", $0}' > "$HOME"/.cache/packageList
+        pacman -Si \
+        | awk '/^Name/{name=$3} /^Description/{sub(/^.{18}/,"", $0); print name, " => ", $0}' > "$HOME"/.cache/packageList
 }
 
 confirm(){
@@ -49,7 +49,7 @@ cleanUp(){
 }
 
 menu(){
-    operation=$(printf "install\nremove\nupdate\nremove orphan packages" | dmenu -i -l 4 -p "Select operation") || exit
+    operation=$(printf "install\nremove\nupdate\nremove orphan packages" | dmenu -i -l 4 -p "Select operation" "${@}") || exit
     case $operation in
         "install") install ;;
         "remove") remove ;;
@@ -59,4 +59,4 @@ menu(){
     esac
 }
 
-menu
+menu "${@}"

@@ -18,14 +18,13 @@
 set -euo pipefail
 
 DMCONFIG="$HOME/.config/dmscripts/dmconf"
-if [ -f "$DMCONFIG" ]; then
 # No issues should arrise since it won't even be sourced if the file doesn't exist
 # shellcheck disable=SC1090	
-  source "$DMCONFIG"
-else
-  : "${DMEDITOR:=emacsclient -c -a emacs}"
-# An array of options to choose.
-# You can edit this list to add/remove config files.
+[[ -f "$DMCONFIG" ]] && source "$DMCONFIG"
+
+: "${DMEDITOR:=emacsclient -c -a emacs}"
+
+if [[ ! "$(declare -p options 2>/dev/null)" == "declare -A"* ]] ; then 
   declare -A options
   options[alacritty]="$HOME/.config/alacritty/alacritty.yml"
   options[awesome]="$HOME/.config/awesome/rc.lua"
@@ -68,6 +67,7 @@ else
   options[xresources]="$HOME/.Xresources"
   options[zsh]="$HOME/.zshrc"
 fi
+
 # Clean options array making sure that the files exist
 declare -A options_clean
   for i in "${!options[@]}"; do
@@ -77,7 +77,6 @@ declare -A options_clean
 # Piping the above array (cleaned) into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
 choice=$(printf '%s\n' "${!options_clean[@]}" | sort | dmenu -i -l 20 -p 'Edit config:' "$@")
-
 
 # What to do when/if we choose a file to edit.
 if [ "$choice" ]; then

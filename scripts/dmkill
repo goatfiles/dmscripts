@@ -20,7 +20,6 @@ selected="$(ps --user "$(id -u)" -F | \
 # Nested 'if' statements.  The outer 'if' statement is what to do
 # when we select one of the 'selected' options listed in dmenu.
 if [[ -n $selected ]]; then
-
     # Piping No/Yes into dmenu as a safety measure, in case you
     # select a process that you don't actually want killed.
     answer="$(echo -e "No\nYes" | dmenu -i -p "Kill $selected?" "$@")"

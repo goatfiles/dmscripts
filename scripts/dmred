@@ -14,13 +14,13 @@
 set -euo pipefail
 
 # Defining our config location
-DMCONFIG="$HOME/.config/dmscripts/dmred"
-if [ -f "$DMCONFIG" ]; then 
+DMCONFIG="$HOME/.config/dmscripts/config"
 # No issues should arrise since it won't even be sourced if the file doesn't exist
-# shellcheck disable=SC1090	
-  source "$DMCONFIG"
-else
-# List of subreddits
+# shellcheck disable=SC1090
+[ -f "$DMCONFIG" ] && source "$DMCONFIG"
+
+if [[ ! "$(declare -p subreddit_list 2>/dev/null)" == "declare -A"* ]] ; then 
+  # List of subreddits
   declare -a subreddit_list=(
   "r/archlinux"
   "r/bash"
@@ -38,6 +38,7 @@ else
   "Quit"
   )
 fi
+
 # Picking a subreddit from the above subreddit_list.
 while [ -z "$subreddit" ]; do
     subreddit=$(printf '%s\n' "${subreddit_list[@]}" | dmenu -i -l 20 -p "Choose a subreddit:" "$@") || exit
