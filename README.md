@@ -20,7 +20,7 @@ The scripts included in this repo are:
 + dm-usbmount - mount/unmount usb drives using dmenu. No fancy daemon required
 + dm-music - Dmenu as your music player
 
-Currently, we would prefer if you took a look at our [TODO list][TODO.md] as we would like to ensure all scripts are stable and secure.
+Currently, we would prefer if you took a look at our [TODO list](TODO) as we would like to ensure all scripts are stable and secure.
 
 # Dependencies
 
