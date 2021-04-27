@@ -11,6 +11,12 @@
 # Usage:
 # to use other editor than emacsclient set DMEDITOR accordingly
 #   Example: `DMEDITOR="alacritty -e nvim" ./dmconf`
+
+# Set with the flags "-e", "-u","-o pipefail" cause the script to fail
+# if certain things happen, which is a good thing.  Otherwise, we can
+# get hidden bugs that are hard to discover.
+set -euo pipefail
+
 DMCONFIG="$HOME/.config/dmscripts/dmconf"
 if [ -f "$DMCONFIG" ]; then
 # No issues should arrise since it won't even be sourced if the file doesn't exist

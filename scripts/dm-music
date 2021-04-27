@@ -38,6 +38,10 @@
 #        format	"44100:16:2"
 # }
 
+# Set with the flags "-e", "-u","-o pipefail" cause the script to fail
+# if certain things happen, which is a good thing.  Otherwise, we can
+# get hidden bugs that are hard to discover.
+set -euo pipefail
 
 help(){
     printf "Run dm-music without any arguments for all available music\n

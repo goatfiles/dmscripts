@@ -9,6 +9,11 @@
 #               Ali Furkan Yıldız
 #               HostGrady
 
+# Set with the flags "-e", "-u","-o pipefail" cause the script to fail
+# if certain things happen, which is a good thing.  Otherwise, we can
+# get hidden bugs that are hard to discover.
+set -euo pipefail
+
 # Defining our config location
 # The configuration file must be a bash script and it is formatted the same as below
 DMCONFIG="$HOME/.config/dmscripts/dmsearch"

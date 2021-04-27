@@ -9,6 +9,17 @@
 #               Simon Ingelsson 
 #               HostGrady 
 
+# Set with the flags "-e", "-u","-o pipefail" cause the script to fail
+# if certain things happen, which is a good thing.  Otherwise, we can
+# get hidden bugs that are hard to discover.
+set -euo pipefail
+
+# Defining the terminal emulator to use.
+DMCONFIG="${HOME}/.config/dmscripts/dmconf"
+# No issues should arrise since it won't even be sourced if the file doesn't exist
+# shellcheck disable=SC1090	
+[ -f "${DMCONFIG}" ] && source "${DMCONFIG}"
+
 declare -A colors
 colors[black]="#282a36"
 colors[red]="#ff5555"
