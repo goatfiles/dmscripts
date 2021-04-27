@@ -10,10 +10,13 @@
 
 set -euo pipefail
 
-DMBROWSER="${BROWSER:-qutebrowser}"
+DMCONFIG="${HOME}/.config/dmscripts/dmconf"
+# No issues should arrise since it won't even be sourced if the file doesn't exist
+# shellcheck disable=SC1090	
+[ -f "${DMCONFIG}" ] && source "${DMCONFIG}"
 
-# Show from what browser the url entry is from
-SHOW_BROWSER=1
+: "${DMBROWSER:=qutebrowser}"
+: "${DMBROWSER_SHOW:=1}"
 
 HISTORY_CACHE_FILE="${HOME}/.cache/dmbrowserhistory"
 
@@ -24,22 +27,27 @@ SEPARATOR="----------"
 BMFILE="$HOME/.config/qutebrowser/bookmarks/urls"
 # Defining location of quickmarks file
 QMFILE="$HOME/.config/qutebrowser/quickmarks"
-# Defining location of history database
-SQLITE_SEPARATOR='=%='
 
 # Do query against sqlite3 database expecting two columns (title, url)
+# args "file" "query"
 function cacheHistory() {
+  sqlite_separator='=%='
   file=${1}
   query=${2}
-  [[ ${SHOW_BROWSER} -eq 1 ]] && browser=${3-} || browser=""
+  [[ ${DMBROWSER_SHOW} -eq 1 ]] && browser=${3-} || browser=""
 
-  sqlCmd="sqlite3 -separator ${SQLITE_SEPARATOR}"
+  sqlCmd="sqlite3 -separator ${sqlite_separator}"
   printf '%s\n' "$(${sqlCmd} "${file}" "${query}")" | \
-  awk -F "${SQLITE_SEPARATOR}" -v browser="${browser} " '{print browser""$1" - "$NF}' >> "${HISTORY_CACHE_FILE}"
+  awk -F "${sqlite_separator}" -v browser="${browser} " '{print browser""$1" - "$NF}' >> "${HISTORY_CACHE_FILE}"
 }
 
 # Wrap getting history so we can call it only if the cache is old
 generateHistory() {
+  if [[ -f "${HISTORY_CACHE_FILE}.sorted" ]]; then
+    if [ $(( $(date +%s) - $(date +%s -r "${HISTORY_CACHE_FILE}.sorted") )) -lt 180 ]; then
+      return 0
+    fi
+  fi
   # Make sure cache is empty and exists
   echo -n "" > "${HISTORY_CACHE_FILE}"
 
@@ -73,18 +81,11 @@ generateHistory() {
   # reverse each line and then sorting on url making sure they are uniq then restoring the lines
   rev "${HISTORY_CACHE_FILE}" | sort -u -t' ' -r -k1,1 |rev | sort  > "${HISTORY_CACHE_FILE}.sorted"
 }
+generateHistory
 
 # Read array of options to choose.
 readarray -t bmarks < "${BMFILE}"
 readarray -t qmarks < "${QMFILE}"
-
-if [[ -f "${HISTORY_CACHE_FILE}.sorted" ]]; then
-  if [ $(( $(date +%s) - $(date +%s -r "${HISTORY_CACHE_FILE}.sorted") )) -le 180 ]; then
-    generateHistory
-  fi
-else 
-  generateHistory
-fi
 
 # Sort the bookmark and quickmark lists so that the url is the last field.
 # We will awk print the last field later.

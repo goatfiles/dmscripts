@@ -8,6 +8,9 @@
 # Contributors: n-e0
 #               HostGrady
 
+
+set -euo pipefail
+
 package-names () {
     echo xclip
     echo xargs
@@ -70,36 +73,34 @@ scriptpath="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 check-path () {
     path=$(printf '%s\n' "${pathexample[@]}" | dmenu -i -p 'Enter Path To scripts directory:' "$@")
-    doespathexist=false
-    if [ -e $path/dman ] ; then
+    if [ -e "${path}/dman" ] ; then
         ls > /dev/null
     else
         confirm=$(printf '%s\n' "${yesno[@]}" | dmenu -i -p "Creating directory at $path are you sure?:" "$@")
         case "$confirm" in
             'Yes')
-                mkdir $path
+                mkdir -p "${path}"
                 cp "$scriptpath"/* "$path"
 
             ;;
             'No')
-                check-path
-
+                check-path "$@"
             ;;
             *)
-                check-path
+                check-path "$@"
             ;;
         esac
     fi
 }
 
 make-executable () {
-    chmod 755 $path
+    chmod 755 "${path}"
     echo "scripts in $path are executable"
 }
 
 main () {
 
-    check-path
+    check-path "$@"
 
     case "$choice" in
 
@@ -121,4 +122,4 @@ main () {
     esac
 }
 
-main
+main "${@}"

@@ -6,6 +6,11 @@
 # Contributors: Murtaza Udaipurwala
 #               HostGrady
 
+# Set with the flags "-e", "-u","-o pipefail" cause the script to fail
+# if certain things happen, which is a good thing.  Otherwise, we can
+# get hidden bugs that are hard to discover.
+set -euo pipefail
+
 packageList="$HOME/.cache/packageList"
 
 refresh(){
@@ -24,7 +29,7 @@ install(){
     refresh
     package=$(dmenu -i -l 30 -p "Package to install" < "$packageList") || exit
     confirm "Install this package?"
-    $TERMINAL -e sudo pacman -S --noconfirm $(echo "$package" | cut -d'=' -f1)
+    $TERMINAL -e sudo pacman -S --noconfirm "$(echo "$package" | cut -d'=' -f1)"
 }
 
 remove(){
@@ -40,7 +45,7 @@ update(){
 
 cleanUp(){
     [ "$(pacman -Qdtq)" = "" ] && exit
-    $TERMINAL -e sudo pacman -Rns --noconfirm $(pacman -Qdtq)
+    $TERMINAL -e sudo pacman -Rns --noconfirm "$(pacman -Qdtq)"
 }
 
 menu(){

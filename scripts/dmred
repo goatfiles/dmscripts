@@ -8,30 +8,35 @@
 # Contributors: Derek Taylor
 #               HostGrady
 
+# Set with the flags "-e", "-u","-o pipefail" cause the script to fail
+# if certain things happen, which is a good thing.  Otherwise, we can
+# get hidden bugs that are hard to discover.
+set -euo pipefail
+
 # Defining our config location
 DMCONFIG="$HOME/.config/dmscripts/dmred"
 if [ -f "$DMCONFIG" ]; then 
 # No issues should arrise since it won't even be sourced if the file doesn't exist
 # shellcheck disable=SC1090	
-	source "$DMCONFIG"
+  source "$DMCONFIG"
 else
 # List of subreddits
-	declare -a subreddit_list=(
-	"r/archlinux"
-	"r/bash"
-	"r/commandline"
-	"r/emacs"
-	"r/freesoftware"
-	"r/linux"
-	"r/linux4noobs"
-	"r/linuxmasterrace"
-	"r/linuxquestions"
-	"r/suckless"
-	"r/Ubuntu"
-	"r/unixporn"
-	"r/vim"
-	"Quit"
-	)
+  declare -a subreddit_list=(
+  "r/archlinux"
+  "r/bash"
+  "r/commandline"
+  "r/emacs"
+  "r/freesoftware"
+  "r/linux"
+  "r/linux4noobs"
+  "r/linuxmasterrace"
+  "r/linuxquestions"
+  "r/suckless"
+  "r/Ubuntu"
+  "r/unixporn"
+  "r/vim"
+  "Quit"
+  )
 fi
 # Picking a subreddit from the above subreddit_list.
 while [ -z "$subreddit" ]; do

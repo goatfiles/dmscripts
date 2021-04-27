@@ -8,16 +8,26 @@
 # Contributors: Derek Taylor, 
 #               Simon Ingelsson
 
+# Set with the flags "-e", "-u","-o pipefail" cause the script to fail
+# if certain things happen, which is a good thing.  Otherwise, we can
+# get hidden bugs that are hard to discover.
+set -euo pipefail
+
+DMCONFIG="${HOME}/.config/dmscripts/dmconf"
+# No issues should arrise since it won't even be sourced if the file doesn't exist
+# shellcheck disable=SC1090	
+[ -f "${DMCONFIG}" ] && source "${DMCONFIG}"
 # Define LOCKER in .xprofile to set to different LOCKER program
+
 : "${LOCKER:=slock}"
 
 # use notify-send if run in dumb term
+# TODO: add abillity to control from config.
 OUTPUT="echo"
 if [[ ${TERM} == 'dumb' ]]; then
     OUTPUT="notify-send"
 fi
 export OUTPUT
-
 
 # look up what managers are used (makes it more dynamic)
 declare -a MANAGERS
@@ -25,8 +35,6 @@ while IFS= read -r manager
 do
     MANAGERS+=("${manager,,}")
 done < <(grep 'Name' /usr/share/xsessions/*.desktop | awk -F"=" '{print $2}')
-
-
 
 # An array of options to choose.
 declare -a options=(
@@ -38,16 +46,13 @@ declare -a options=(
 "Quit"
 )
 
-
 output(){
     ${OUTPUT} "dmlogout" "$@"
 }
 
-
 # Piping the above array into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
 choice=$(printf '%s\n' "${options[@]}" | dmenu -i -p 'Shutdown menu:' "${@}")
-
 
 # What to do when/if we choose one of the options.
 case $choice in

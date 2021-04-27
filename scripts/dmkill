@@ -7,6 +7,11 @@
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
 
+# Set with the flags "-e", "-u","-o pipefail" cause the script to fail
+# if certain things happen, which is a good thing.  Otherwise, we can
+# get hidden bugs that are hard to discover.
+set -euo pipefail
+
 # Running ps to get running processes and display in dmenu.
 selected="$(ps --user "$(id -u)" -F | \
             dmenu -i -l 20 -p "Search for process to kill:" "$@" | \

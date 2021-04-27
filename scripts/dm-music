@@ -38,6 +38,10 @@
 #        format	"44100:16:2"
 # }
 
+# Set with the flags "-e", "-u","-o pipefail" cause the script to fail
+# if certain things happen, which is a good thing.  Otherwise, we can
+# get hidden bugs that are hard to discover.
+set -euo pipefail
 
 help(){
     printf "Run dm-music without any arguments for all available music\n
@@ -67,16 +71,16 @@ queuePlaylist(){
     mpc -q clear
     mpc load "$playlist"
     mpc -q play 1
-    echo "$playlist" > "$HOME/.cache/current_playlist"
+    echo "$playlist" > "${HOME}/.cache/current_playlist"
 }
 
 currentPlaylist(){
-    playlist="$(cat $HOME/.cache/current_playlist)"
-    music_list="$(mpc playlist "$playlist")"
-    music="$(echo "$music_list" | dmenu -i -l 10 -p "Music to play")" || exit
+    playlist="$(cat "${HOME}/.cache/current_playlist")"
+    music_list="$(mpc playlist "${playlist}")"
+    music="$(echo "${music_list}" | dmenu -i -l 10 -p "Music to play")" || exit
     mpc -q clear
-    mpc load "$playlist" > /dev/null 2>&1
-    mpc play "$(echo "$music_list" | awk -v pattern="$music" '$0 ~ pattern { print NR; exit }')"
+    mpc load "${playlist}" > /dev/null 2>&1
+    mpc play "$(echo "${music_list}" | awk -v pattern="$music" '$0 ~ pattern { print NR; exit }')"
 }
 
 noOpt=1

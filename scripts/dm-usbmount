@@ -5,12 +5,17 @@
 # Dependencies : dmenu, udisks2
 # Author: Murtaza Udaipurwala
 
+# Set with the flags "-e", "-u","-o pipefail" cause the script to fail
+# if certain things happen, which is a good thing.  Otherwise, we can
+# get hidden bugs that are hard to discover.
+set -euo pipefail
+
 help(){
-    printf "dm-usbmount [options]\n
+    printf 'dm-usbmount [options]\n
     -h\tDisplays this help menu
     -m\tMount usb drive
     -u\tUnmount usb drive\n
-    Drives are mounted at /run/media\n"
+    Drives are mounted at /run/media\n'
 }
 
 driveCount(){
@@ -38,8 +43,12 @@ mount(){
     driveCount "$mountable"
     [ "$count" = "1" ] && options="$mountable" || options="$mountable\nall"
 
-    chosen="$(printf "$options" | dmenu -i -p "Drive to mount?")" || exit
-    [ "$chosen" = "all" ] && mountAll || udisksctl mount -b "${chosen%% *}"
+    chosen="$(printf '%s' "$options" | dmenu -i -p "Drive to mount?")" || exit
+    if [ "$chosen" = "all" ]; then
+       mountAll 
+    else 
+        udisksctl mount -b "${chosen%% *}"
+    fi
 }
 
 unmount(){
@@ -49,8 +58,12 @@ unmount(){
     driveCount "$mounted"
     [ "$count" = "1" ] && options="$mounted" || options="$mounted\nall"
 
-    chosen="$(printf "$options" | dmenu -i -p "Drive to unmount?")"
-    [ "$chosen" = "all" ] && unmountAll || udisksctl unmount -b "$chosen"
+    chosen="$(printf '%s' "${options}" | dmenu -i -p "Drive to unmount?")"
+    if [ "$chosen" = "all" ] ; then 
+       unmountAll 
+   else
+       udisksctl unmount -b "$chosen"
+    fi
 }
 
 while getopts "hmu" arg 2>/dev/null; do
@@ -58,6 +71,6 @@ while getopts "hmu" arg 2>/dev/null; do
         h) help ;;
         m) mount ;;
         u) unmount ;;
-        *) echo "invalid option\nType dm-usbmount -h for help" ;;
+        *) printf "invalid option\nType dm-usbmount -h for help" ;;
     esac
 done
