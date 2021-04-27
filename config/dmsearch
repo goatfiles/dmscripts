@@ -14,7 +14,7 @@ declare -A options
 # Search Engines
 options[bing]="https://www.bing.com/search?q="
 options[duckduckgo]="https://duckduckgo.com/?q="
-options[gemini search \(https\)]="https://portal.mozz.us/gemini/geminispace.info/search%3"
+options[gemini search \(https\)]="https://portal.mozz.us/gemini/geminispace.info/search%3F"
 options[google]="https://www.google.com/search?q="
 options[qwant]="https://www.qwant.com/?q="
 options[swisscows]="https://swisscows.com/web?query="
