@@ -36,7 +36,7 @@ For example, to disable the SC2154 warning about referencing http_proxy:
     # shellcheck disable=SC2154
     echo "proxy=$http_proxy" | ...
 
-Also, please use consistent indentation, preferably four spaces rather than tabs.  
+Also, please use consistent indentation, preferably TWO spaces rather than tabs.  
 
 Contributors are asked to look at our [TODO list](TODO.md) as we would like to ensure all scripts are stable and secure.
 
