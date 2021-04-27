@@ -13,6 +13,8 @@
 #   Example: `DMEDITOR="alacritty -e nvim" ./dmconf`
 DMCONFIG="$HOME/.config/dmscripts/dmconf"
 if [ -f "$DMCONFIG" ]; then
+# No issues should arrise since it won't even be sourced if the file doesn't exist
+# shellcheck disable=SC1090	
 	source "$DMCONFIG"
 else
 	: "${DMEDITOR:=emacsclient -c -a emacs}"

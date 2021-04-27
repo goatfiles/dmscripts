@@ -11,6 +11,8 @@
 # Defining our config location
 DMCONFIG="$HOME/.config/dmscripts/dmred"
 if [ -f "$DMCONFIG" ]; then 
+# No issues should arrise since it won't even be sourced if the file doesn't exist
+# shellcheck disable=SC1090	
 	source "$DMCONFIG"
 else
 # List of subreddits
