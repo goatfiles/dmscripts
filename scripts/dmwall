@@ -23,11 +23,17 @@
 
 # Note this script is posix compliant
 
+DMCONFIG="${HOME}/.config/dmscripts/dmconf"
+# No issues should arrise since it won't even be sourced if the file doesn't exist
+# shellcheck disable=SC1090	
+[ -f "${DMCONFIG}" ] && source "${DMCONFIG}"
 
-# Specify location of your wallpapers directory
-location="${HOME}/pix/wallpapers/"
 
-help(){
+# Default if no config-file
+: "${DMWALLPAPERDIR:=${HOME}/Pictures/Wallpapers}"
+
+
+help() {
     printf '
     ## Usage
     run dmwall without any argument to select a wallpaper from %s\n
@@ -36,36 +42,36 @@ help(){
     -d\tdraws the wallpaper at startx. Add "dmwall -d" in your xinitrc
     -r\trandomly selects a wallpaper
     -i\tGo insane
-' "${location}"
+' "${DMWALLPAPERDIR}"
 }
 
-change(){
+change() {
     xwallpaper --stretch "$1" 2>/dev/null
 }
 
-shuffle(){
-    wallpaper=$(ls "$location" | shuf -n 1)
-    echo "$location/$wallpaper"
+shuffle() {
+    wallpaper=$(find "${DMWALLPAPERDIR}" -type f | shuf -n 1)
+    echo "${DMWALLPAPERDIR}/$wallpaper"
 }
 
-setbg(){
-    wallpaper="$(sxiv -t -o "$location")"
+setbg() {
+    wallpaper="$(sxiv -t -o "${DMWALLPAPERDIR}")"
     echo "$wallpaper" > "$HOME"/.cache/wall
     change "$wallpaper"
 }
 
 # draw the wallpaper at startx
-draw(){
+draw() {
     change "$(cat "$HOME"/.cache/wall)"
 }
 
-random(){
+random() {
     wallpaper=$(shuffle)
     echo "$wallpaper" > "$HOME"/.cache/wall
     change "$wallpaper"
 }
 
-goInsane(){
+goInsane() {
     while true; do
         wallpaper=$(shuffle)
         change "$wallpaper"
@@ -74,7 +80,7 @@ goInsane(){
 }
 
 # dmenu menu
-menu(){
+menu() {
 #    options="set background\nrandom\ngo insane"
     input=$(printf "set background\nrandom\ngo insane" | dmenu -i -l 3) || exit
     case "$input" in

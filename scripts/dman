@@ -8,6 +8,12 @@
 # Contributors: Derek Taylor
 
 # Defining the terminal emulator to use.
+DMCONFIG="${HOME}/.config/dmscripts/dmconf"
+# No issues should arrise since it won't even be sourced if the file doesn't exist
+# shellcheck disable=SC1090	
+[ -f "${DMCONFIG}" ] && source "${DMCONFIG}"
+
+# Default if no config-file
 : "${TERMINAL:=st}"
 : "${DMTERM:=${TERMINAL} -e}"
 

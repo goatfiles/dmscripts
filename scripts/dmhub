@@ -7,8 +7,15 @@
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: n-e0
 
+DMCONFIG="${HOME}/.config/dmscripts/dmconf"
+# No issues should arrise since it won't even be sourced if the file doesn't exist
+# shellcheck disable=SC1090	
+[ -f "${DMCONFIG}" ] && source "${DMCONFIG}"
+
+# FIX: Don't hardcode paths
 path="Git-repos/dmscripts"
 
+# TODO: Generate this list
 declare -A options
     options[dman]="$HOME/$path/dman"
     options[dcolors]="$HOME/$path/dcolors"
