@@ -13,21 +13,21 @@
 # get hidden bugs that are hard to discover.
 set -euo pipefail
 
-DMCONFIG="${HOME}/.config/dmscripts/dmconf"
+config="${HOME}/.config/dmscripts/dmconf"
 # No issues should arrise since it won't even be sourced if the file doesn't exist
 # shellcheck disable=SC1090	
-[ -f "${DMCONFIG}" ] && source "${DMCONFIG}"
+[ -f "${config}" ] && source "${config}"
 # Define LOCKER in .xprofile to set to different LOCKER program
 
 : "${LOCKER:=slock}"
 
 # use notify-send if run in dumb term
 # TODO: add abillity to control from config.
-OUTPUT="echo"
+_out="echo"
 if [[ ${TERM} == 'dumb' ]]; then
-    OUTPUT="notify-send"
+    _out="notify-send"
 fi
-export OUTPUT
+export _out
 
 # look up what managers are used (makes it more dynamic)
 declare -a MANAGERS
@@ -46,8 +46,8 @@ declare -a options=(
 "Quit"
 )
 
-output(){
-    ${OUTPUT} "dmlogout" "$@"
+_out(){
+    ${_out} "dmlogout" "$@"
 }
 
 # Piping the above array into dmenu.
