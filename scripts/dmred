@@ -14,10 +14,10 @@
 set -euo pipefail
 
 # Defining our config location
-DMCONFIG="$HOME/.config/dmscripts/config"
+config="$HOME/.config/dmscripts/config"
 # No issues should arrise since it won't even be sourced if the file doesn't exist
 # shellcheck disable=SC1090
-[ -f "$DMCONFIG" ] && source "$DMCONFIG"
+[ -f "$config" ] && source "$config"
 
 if [[ ! "$(declare -p subreddit_list 2>/dev/null)" == "declare -A"* ]] ; then 
   # List of subreddits

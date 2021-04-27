@@ -22,7 +22,7 @@ config="$HOME/.config/dmscripts/config"
 # If not, the script has sample urls and a sample browser
 # No issues should arrise since it won't even be sourced if the file doesn't exist
 # shellcheck disable=SC1090	
-[[ -f "${config}" ]] && source "$DMCONFIG" 
+[[ -f "${config}" ]] && source "$config" 
 
 # Defining our web browser, by default we are using brave.
   : "${DMBROWSER:=brave}"

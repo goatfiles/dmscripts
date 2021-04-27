@@ -17,10 +17,10 @@
 # get hidden bugs that are hard to discover.
 set -euo pipefail
 
-DMCONFIG="$HOME/.config/dmscripts/dmconf"
+config="$HOME/.config/dmscripts/config"
 # No issues should arrise since it won't even be sourced if the file doesn't exist
-# shellcheck disable=SC1090	
-[[ -f "$DMCONFIG" ]] && source "$DMCONFIG"
+# shellcheck disable=SC1090
+[[ -f "$config" ]] && source "$config"
 
 : "${DMEDITOR:=emacsclient -c -a emacs}"
 

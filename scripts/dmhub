@@ -12,10 +12,10 @@
 # get hidden bugs that are hard to discover.
 set -euo pipefail
 
-DMCONFIG="${HOME}/.config/dmscripts/config"
+config="${HOME}/.config/dmscripts/config"
 # No issues should arrise since it won't even be sourced if the file doesn't exist
 # shellcheck disable=SC1090	
-[[ -f "${DMCONFIG}" ]] && source "${DMCONFIG}"
+[[ -f "${config}" ]] && source "${config}"
 
 # FIX: Don't hardcode paths
 path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd "$(dirname "$(readlink "${BASH_SOURCE[0]}" || echo ".")")" && pwd)"
