@@ -6,7 +6,7 @@
 - [ ] Sane configuration
 	- [ ] Local configs 
 	- [x] /etc/profile 
-	- [ ] Global config file
+	- [X] Global config file
 - [x] Documentation 
 	- [x] Write man page
 	- [ ] Improve README.md

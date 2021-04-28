@@ -19,6 +19,7 @@ The scripts included in this repo are:
 + dm-music - Dmenu as your music player
 
 # Contributing
+
 This is a collection of dmenu scripts that I have found useful in my day-to-day activities as a desktop Linux user.  Although initially this was just for my personal scripts, this project is now open to the community.  If you would like to contribute your own scripts or improve any existing scripts, I would be happy to review your merge requests.  All scripts submitted should meet the following guidelines:
 
 Scripts should be written in Bash and use the following shebang line:
@@ -36,9 +37,11 @@ For example, to disable the SC2154 warning about referencing http_proxy:
     # shellcheck disable=SC2154
     echo "proxy=$http_proxy" | ...
 
-Also, please use consistent indentation, preferably TWO spaces rather than tabs.  
+Please use consistent indentation, preferably TWO spaces rather than tabs.  
 
-Contributors are asked to look at our [TODO list](TODO.md) as we would like to ensure all scripts are stable and secure.
+If you understand org or troff syntax, we ask that you add to the man page your script's name and a brief description of what it does.
+
+Finally, contributors are asked to look at our [TODO list](TODO.md) as well as the [issues page](https://gitlab.com/dwt1/dmscripts/-/issues) since we would like to ensure all scripts are stable and secure.
 
 # Dependencies
 
@@ -86,19 +89,23 @@ Or:
 # Configuration
 
 Currently, configuration can be done in a few ways:
-+ Via the proper config files (recommended)
++ Via the global config file (Recommended)
+	+ Maintenance
 + Via /etc/profile
 + Via editing the source code (not recommended)
+	+ Changing the Config Location
 
-## Config files
+## The Global Config
 
-Currently the config files are not installed by default so in order to correctly install them, you need to move or copy them to the appropriate directory. Run the following commands:
+Currently the config file is not installed by default so in order to correctly install it, you need to move or copy it to the appropriate directory. Assuming you have the source code, run the following command:
 
-	git clone https://gitlab.com/dwt1/dmscripts.git
-	cd dmscripts
 	cp -riv config/ "$HOME"/.config/dmscripts
 
-The config files are bash scripts however they are very simple to understand and several comments are left which explains what everything in the config files do. If you are still confused, a general word of advice that you should just copy one of the lines in the config and modify it to see what it does.
+The config file is a bash script however it is very simple to understand and several comments are left which explains what everything in the config file does. If you are still confused, a general word of advice that you should just copy one of the lines in the config and modify it to see what it does.
+
+### Maintenance
+
+As we are currently adding a lot of scripts to the repository and making patches very regularly, the advice is to check up on the repo's sample config every few days and make the appropriate changes. This is especially true if you are also installing new scripts as they get added.
 
 ## /etc/profile
 
@@ -114,3 +121,17 @@ You can, of course, replace the variables with whatever you prefer. It's also wo
 ## Editing the Source Code
 
 Being a free/libre software project, you may make modifications to the source code to fit your needs. If you need a reference, look at the config files and variables in /etc/profile for a general idea on what to look for in the source code. Please submit patches and merge requests if you see any bugs or improve the source code while you are there.
+
+### Changing the Config Location
+
+If you dislike our naming scheme, find this line:
+
+	config="$HOME/.config/dmscripts/config"
+
+and replace it with this line:
+
+	config="$HOME/path/to/config"
+
+You will have to do this manually for each script you wish to change.
+
+This can also be done to segregate config files if you prefer that for whatever reason.

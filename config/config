@@ -2,7 +2,7 @@
 # shellcheck disable=SC2034
 # This issue is ignored because it is part of a larger file that calls upon all variables listed
 
-# Defining the editor, simply replace the emacsclient command with your editor of preferance
+# Defined variables, modify anything in quotes to your prefered software
 DMEDITOR="emacsclient -c -a emacs"
 DMBROWSER="brave"
 DMBROWSER_SHOW=1
@@ -14,6 +14,9 @@ LOCKER='slock'
 NOTIFIER='notify-send'
 
 DMHUB_DIR="${HOME}/git"
+
+# dmconf config
+
 # An array of options to choose.
 # You can edit this list to add/remove config files.
 declare -A options
@@ -58,6 +61,8 @@ options[xinitrc]="$HOME/.xinitrc"
 options[xresources]="$HOME/.Xresources"
 options[zsh]="$HOME/.zshrc"
 
+# dmred config
+
 # Ensure you have a quit option at the bottom
 declare -a subreddit_list=(
 "r/archlinux"
@@ -76,8 +81,8 @@ declare -a subreddit_list=(
 "Quit"
 )
 
+# Search engine config 
 
-# Declare Search Engines
 declare -A options
 # Syntax:
 # options[name]="https://www.example.com/search?q="
@@ -118,9 +123,8 @@ options[sourceforge]="https://sourceforge.net/directory/?q="
 options[stackoverflow]="https://stackoverflow.com/search?q="
 # Etc
 
+# dmcolors config
 
-
-# dmcolors
 declare -A colors
 colors[black]="#282a36"
 colors[red]="#ff5555"
