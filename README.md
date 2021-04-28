@@ -97,7 +97,7 @@ Currently, configuration can be done in a few ways:
 
 ## The Global Config
 
-Currently the config file is not installed by default so in order to correctly install them, you need to move or copy it to the appropriate directory. Assuming you have the source code, run the following command:
+Currently the config file is not installed by default so in order to correctly install it, you need to move or copy it to the appropriate directory. Assuming you have the source code, run the following command:
 
 	cp -riv config/ "$HOME"/.config/dmscripts
 
