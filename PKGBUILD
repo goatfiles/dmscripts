@@ -1,7 +1,7 @@
 # Maintainer: Derek Taylor (DistroTube) <derek@distrotube.com>
 pkgname=dmscripts-git
 _pkgname=dmscripts
-pkgver=1.0.r177.cec16c4
+pkgver=1.0.r179.4132817
 pkgrel=1
 pkgdesc="A collection of dmenu scripts"
 arch=('any')
@@ -9,7 +9,7 @@ url="https://gitlab.com/dwt1/dmscripts.git"
 license=('GPL3')
 depends=(dmenu ffmpeg findutils xclip xdotool xorg-xrandr )
 groups=()
-makedepends=()
+makedepends=(pandoc)
 checkdepends=()
 optdepends=(
   'emacs: editor for dmconf '
@@ -41,14 +41,23 @@ pkgver() {
 }
 
 
+build() {
+  cd "${_pkgname}"
+  ls -la
+  pwd
+  DESTDIR="$pkgdir/" make build
+}
+
+
 package() {
   cd ${_pkgname}
-  # Make sure to install all scripts
-  for script in $(echo scripts/*); do 
-    install -Dm755 ${script} -t "${pkgdir}/usr/bin"
-  done
-  install -Dm644 man/dmscripts.1 "${pkgdir}/usr/local/man/man1/dmscripts.1"  
-  install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-  install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
+  DESTDIR="$pkgdir/" make install
+  # # Make sure to install all scripts
+  # for script in $(echo scripts/*); do 
+  #   install -Dm755 ${script} -t "${pkgdir}/usr/bin"
+  # done
+  # install -Dm644 man/dmscripts.1 "${pkgdir}/usr/local/man/man1/dmscripts.1"  
+  # install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  # install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
 }
 

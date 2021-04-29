@@ -1,7 +1,8 @@
 # VARIABLES
 SHELL = /bin/sh
+NAME = dmscripts
 
-prefix = /usr/local
+prefix = /usr
 datarootdir = $(prefix)/share
 datadir = $(datarootdir)
 exec_prefix = $(prefix)
@@ -11,7 +12,10 @@ mandir = $(datarootdir)/man
 
 SCRIPTS := $(wildcard ./scripts/*)
 
-build:
+clean:
+	@rm man/dmscripts.1.gz
+
+build: 
 	@pandoc -s -t man man/man.org -o man/dmscripts.1
 	gzip man/dmscripts.1
 
@@ -21,10 +25,14 @@ install:
 	@echo $(infodir)
 	@echo $(mandir)
 	@echo $(bindir)
-	# install -Dm755 ${script} -t "$DESTDIR"
-	# install -Dm 775 $(SCRIPTS) -t $(bindir)
+	
+	install -Dm 775 $(SCRIPTS) -t $(bindir)
 
 	install -Dm 664 man/dmscripts.1.gz $(mandir)/man1
+	mandb
+
+	install -Dm644 LICENSE "$(datarootdir)/licenses/$(NAME)/LICENSE"
+	install -Dm644 README.md "$(datarootdir)/doc/$(NAME)/README.md"
 
 
 
