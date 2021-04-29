@@ -34,6 +34,8 @@ A reddit viewer using dmenu, still a work in progress.
 A GUI to maim using dmenu.
 ** dmsearch
 Web searching utility using dmenu.
+** dmsounds
+Choose a ambient background sound to play.
 ** dm-usbmount
 USB mounting done suckless, no need for bloated daemons. 
 ** dmwall
