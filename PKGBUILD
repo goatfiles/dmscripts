@@ -43,6 +43,7 @@ pkgver() {
 
 build() {
   cd "${_pkgname}"
+  make clean
   DESTDIR="$pkgdir/" make build
 }
 
