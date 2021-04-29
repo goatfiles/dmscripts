@@ -24,13 +24,19 @@ path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd "$(dirname "$(readlink "${BASH
 # TODO: Generate this list
 declare -A options
     options[dman]="$path/dman"
-    options[dcolors]="$path/dcolors"
+    options[dmcolors]="$path/dmcolors"
+    options[dmconf]="$path/dmconf"
     options[dmkill]="$path/dmkill"
     options[dmlogout]="$path/dmlogout"
     options[dmqute]="$path/dmqute"
     options[dmred]="$path/dmred"
     options[dmscrot]="$path/dmscrot"
     options[dmsearch]="$path/dmsearch"
+    options[dmsounds]="$path/dmsounds"
+    options[dmwall]="$path/dmwall"
+    options[dm-music]="$path/dm-music"
+    options[dm-pacman]="$path/dm-pacman"
+    options[dm-usbmount]="$path/dm-usbmount"
 
 declare -A options_clean
     for i in "${!options[@]}"; do
