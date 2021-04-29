@@ -17,8 +17,11 @@
 set -euo pipefail
 
 # The directory where the sound files are located.
-soundDir=$HOME/dmscripts/config/dmsounds
-
+soundDir="${HOME}/.config/dmscripts/dmsounds"
+config="${HOME}/.config/dmscripts/config"
+# No issues should arrise, so it is disabled
+# shellcheck disable=SC1090
+[ -f "${config}" ] && source "${config}" 
 # Produces a listing of the sound files.
 soundFiles=$(/bin/ls -1 "$soundDir" | grep -E ".mp3|.m4a|.ogg")
 
