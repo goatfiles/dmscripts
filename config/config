@@ -12,8 +12,8 @@ SCROTDIR="${HOME}/Screenshots"
 DMWALLPAPERDIR="${HOME}/Pictures/Wallpapers"
 LOCKER='slock'
 NOTIFIER='notify-send'
-
 DMHUB_DIR="${HOME}/git"
+soundDir="${HOME}/.config/dmscripts/dmsounds"
 
 # dmconf config
 
