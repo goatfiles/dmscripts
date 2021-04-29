@@ -37,33 +37,31 @@ declare -a soundList=$soundFiles
 # We use "printf '%s\n'" to format the array one item to a line.
 choice=$(printf '%s\n' "${options[@]}" | dmenu -i -p 'Ambient sounds:' "${@}")
 
-# If user chooses a sound file.
 if [ "$choice" == "Choose sound file" ]; then
   # Piping the soundList array into dmenu.
   # We use "printf '%s\n'" to format the array one item to a line.
   choice=$(printf '%s\n' "${soundList[@]}" | sort | dmenu -i -l 20 -p 'Choose sound file:' "$@")
-
-  # Kill mpv is already playing a sound file.
-  killall ffplay || echo "ffplay was not running."
-
+  # Kill PID saved in cache file.
+  kill "$(cat "$HOME/.cache/dmsounds")" || echo "ffplay was not running."
   # Play the chosen sound file.
-  ffplay -nodisp -loop 0 "$soundDir/$choice" || exit
+  ffplay -nodisp -loop 0 "$soundDir/$choice" &
+  # Get PID for the above command and write to cache.
+  _pid=$!
+  echo "$_pid" > "$HOME/.cache/dmsounds"
 
-# If user chooses to play a random sound.
 elif [ "$choice" == "Play random sound" ]; then
   getRand=$(printf '%s\n' "${soundList[@]}" | shuf -n 1)
-
-  # Kill mpv is already playing a sound file.
-  killall ffplay || echo "ffplay was not running."
-
+  # Kill PID saved in cache file.
+  kill "$(cat "$HOME/.cache/dmsounds")" || echo "ffplay was not running."
   # Play random sound file.
-  ffplay -nodisp -loop 0 "$soundDir/$getRand" || exit
+  ffplay -nodisp -loop 0 "$soundDir/$getRand" &
+  # Get PID for the above command and write to cache.
+  _pid=$!
+  echo "$_pid" > "$HOME/.cache/dmsounds"
 
-# If user chooses to stop sound playing.
 elif [ "$choice" == "Stop sound player" ]; then
-  killall ffplay
+  kill "$(cat "$HOME/.cache/dmsounds")" || echo "ffplay was not running."
 
-# What to do if we just escape without choosing anything.
 else
   echo "Program terminated." && exit 0
 fi
