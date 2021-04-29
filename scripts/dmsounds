@@ -42,12 +42,22 @@ if [ "$choice" == "Choose sound file" ]; then
   # Piping the soundList array into dmenu.
   # We use "printf '%s\n'" to format the array one item to a line.
   choice=$(printf '%s\n' "${soundList[@]}" | sort | dmenu -i -l 20 -p 'Choose sound file:' "$@")
-  killall mpv && mpv --loop "$soundDir/$choice" || exit
+
+  # Kill mpv is already playing a sound file.
+  ps -ef | grep mpv | grep -v grep | awk '{print $2}' | xargs kill
+
+  # Play the chosen sound file.
+  mpv --loop "$soundDir/$choice" || exit
 
 # If user chooses to play a random sound.
 elif [ "$choice" == "Play random sound" ]; then
   getRand=$(printf '%s\n' "${soundList[@]}" | shuf -n 1)
-  killall mpv && mpv --loop "$soundDir/$getRand" || exit
+
+  # Kill mpv is already playing a sound file.
+  ps -ef | grep mpv | grep -v grep | awk '{print $2}' | xargs kill
+
+  # Play random sound file.
+  mpv --loop "$soundDir/$getRand" || exit
 
 # If user chooses to stop sound playing.
 elif [ "$choice" == "Stop sound player" ]; then
