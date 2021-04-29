@@ -2,37 +2,26 @@
 SHELL = /bin/sh
 NAME = dmscripts
 
-prefix = /usr
-datarootdir = $(prefix)/share
-datadir = $(datarootdir)
-exec_prefix = $(prefix)
-bindir = $(exec_prefix)/bin
-infodir = $(datarootdir)/info
-mandir = $(datarootdir)/man
-
+PREFIX=/usr
 SCRIPTS := $(wildcard ./scripts/*)
 
-clean:
-	@rm man/dmscripts.1.gz
 
 build: 
 	@pandoc -s -t man man/man.org -o man/dmscripts.1
 	gzip man/dmscripts.1
 
-
 install:
-	@echo $(prefix)
-	@echo $(infodir)
-	@echo $(mandir)
-	@echo $(bindir)
-	
-	install -Dm 775 $(SCRIPTS) -t $(bindir)
+	echo $(DESTDIR)$(PREFIX)
+	# install -Dm 775 $(SCRIPTS) -t $(DESTDIR)$(PREFIX)/bin/
+	# install -Dm 644 man/dmscripts.1.gz $(DESTDIR)$(MANPREFIX)/man1/dmscripts.1.gz
+	# install -Dm644 LICENSE "$(DESTDIR)$(PREFIX)/licenses/$(NAME)/LICENSE"
+	# mandb
 
-	install -Dm 664 man/dmscripts.1.gz $(mandir)/man1
-	mandb
 
-	install -Dm644 LICENSE "$(datarootdir)/licenses/$(NAME)/LICENSE"
-	install -Dm644 README.md "$(datarootdir)/doc/$(NAME)/README.md"
 
+clean:
+	@rm man/dmscripts.1.gz
+
+.PHONY: clean build install
 
 

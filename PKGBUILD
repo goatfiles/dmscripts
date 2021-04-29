@@ -9,7 +9,7 @@ url="https://gitlab.com/dwt1/dmscripts.git"
 license=('GPL3')
 depends=(dmenu ffmpeg findutils xclip xdotool xorg-xrandr )
 groups=()
-makedepends=(pandoc)
+makedepends=(pandoc git)
 checkdepends=()
 optdepends=(
   'emacs: editor for dmconf '
@@ -51,6 +51,7 @@ build() {
 
 package() {
   cd ${_pkgname}
+  echo ${pkgdir}
   DESTDIR="$pkgdir/" make install
   # # Make sure to install all scripts
   # for script in $(echo scripts/*); do 
