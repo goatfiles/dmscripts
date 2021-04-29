@@ -20,7 +20,7 @@ set -euo pipefail
 soundDir=$HOME/dmscripts/config/dmsounds
 
 # Produces a listing of the sound files.
-soundFiles=$(/bin/ls -1 "$soundDir" | grep ".mp3")
+soundFiles=$(/bin/ls -1 "$soundDir" | grep -E ".mp3|.m4a|.ogg")
 
 # An array of options to choose.
 declare -a options=(
