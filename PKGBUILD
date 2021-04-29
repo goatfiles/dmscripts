@@ -43,15 +43,12 @@ pkgver() {
 
 build() {
   cd "${_pkgname}"
-  ls -la
-  pwd
   DESTDIR="$pkgdir/" make build
 }
 
 
 package() {
   cd ${_pkgname}
-  echo ${pkgdir}
   DESTDIR="$pkgdir/" make install
   # # Make sure to install all scripts
   # for script in $(echo scripts/*); do 
