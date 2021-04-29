@@ -6,13 +6,14 @@ The scripts included in this repo are:
 + dm-setup - Downloads dependencies and makes the scripts executable.
 + dmhub - A hub from where you can run all the scripts from.
 + dman - Search for a manpage or get a random one.
++ dmcolors - Copy a color's hex value to your clipboard
 + dmconf - Choose from a list of configuration files to edit.
-+ dmlogout - Logout, shutdown, reboot or lock screen.
 + dmkill - Search for a process to kill.
++ dmlogout - Logout, shutdown, reboot or lock screen.
 + dmqute - Search your qutebrowser bookmarks, quickmarks and history urls.
 + dmred - Dmenu as a reddit viewer using reddio. *STILL A WORK IN PROGRESS*
 + dmsearch - Search various search engines (inspired by surfraw).
-+ dmcolors - Copy a color's hex value to your clipboard
++ dmsounds - Choose an ambient background to play.
 + dmwall - A wallpaper setting utility using dmenu, xwallpaper and sxiv
 + dm-pacman - A software store using dmenu
 + dm-usbmount - mount/unmount usb drives using dmenu. No fancy daemon required
