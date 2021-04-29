@@ -2,7 +2,7 @@
 #
 # Script name: dmsounds
 # Description: Choose a ambient background sound to play
-# Dependencies: dmenu, mpv
+# Dependencies: dmenu, ffmpeg
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
@@ -44,24 +44,24 @@ if [ "$choice" == "Choose sound file" ]; then
   choice=$(printf '%s\n' "${soundList[@]}" | sort | dmenu -i -l 20 -p 'Choose sound file:' "$@")
 
   # Kill mpv is already playing a sound file.
-  killall mpv || echo "mpv was not running."
+  killall ffplay || echo "ffplay was not running."
 
   # Play the chosen sound file.
-  mpv --loop "$soundDir/$choice" || exit
+  ffplay -nodisp -loop 0 "$soundDir/$choice" || exit
 
 # If user chooses to play a random sound.
 elif [ "$choice" == "Play random sound" ]; then
   getRand=$(printf '%s\n' "${soundList[@]}" | shuf -n 1)
 
   # Kill mpv is already playing a sound file.
-  killall mpv || echo "mpv was not running."
+  killall ffplay || echo "ffplay was not running."
 
   # Play random sound file.
-  mpv --loop "$soundDir/$getRand" || exit
+  ffplay -nodisp -loop 0 "$soundDir/$getRand" || exit
 
 # If user chooses to stop sound playing.
 elif [ "$choice" == "Stop sound player" ]; then
-  killall mpv
+  killall ffplay
 
 # What to do if we just escape without choosing anything.
 else
