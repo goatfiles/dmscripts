@@ -15,7 +15,7 @@ install:
 	install -Dm 775 $(SCRIPTS) -t $(DESTDIR)$(PREFIX)/bin/
 	install -Dm 644 man/dmscripts.1.gz $(DESTDIR)$(MANPREFIX)/man1/dmscripts.1.gz
 	install -Dm644 LICENSE "$(DESTDIR)$(PREFIX)/share/licenses/$(NAME)/LICENSE"
-	install -Dm644 README.md "$(DESTDIR)$(PREFIX)/share/doc/${pkgname}/README.md"
+	install -Dm644 README.md "$(DESTDIR)$(PREFIX)/share/doc/$(NAME)/README.md"
 	mandb
 
 

@@ -49,7 +49,7 @@ build() {
 
 package() {
   cd ${_pkgname}
-  DESTDIR="$pkgdir/" make install
+  NAME="${pkgname}" DESTDIR="${pkgdir}/" make install
   # # Make sure to install all scripts
   # for script in $(echo scripts/*); do 
   #   install -Dm755 ${script} -t "${pkgdir}/usr/bin"
