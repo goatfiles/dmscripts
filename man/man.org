@@ -42,6 +42,8 @@ USB mounting done suckless, no need for bloated daemons.
 Using dmenu, setup a wallpaper.
 ** dmyoutube
 Youtube subscriptions without an account or the API tying you down.
+** dmwifi
+Connect to wifi using dmenu.
 
 * USAGE
 ** bash dmhub

@@ -19,6 +19,7 @@ The scripts included in this repo are:
 + dm-usbmount - mount/unmount usb drives using dmenu. No fancy daemon required
 + dm-music - Dmenu as your music player
 + dmyoutube - Youtube subscriptions without an account or the API tying you down.
++ dmwifi - Connect to wifi using dmenu.
 
 # Contributing
 
