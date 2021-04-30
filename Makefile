@@ -10,7 +10,7 @@ build:
 	@$(MAKE) man/dmscripts.1.gz
 	@echo "Done"
 
-man/dmscripts.1.gz: man/man.org
+./man/dmscripts.1.gz: ./man/man.org
 	@pandoc -s -t man man/man.org -o man/dmscripts.1
 	gzip man/dmscripts.1
 
@@ -24,8 +24,8 @@ install:
 	mandb
 
 clean:
-	@[ -f man/dmscripts.1.gz ] && rm man/dmscripts.1.gz || echo "hgej"
-	@echo "Cleanup Completed"
+	$(shell [ -f man/dmscripts.1.gz ] && rm man/dmscripts.1.gz )
+	@echo "done"
 
 .PHONY: clean build install
 
