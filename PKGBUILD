@@ -43,20 +43,12 @@ pkgver() {
 
 build() {
   cd "${_pkgname}"
-  make clean
-  DESTDIR="$pkgdir/" make build
+  DESTDIR="$pkgdir/" make clean build
 }
 
 
 package() {
   cd ${_pkgname}
   NAME="${pkgname}" DESTDIR="${pkgdir}/" make install
-  # # Make sure to install all scripts
-  # for script in $(echo scripts/*); do 
-  #   install -Dm755 ${script} -t "${pkgdir}/usr/bin"
-  # done
-  # install -Dm644 man/dmscripts.1 "${pkgdir}/usr/local/man/man1/dmscripts.1"  
-  # install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-  # install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
 }
 

@@ -7,8 +7,13 @@ SCRIPTS := $(wildcard ./scripts/*)
 
 
 build: 
+	@$(MAKE) man/dmscripts.1.gz
+	@echo "Done"
+
+man/dmscripts.1.gz: man/man.org
 	@pandoc -s -t man man/man.org -o man/dmscripts.1
 	gzip man/dmscripts.1
+
 
 install:
 	install -Dm 775 $(SCRIPTS) -t $(DESTDIR)$(PREFIX)/bin/
@@ -18,10 +23,9 @@ install:
 	# Update man database
 	mandb
 
-
-
 clean:
-	@rm man/dmscripts.1.gz
+	@[ -f man/dmscripts.1.gz ] && rm man/dmscripts.1.gz || echo "hgej"
+	@echo "Cleanup Completed"
 
 .PHONY: clean build install
 
