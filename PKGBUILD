@@ -1,7 +1,7 @@
 # Maintainer: Derek Taylor (DistroTube) <derek@distrotube.com>
 pkgname=dmscripts-git
 _pkgname=dmscripts
-pkgver=1.0.r191.f5fbce1
+pkgver=1.0.r201.dded63c
 pkgrel=1
 pkgdesc="A collection of dmenu scripts"
 arch=('any')
@@ -43,20 +43,12 @@ pkgver() {
 
 build() {
   cd "${_pkgname}"
-  make clean
-  DESTDIR="$pkgdir/" make build
+  DESTDIR="$pkgdir/" make clean build
 }
 
 
 package() {
   cd ${_pkgname}
   NAME="${pkgname}" DESTDIR="${pkgdir}/" make install
-  # # Make sure to install all scripts
-  # for script in $(echo scripts/*); do 
-  #   install -Dm755 ${script} -t "${pkgdir}/usr/bin"
-  # done
-  # install -Dm644 man/dmscripts.1 "${pkgdir}/usr/local/man/man1/dmscripts.1"  
-  # install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-  # install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
 }
 
