@@ -37,6 +37,7 @@ declare -A options
     options[dm-music]="$path/dm-music"
     options[dm-pacman]="$path/dm-pacman"
     options[dm-usbmount]="$path/dm-usbmount"
+    options[dmwifi]="$path/dmwifi"
 
 declare -A options_clean
     for i in "${!options[@]}"; do
