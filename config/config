@@ -123,6 +123,13 @@ options[sourceforge]="https://sourceforge.net/directory/?q="
 options[stackoverflow]="https://stackoverflow.com/search?q="
 # Etc
 
+# dmyoutube config
+
+# Think of these as your "subscribed channels", name the channel in the square brackets then put the channel URL in the quotation marks
+# Syntax: channels[name]="https://www.youtube.com/link/to/channel"
+declare -A channels
+channels[distrotube]="https://www.youtube.com/c/DistroTube/featured"
+
 # dmcolors config
 
 declare -A colors

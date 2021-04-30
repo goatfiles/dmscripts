@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Description: Youtube subscription manager without API access
+# Dependencies: dmenu, curl, a browser (brave by default)
+# Gitlab: https://www.gitlab.com/dwt1/dmscripts
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
+# Contributors: HostGrady
+
+# pipefail setup
+set -euo pipefail
+
+# Define and source the config
+config="${HOME}/.config/dmscripts/config"
+# No issues should arrise as all values needed by the script are called in this script
+# shellcheck disable=SC1090
+[[ -f "${config}" ]] && source "${config}"
+# Define browser, if the variable is in our config it uses the config variable
+: "${DMBROWSER:=brave}"
+# If the array exists in the config, then it uses that array
+if [[ !  "$(declare -p channels 2>/dev/null)" == "declare -A"* ]]; then
+# An array of youtube channels
+# Syntax: channels[name]="https://youtube.com/path/to/channel"
+  declare -A channels
+  channels[distrotube]="https://www.youtube.com/c/DistroTube/featured"
+fi
+
+# Sorts the array and lets you select a channel with dmenu
+choice=$(printf '%s\n' "${!channels[@]}" | sort | dmenu -i -l 20 -p 'Select Channel:' "$@")
+
+# The "chosen" variable takes the the choice variable, sets it back through the array, chooses the youtube link and turns it into the RSS link
+chosen="$(curl -s "${channels[${choice}]}" | grep -i rss | sed '0,/^.*RSS/ s//RSS/' | cut -d'"' -f3)"
+
+# Takes the RSS link and prints out the titles and video links, then you pick your video with dmenu
+video_select=$(curl -s "$chosen" | grep "media:title\|media:content url="| cut -d'"' -f2 | cut -d'>' -f2 | cut -d'<' -f1 | dmenu -i -l 20 -p "Select Video:")
+
+# Until loop: until the video_select variable contains "http" in it, it doesn't even try to load it in a browser but instead it makes you reselect the video
+until [[ "$video_select" == http* ]]; do 
+  video_select=$(curl -s "$chosen" | grep "media:title\|media:content url="| cut -d'"' -f2 | cut -d'>' -f2 | cut -d'<' -f1 | dmenu -i -l 20 -p "Error! Please select the link not a title:")
+done
+# After the respective video is chosen, run it in your web browser
+$DMBROWSER "$video_select"
