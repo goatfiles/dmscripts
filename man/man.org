@@ -40,10 +40,10 @@ Choose a ambient background sound to play.
 USB mounting done suckless, no need for bloated daemons. 
 ** dmwall
 Using dmenu, setup a wallpaper.
-** dmyoutube
-Youtube subscriptions without an account or the API tying you down.
 ** dmwifi
 Connect to wifi using dmenu.
+** dmyoutube
+Youtube subscriptions without an account or the API tying you down.
 
 * USAGE
 ** bash dmhub
