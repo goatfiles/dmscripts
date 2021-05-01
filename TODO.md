@@ -1,15 +1,12 @@
 # Issues 
 - [ ] Fix any spelling or grammatical mistakes in files
-	- [ ] Script name
-- [ ] Find and fix all shellcheck errors
-	- [ ] Script name
-- [ ] Sane configuration
-	- [ ] Local configs 
+- [x] Find and fix all shellcheck errors
+- [x] Sane configuration
 	- [x] /etc/profile 
-	- [X] Global config file
+	- [x] Global config file
 - [x] Documentation 
 	- [x] Write man page
-	- [ ] Improve README.md
+	- [x] Improve README.md
 - [ ] Release a stable tar
 	- [ ] Write a changelog
 	- [ ] Fix the issues mentioned here
