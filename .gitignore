@@ -2,3 +2,4 @@
 dmscripts/
 src/
 pkg/
+man/*.gz
