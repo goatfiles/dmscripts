@@ -14,6 +14,7 @@ The scripts included in this repo are:
 + dm-pacman - A software store using dmenu
 + dmqute - Search your qutebrowser bookmarks, quickmarks and history urls.
 + dmred - Dmenu as a reddit viewer using reddio. *STILL A WORK IN PROGRESS*
++ dmscrot - A GUI to maim using dmenu.
 + dmsearch - Search various search engines (inspired by surfraw).
 + dm-setup - Downloads dependencies and makes the scripts executable.
 + dmsounds - Choose an ambient background to play.
