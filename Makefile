@@ -24,8 +24,6 @@ install:
 	install -Dm644 LICENSE "$(DESTDIR)$(PREFIX)/share/licenses/$(NAME)/LICENSE"
 	install -Dm644 README.md "$(DESTDIR)$(PREFIX)/share/doc/$(NAME)/README.md"
 	install -Dm644 config/config "/etc/dmscripts/config"
-	# Update man database
-	mandb
 
 clean:
 	$(shell [ -f man/dmscripts.1.gz ] && rm man/dmscripts.1.gz )
