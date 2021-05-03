@@ -12,17 +12,28 @@
 # get hidden bugs that are hard to discover.
 set -euo pipefail
 
-# Defining the terminal emulator to use.
-config="${HOME}/.config/dmscripts/dmconf"
-# No issues should arrise since it won't even be sourced if the file doesn't exist
-# shellcheck disable=SC1090	
-[ -f "${config}" ] && source "${config}"
+function get_config() {
+  local loaded=0
+  declare -a config_dirs=(
+  "${HOME}/.config/dmscripts/config"
+  "/etc/dmscripts/config"
+  )
+  for conf in "${config_dirs[@]}"; do
+    if [[ -f ${conf} ]]; then
+      echo "${conf}"
+      loaded=1
+      break
+    fi
+  done
+  [[ ${loaded} -eq 0 ]] && echo "No config found" ; exit 1
+}
 
-# Default if no config-file
-: "${DMTERM:=st -e}"
+# script will not hit this if there is no config-file to load
+# shellcheck disable=SC1090
+source "$(get_config)"
 
 # An array of options to choose.
-declare -a options=(
+declare -a dman_options=(
 "Search manpages"
 "Random manpage"
 "Quit"
@@ -30,7 +41,7 @@ declare -a options=(
 
 # Piping the above array into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
-choice=$(printf '%s\n' "${options[@]}" | dmenu -i -p 'Manpages:' "$@")
+choice=$(printf '%s\n' "${dman_options[@]}" | dmenu -i -p 'Manpages:' "$@")
 
 # What to do when/if we choose one of the options.
 case "$choice" in

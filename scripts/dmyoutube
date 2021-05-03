@@ -8,22 +8,29 @@
 # pipefail setup
 set -euo pipefail
 
-# Define and source the config
-config="${HOME}/.config/dmscripts/config"
-# No issues should arrise as all values needed by the script are called in this script
+function get_config() {
+  local loaded=0
+  declare -a config_dirs=(
+  "${HOME}/.config/dmscripts/config"
+  "/etc/dmscripts/config"
+  )
+  for conf in "${config_dirs[@]}"; do
+    if [[ -f ${conf} ]]; then
+      echo "${conf}"
+      loaded=1
+      break
+    fi
+  done
+  [[ ${loaded} -eq 0 ]] && echo "No config found" ; exit 1
+}
+
+# script will not hit this if there is no config-file to load
 # shellcheck disable=SC1090
-[[ -f "${config}" ]] && source "${config}"
-# Define browser, if the variable is in our config it uses the config variable
-: "${DMBROWSER:=brave}"
-# If the array exists in the config, then it uses that array
-if [[ !  "$(declare -p channels 2>/dev/null)" == "declare -A"* ]]; then
-# An array of youtube channels
-# Syntax: channels[name]="https://youtube.com/path/to/channel"
-  declare -A channels
-  channels[distrotube]="https://www.youtube.com/c/DistroTube/featured"
-fi
+source "$(get_config)"
 
 # Sorts the array and lets you select a channel with dmenu
+# As this is loaded from other file it is technically not defined
+# shellcheck disable=SC2154
 choice=$(printf '%s\n' "${!channels[@]}" | sort | dmenu -i -l 20 -p 'Select Channel:' "$@")
 
 # The "chosen" variable takes the the choice variable, sets it back through the array, chooses the youtube link and turns it into the RSS link

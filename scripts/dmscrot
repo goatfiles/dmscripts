@@ -15,13 +15,26 @@
 # get hidden bugs that are hard to discover.
 set -euo pipefail
 
-config="${HOME}/.config/dmscripts/config"
-# No issues should arrise since it won't even be sourced if the file doesn't exist
-# shellcheck disable=SC1090	
-[ -f "${config}" ] && source "${config}"
+function get_config() {
+  local loaded=0
+  declare -a config_dirs=(
+  "${HOME}/.config/dmscripts/config"
+  "/etc/dmscripts/config"
+  )
+  for conf in "${config_dirs[@]}"; do
+    if [[ -f ${conf} ]]; then
+      echo "${conf}"
+      loaded=1
+      break
+    fi
+  done
+  [[ ${loaded} -eq 0 ]] && echo "No config found" ; exit 1
+}
 
-# Defaults (Override in config)
-: "${SCROTDIR:=${HOME}/Screenshots}"
+# script will not hit this if there is no config-file to load
+# shellcheck disable=SC1090
+source "$(get_config)"
+# Defining our config location
 
 # Makes sure the directory exists.
 mkdir -p "${SCROTDIR}"

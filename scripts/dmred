@@ -13,33 +13,30 @@
 # get hidden bugs that are hard to discover.
 set -euo pipefail
 
-# Defining our config location
-config="$HOME/.config/dmscripts/config"
-# No issues should arrise since it won't even be sourced if the file doesn't exist
-# shellcheck disable=SC1090
-[ -f "$config" ] && source "$config"
-
-if [[ ! "$(declare -p subreddit_list 2>/dev/null)" == "declare -A"* ]] ; then 
-  # List of subreddits
-  declare -a subreddit_list=(
-  "r/archlinux"
-  "r/bash"
-  "r/commandline"
-  "r/emacs"
-  "r/freesoftware"
-  "r/linux"
-  "r/linux4noobs"
-  "r/linuxmasterrace"
-  "r/linuxquestions"
-  "r/suckless"
-  "r/Ubuntu"
-  "r/unixporn"
-  "r/vim"
-  "Quit"
+function get_config() {
+  local loaded=0
+  declare -a config_dirs=(
+  "${HOME}/.config/dmscripts/config"
+  "/etc/dmscripts/config"
   )
-fi
+  for conf in "${config_dirs[@]}"; do
+    if [[ -f ${conf} ]]; then
+      echo "${conf}"
+      loaded=1
+      break
+    fi
+  done
+  [[ ${loaded} -eq 0 ]] && echo "No config found" ; exit 1
+}
+
+# script will not hit this if there is no config-file to load
+# shellcheck disable=SC1090
+source "$(get_config)"
+# Defining our config location
 
 # Picking a subreddit from the above subreddit_list.
+# As this is loaded from other file it is technically not defined
+# shellcheck disable=SC2154
 subreddit=$(printf '%s\n' "${subreddit_list[@]}" | dmenu -i -l 20 -p "Choose a subreddit:" "$@") || exit
 
 # Show the last 20 posts (titles and ids) from the chosen subreddit.
