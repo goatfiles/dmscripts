@@ -21,6 +21,7 @@ The scripts included in this repo are:
 + dmwall - A wallpaper setting utility using dmenu, xwallpaper and sxiv
 + dmwifi - Connect to wifi using dmenu.
 + dmyoutube - Youtube subscriptions without an account or the API tying you down.
++ dm-ip - Get IP of interface or external IP
 
 # Contributing
 
