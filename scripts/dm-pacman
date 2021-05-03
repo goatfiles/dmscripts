@@ -5,6 +5,8 @@
 # Dependencies: dmenu, pacman
 # Contributors: Murtaza Udaipurwala
 #               HostGrady
+#               Simon Ingelsson
+#
 
 # Set with the flags "-e", "-u","-o pipefail" cause the script to fail
 # if certain things happen, which is a good thing.  Otherwise, we can
