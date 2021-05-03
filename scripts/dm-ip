@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
-# script name: dm-ip
+
+# Script name: dm-ip
 # Description: Get IP from interface (or external)
 # Dependencies: dmenu, dig, ip, jq
 # Contributor: Simon Ingelsson
+# GitLab: https://www.gitlab.com/dwt1/dmscripts
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
+# Contributors: Simon Ingelsson
 
 set -euo pipefail
 declare -A _ips
