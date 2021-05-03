@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# script name: dm-ip
+# Description: Get IP from interface (or external)
+# Dependencies: dmenu, dig, ifconfig
+# Contributor: Simon Ingelsson
+
+set -euo pipefail
+declare -A _ips
+
+_external=$(dig +short myip.opendns.com @resolver1.opendns.com)
+_ips[external]="${_external}"
+
+_ifaces=$(ifconfig | grep --color=never -o -e "^[a-z][a-z]*[0-9]*:")
+for _iface in $_ifaces; do
+  _ifname=${_iface%%:*}
+  _ifip=$( LANG=C /sbin/ifconfig "${_ifname}" | sed -ne $'/127.0.0.1/ ! { s/^[ \t]*inet[ \t]\\{1,99\\}\\(addr:\\)\\{0,1\\}\\([0-9.]*\\)[ \t\/].*$/\\2/p; }')
+  if [ -n "$_ifip" ]; then
+    _ips[${_ifname}]="${_ifip}"
+  fi
+done
+
+selected="$(printf '%s\n' "${!_ips[@]}" | dmenu -i -l 20 -p "ips:")"
+[ -z "${selected}" ] && exit
+echo "${_ips["${selected}"]}" | xclip -r -selection clipboard
+
