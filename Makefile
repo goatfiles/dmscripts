@@ -23,7 +23,7 @@ install:
 	install -Dm 644 man/dmscripts.1.gz $(DESTDIR)$(MANPREFIX)/man1/dmscripts.1.gz
 	install -Dm644 LICENSE "$(DESTDIR)$(PREFIX)/share/licenses/$(NAME)/LICENSE"
 	install -Dm644 README.md "$(DESTDIR)$(PREFIX)/share/doc/$(NAME)/README.md"
-	install -Dm644 config/config "/etc/dmscripts/config"
+	install -Dm644 config/config "$(DESTDIR)/etc/dmscripts/config"
 
 clean:
 	$(shell [ -f man/dmscripts.1.gz ] && rm man/dmscripts.1.gz )
