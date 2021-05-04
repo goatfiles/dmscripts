@@ -16,13 +16,31 @@
 # get hidden bugs that are hard to discover.
 set -euo pipefail
 
-# The directory where the sound files are located.
-soundDir="${HOME}/.config/dmscripts/dmsounds"
-config="${HOME}/.config/dmscripts/config"
-# No issues should arrise, so it is disabled
+function get_config() {
+  local loaded=0
+  declare -a config_dirs=(
+  "${HOME}/.config/dmscripts/config"
+  "/etc/dmscripts/config"
+  )
+  for conf in "${config_dirs[@]}"; do
+    if [[ -f ${conf} ]]; then
+      echo "${conf}"
+      loaded=1
+      break
+    fi
+  done
+  [[ ${loaded} -eq 0 ]] && echo "No config found" ; exit 1
+}
+
+# script will not hit this if there is no config-file to load
 # shellcheck disable=SC1090
-[ -f "${config}" ] && source "${config}" 
+source "$(get_config)"
+
+
+# shellcheck disable=SC1090
 # Produces a listing of the sound files.
+# As this is loaded from other file it is technically not defined
+# shellcheck disable=SC2154
 soundFiles=$(/bin/ls -1 "$soundDir" | grep -E ".mp3|.m4a|.ogg")
 
 # An array of options to choose.

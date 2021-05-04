@@ -5,19 +5,36 @@
 # Dependencies: dmenu, pacman
 # Contributors: Murtaza Udaipurwala
 #               HostGrady
+#               Simon Ingelsson
+#
 
 # Set with the flags "-e", "-u","-o pipefail" cause the script to fail
 # if certain things happen, which is a good thing.  Otherwise, we can
 # get hidden bugs that are hard to discover.
 set -euo pipefail
 
-packageList="$HOME/.cache/packageList"
+function get_config() {
+  local loaded=0
+  declare -a config_dirs=(
+  "${HOME}/.config/dmscripts/config"
+  "/etc/dmscripts/config"
+  )
+  for conf in "${config_dirs[@]}"; do
+    if [[ -f ${conf} ]]; then
+      echo "${conf}"
+      loaded=1
+      break
+    fi
+  done
+  [[ ${loaded} -eq 0 ]] && echo "No config found" ; exit 1
+}
+
 
 refresh(){
     # only update the packageList once a day
     [ "$(stat -c %y "$packageList" 2>/dev/null | cut -d' ' -f1)" != "$(date '+%Y-%m-%d')" ] &&
         pacman -Si \
-        | awk '/^Name/{name=$3} /^Description/{sub(/^.{18}/,"", $0); print name, " => ", $0}' > "$HOME"/.cache/packageList
+        | awk '/^Name/{name=$3} /^Description/{sub(/^.{18}/,"", $0); print name, " => ", $0}' > "${packageList}"
 }
 
 confirm(){
@@ -29,23 +46,23 @@ install(){
     refresh
     package=$(dmenu -i -l 30 -p "Package to install" < "$packageList") || exit
     confirm "Install this package?"
-    $TERMINAL -e sudo pacman -S --noconfirm "$(echo "$package" | cut -d'=' -f1)"
+    $DMTERM sudo pacman -S --noconfirm "$(echo "$package" | cut -d'=' -f1)"
 }
 
 remove(){
     package=$(pacman -Qeq | dmenu -i -l 30 -p "Package to remove") || exit
     confirm "Remove this package?"
-    $TERMINAL sudo pacman -Rns --noconfirm "$package"
+    $DMTERM sudo pacman -Rns --noconfirm "$package"
 }
 
 update(){
     confirm "Update the system?"
-    $TERMINAL -e sudo pacman -Syu --noconfirm
+    $DMTERM sudo pacman -Syu --noconfirm
 }
 
 cleanUp(){
     [ "$(pacman -Qdtq)" = "" ] && exit
-    $TERMINAL -e sudo pacman -Rns --noconfirm "$(pacman -Qdtq)"
+    $DMTERM sudo pacman -Rns --noconfirm "$(pacman -Qdtq)"
 }
 
 menu(){
@@ -58,5 +75,11 @@ menu(){
         *) echo "invalid operation" && exit ;;
     esac
 }
+
+# script will not hit this if there is no config-file to load
+# shellcheck disable=SC1090
+source "$(get_config)"
+
+packageList="$HOME/.cache/packageList"
 
 menu "${@}"

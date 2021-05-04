@@ -40,15 +40,17 @@ pkgver() {
   printf "1.0.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
-
 build() {
   cd "${_pkgname}"
   DESTDIR="$pkgdir/" make clean build
 }
 
-
 package() {
   cd ${_pkgname}
   NAME="${pkgname}" DESTDIR="${pkgdir}/" make install
+}
+
+post_install () {
+  mandb
 }
 
