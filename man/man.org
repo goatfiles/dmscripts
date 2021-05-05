@@ -16,6 +16,8 @@ A manual page searcher, search a man page or randomly view one.
 Find the hex value of a color you are searching for.
 ** dmconf
 A configuration manager, find and edit any config file you need.
+** dm-ip 
+Get IP of interface or external IP
 ** dmkill
 Simple process killer, find and kill misbehaving processes.
 ** dmlogout
