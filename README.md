@@ -7,6 +7,7 @@ The scripts included in this repo are:
 + dmcolors - Copy a color's hex value to your clipboard
 + dmconf - Choose from a list of configuration files to edit.
 + dmhub - A hub from where you can run all the scripts from.
++ dm-ip - Get IP of interface or external IP
 + dmkill - Search for a process to kill.
 + dmlogout - Logout, shutdown, reboot or lock screen.
 + dman - Search for a manpage or get a random one.
@@ -21,7 +22,6 @@ The scripts included in this repo are:
 + dmwall - A wallpaper setting utility using dmenu, xwallpaper and sxiv
 + dmwifi - Connect to wifi using dmenu.
 + dmyoutube - Youtube subscriptions without an account or the API tying you down.
-+ dm-ip - Get IP of interface or external IP
 
 # Contributing
 
