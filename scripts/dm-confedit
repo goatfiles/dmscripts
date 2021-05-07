@@ -16,7 +16,6 @@
 # if certain things happen, which is a good thing.  Otherwise, we can
 # get hidden bugs that are hard to discover.
 set -euo pipefail
-(return 0 2>/dev/null) && sourced=1 || sourced=0
 _path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd "$(dirname "$(readlink "${BASH_SOURCE[0]}" || echo ".")")" && pwd)"
 if [[  -f "${_path}/_dm-helper.sh" ]]; then
     source "${_path}/_dm-helper.sh"
