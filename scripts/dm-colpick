@@ -36,7 +36,7 @@ source "$(get_config)"
 
 # As this is loaded from other file it is technically not defined
 # shellcheck disable=SC2154
-selected="$(printf '%s\n' "${!colors[@]}" | dmenu -p "color:")"
+selected="$(printf '%s\n' "${!colors[@]}" | dmenu -p "color:" "$@")"
 [ -z "${selected}" ] && exit
 echo "${colors["${selected}"]}" | xclip -r -selection clipboard
 
