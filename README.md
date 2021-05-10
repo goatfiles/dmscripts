@@ -4,28 +4,31 @@
 
 The scripts included in this repo are:
 
-+ dmcolors - Copy a color's hex value to your clipboard
-+ dmconf - Choose from a list of configuration files to edit.
-+ dmhub - A hub from where you can run all the scripts from.
++ dm-bookman - Search your qutebrowser bookmarks, quickmarks and history urls.
++ dm-colpick - Copy a color's hex value to your clipboard
++ dm-confedit - Choose from a list of configuration files to edit.
++ dm-hub - A hub from where you can run all the scripts from.
 + dm-ip - Get IP of interface or external IP
-+ dmkill - Search for a process to kill.
-+ dmlogout - Logout, shutdown, reboot or lock screen.
-+ dman - Search for a manpage or get a random one.
++ dm-kill - Search for a process to kill.
++ dm-logout - Logout, shutdown, reboot or lock screen.
++ dm-maim - A GUI to maim using dmenu.
++ dm-man - Search for a manpage or get a random one.
 + dm-music - Dmenu as your music player
 + dm-pacman - A software store using dmenu
-+ dmqute - Search your qutebrowser bookmarks, quickmarks and history urls.
-+ dmred - Dmenu as a reddit viewer using reddio. *STILL A WORK IN PROGRESS*
-+ dmscrot - A GUI to maim using dmenu.
-+ dmsearch - Search various search engines (inspired by surfraw).
-+ dmsounds - Choose an ambient background to play.
++ dm-reddit - Dmenu as a reddit viewer using reddio. *STILL A WORK IN PROGRESS*
++ dm-setbg - A wallpaper setting utility using dmenu, xwallpaper and sxiv
++ dm-sounds - Choose an ambient background to play.
 + dm-usbmount - mount/unmount usb drives using dmenu. No fancy daemon required
-+ dmwall - A wallpaper setting utility using dmenu, xwallpaper and sxiv
-+ dmwifi - Connect to wifi using dmenu.
-+ dmyoutube - Youtube subscriptions without an account or the API tying you down.
++ dm-websearch - Search various search engines (inspired by surfraw).
++ dm-wifi - Connect to wifi using dmenu.
++ dm-youtube - Youtube subscriptions without an account or the API tying you down.
++ \_dm-helper.sh Helper scripts adding functionality to other scripts
 
 # Contributing
 
 This is a collection of dmenu scripts that I have found useful in my day-to-day activities as a desktop Linux user.  Although initially this was just for my personal scripts, this project is now open to the community.  If you would like to contribute your own scripts or improve any existing scripts, I would be happy to review your merge requests.  All scripts submitted should meet the following guidelines:
+
+Scripts should be named in the format `dm-[scriptname]`
 
 Scripts should be written in Bash and use the following shebang line:
 
@@ -100,10 +103,14 @@ Once installed, the scripts should behave like any other command and can be run 
 
 ## Non-installation
 
-If you wish to try the scripts without installing, you can use dmhub:
+If you wish to try the scripts without installing, you can use dm-hub:
+for the scripts to work you need to have the config-file in one of three locations:
++ /etc/dmscripts/config
++ ../config/config (path relative to scripts in git-repo)
++ ~/.config/dmscripts/config
 
 ```bash
-$ bash dmhub
+$ bash /path/to/dm-hub
 ```
 
 To run a script without using the hub:
@@ -121,16 +128,17 @@ $ ./path/to/script
 # Configuration
 
 Currently, configuration can be done in a few ways:
-+ Via the global config file (Recommended)
++ copying config (from repo ./config/config or /etc/dmscripts/config if installed) to ~/.config/dmscripts/config (Recommended)
++ Via the global config file `/etc/dmscripts/config` (will cause diff when updating)
 	+ Maintenance
-+ Via /etc/profile
+-+ Via /etc/profile-
 + Via editing the source code (not recommended)
 	+ Changing the Config Location
 
 ## The Global Config
 
-Currently the config file is not installed by default so in order to correctly install it, you need to move or copy it to the appropriate directory. Assuming you have the source code, run the following command:
-
+Currently only a "global" config is installed to `/etc/dmscripts/config`.
+To install a user-specific version of the config run the following command:
 ```bash
 $ cp -riv config/ "$HOME"/.config/dmscripts
 ```
@@ -141,37 +149,19 @@ The config file is a bash script however it is very simple to understand and sev
 
 As we are currently adding a lot of scripts to the repository and making patches very regularly, the advice is to check up on the repo's sample config every few days and make the appropriate changes. This is especially true if you are also installing new scripts as they get added.
 
-## /etc/profile
-
-By editing the file /etc/profile, you can add environment variables which will work accross the dmscripts. A few examples include:
-
-```bash
-: "${TERMINAL:=st}"
-: "${DMTERM:=${TERMINAL} -e}"
-: "${DMBROWSER=qutebrowser}"
-: "${DMEDITOR="emacsclient -c -a emacs}"
-```
-
-You can, of course, replace the variables with whatever you prefer. It's also worth noting that editing /etc/profile requires root permission, so you will need to elevate yourself if you wish to configure the scripts in this manner.
-
 ## Editing the Source Code
 
 Being a free/libre software project, you may make modifications to the source code to fit your needs. If you need a reference, look at the config files and variables in /etc/profile for a general idea on what to look for in the source code. Please submit patches and merge requests if you see any bugs or improve the source code while you are there.
 
 ### Changing the Config Location
 
-If you dislike our naming scheme, find this line:
+If you could like to change config location you can add custom search path into the array in function `get_config` in `_dm-helper.sh`
 
 ```bash
-config="$HOME/.config/dmscripts/config"
+config_dirs+=(
+"/path/to/custom/config-file"
+"${HOME}/.config/dmscripts/config"
+"/etc/dmscripts/config"
+)
 ```
 
-and replace it with this line:
-
-```bash
-config="$HOME/path/to/config"
-```
-
-You will have to do this manually for each script you wish to change.
-
-This can also be done to segregate config files if you prefer that for whatever reason.

@@ -3,25 +3,24 @@
 # Script name: dm-ip
 # Description: Get IP from interface (or external)
 # Dependencies: dmenu, dig, ip, jq
-# Contributor: Simon Ingelsson
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Simon Ingelsson
 
 set -euo pipefail
-declare -A _ips
+main() {
+  declare -A _ips
 
-_external=$(dig +short myip.opendns.com @resolver1.opendns.com)
-_ips[external]="${_external}"
+  _external=$(dig +short myip.opendns.com @resolver1.opendns.com)
+  _ips[external]="${_external}"
 
-# IPS=$(ip -4 -j addr | jq -r '.[] |{ name: .ifname, ip: .addr_info[].local} | join(":")')
+  for _iface in $(ip -4 -j addr | jq -r '.[] |{ name: .ifname, ip: .addr_info[].local} | join(":")') ; do
+    _ips[${_iface%:*}]="${_iface##*:}"
+  done
 
-for _iface in $(ip -4 -j addr | jq -r '.[] |{ name: .ifname, ip: .addr_info[].local} | join(":")') ; do
-  _ips[${_iface%:*}]="${_iface##*:}"
-done
+  selected="$(printf '%s\n' "${!_ips[@]}" | dmenu -i -l 20 -p "ips:" "$@")"
+  [ -z "${selected}" ] && exit
+  echo "${_ips["${selected}"]}" | xclip -r -selection clipboard
+}
 
-
-selected="$(printf '%s\n' "${!_ips[@]}" | dmenu -i -l 20 -p "ips:")"
-[ -z "${selected}" ] && exit
-echo "${_ips["${selected}"]}" | xclip -r -selection clipboard
-
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
