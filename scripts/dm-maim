@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Script name: dmscrot
+# Script name: dm-maim
 # Description: Choose type of screenshot to take with maim.
 # Dependencies: dmenu, maim, tee, xdotool, xclip, xrandr
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
@@ -30,7 +30,7 @@ source "$(get_config)"
 # Defining our config location
 
 # Makes sure the directory exists.
-mkdir -p "${SCROTDIR}"
+mkdir -p "${maim_dir}"
 
 getStamp() {
   date '+%Y%m%d-%H%M%S'
@@ -85,7 +85,7 @@ dest=$(printf '%s\n' "${destination[@]}" | dmenu -i -l 20 -p 'Destination:' "$@"
 case "$dest" in
   'File')
     # shellcheck disable=SC2086
-    maim ${_maim_args} "${SCROTDIR}/scrot-${_file_type}-$(getStamp).png"
+    maim ${_maim_args} "${maim_dir}/${maim_file_prefix}-${_file_type}-$(getStamp).png"
   ;;
   'Clipboard')
     # shellcheck disable=SC2086
@@ -93,7 +93,7 @@ case "$dest" in
   ;;
   'Both')
     # shellcheck disable=SC2086
-    maim ${_maim_args} | tee "${SCROTDIR}/scrot-${_file_type}-$(getStamp).png" | xclip -selection clipboard -t image/png
+    maim ${_maim_args} | tee "${maim_dir}/${maim_file_prefix}-${_file_type}-$(getStamp).png" | xclip -selection clipboard -t image/png
   ;;
   *)
     exit 1

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Script name: dmhub
+# Script name: dm-hub
 # Description: a hub that you can execute all the other scripts from
 # Dependencies: dmenu, executable dmscripts, all the dependancies from dmscripts
 # GitLab: https://www.gitlab.com/dwt1/hub
@@ -12,7 +12,7 @@ set -euo pipefail
 (return 0 2>/dev/null) && sourced=1 || sourced=0
 _path=$(dirname "$(realpath "$0")")
 [[ ! -f "${_path}/_dm-helper.sh" ]] && echo "No helper-script found"
-# shellcheck disable=SC1090,SC1091
+# shellcheck disable=SC1090
 source "${_path}/_dm-helper.sh"
 # shellcheck disable=SC1090
 source "$(get_config)"

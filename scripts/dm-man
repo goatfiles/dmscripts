@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Script name: dman
+# Script name: dm-man
 # Description: Search for a manpage or get a random one.
 # Dependencies: dmenu, xargs
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
@@ -27,7 +27,7 @@ fi
 source "$(get_config)"
 
 # An array of options to choose.
-declare -a dman_options=(
+declare -a _options=(
 "Search manpages"
 "Random manpage"
 "Quit"
@@ -35,7 +35,7 @@ declare -a dman_options=(
 
 # Piping the above array into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
-choice=$(printf '%s\n' "${dman_options[@]}" | dmenu -i -p 'Manpages:' "$@")
+choice=$(printf '%s\n' "${_options[@]}" | dmenu -i -p 'Manpages:' "$@")
 
 # What to do when/if we choose one of the options.
 case "$choice" in

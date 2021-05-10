@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Script name: dmkill
+# Script name: dm-kill
 # Description: Search for a process to kill.
 # Dependencies: dmenu
 # GitLab: https://www.gitlab.com/dwt1/dmscripts

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Script name: dmsearch
+# Script name: dm-websearch
 # Description: Search various search engines (inspired by surfraw).
 # Dependencies: dmenu and brave
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
@@ -32,7 +32,7 @@ source "$(get_config)"
 # shellcheck disable=SC2154 # Choosing  a search engine by name from array above.
 engine=$(printf '%s\n' "${!search_options[@]}" | sort | dmenu -i -l 20 -p 'Choose search engine:') "$@" || exit
 
-# Getting the url of the search engine we chose.
+# Getting the URL of the search engine we chose.
 url="${search_options["${engine}"]}"
 
 # Searching the chosen engine.

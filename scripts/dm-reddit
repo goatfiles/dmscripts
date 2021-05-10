@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Script name: dmred
+# Script name: dm-reddit
 # Description: Dmenu as a reddit viewer using reddio.
 # Dependencies: dmenu, reddio, zenity
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
@@ -27,14 +27,14 @@ fi
 # shellcheck disable=SC1090
 source "$(get_config)"
 
-# Picking a subreddit from the above subreddit_list.
+# Picking a subreddit from the above reddit_list.
 # As this is loaded from other file it is technically not defined
 # shellcheck disable=SC2154
-subreddit=$(printf '%s\n' "${subreddit_list[@]}" | dmenu -i -l 20 -p "Choose a subreddit:" "$@") || exit
+_subreddit=$(printf '%s\n' "${subreddit_list[@]}" | dmenu -i -l 20 -p "Choose a subreddit:" "$@") || exit
 
 # Show the last 20 posts (titles and ids) from the chosen subreddit.
-post_title=$(bash reddio print -f '$num. $title $id$nl' -l 20 "$subreddit" | \
-dmenu -i -l 20 -p 'Last 20 posts on '"$subreddit" "$@")
+post_title=$(bash reddio print -f '$num. $title $id$nl' -l 20 "$_subreddit" | \
+dmenu -i -l 20 -p 'Last 20 posts on '"$_subreddit" "$@")
 
 # Display contents of chosen post in a zenity text box.
 post_id=$(printf '%s\n' "$post_title" | awk '{print $NF}')

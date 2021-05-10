@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Script name: dmlogout
+# Script name: dm-logout
 # Description: Logout, shutdown, reboot or lock screen.
 # Dependencies: dmenu, systemd, slock, notify-send
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
@@ -97,7 +97,7 @@ case $choice in
     'Quit')
         output "Program terminated." && exit 0
     ;;
-        # It is a common practice to use the wildcard asterisk symbol (*) as a final
+    # It is a common practice to use the wildcard asterisk symbol (*) as a final
     # pattern to define the default case. This pattern will always match.
     *)
         exit 0

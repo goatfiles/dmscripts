@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Script name: dmwall
-
+# Script name: dm-wall
 # Description: A wallpaper setting utility using dmenu, xwallpaper and sxiv
 # Also has the following features
 # 1. set a random walllpaper
@@ -52,7 +51,7 @@ help() {
     -d\tdraws the wallpaper at startx. Add "dmwall -d" in your xinitrc
     -r\trandomly selects a wallpaper
     -i\tGo insane
-' "${DMWALLPAPERDIR}"
+' "${setbg_dir}"
 }
 
 change() {
@@ -60,12 +59,12 @@ change() {
 }
 
 shuffle() {
-    wallpaper=$(find "${DMWALLPAPERDIR}" -type f | shuf -n 1)
-    echo "${DMWALLPAPERDIR}/$wallpaper"
+    wallpaper=$(find "${setbg_dir}" -type f | shuf -n 1)
+    echo "${setbg_dir}/$wallpaper"
 }
 
 setbg() {
-    wallpaper="$(sxiv -t -o "${DMWALLPAPERDIR}")"
+    wallpaper="$(sxiv -t -o "${setbg_dir}")"
     echo "$wallpaper" > "$HOME"/.cache/wall
     change "$wallpaper"
 }

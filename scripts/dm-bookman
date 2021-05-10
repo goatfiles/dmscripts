@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Script name: dmqute
+# Script name: dm-bookman
 # Description: Search your qutebrowswer bookmarks and quickmarks.
 # Dependencies: dmenu, qutebrowser
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
@@ -24,7 +24,7 @@ source "$(get_config)"
 
 _hist_cache_file="${HOME}/.cache/dmbrowserhistory"
 
-# A separator that will appear in between quickmarks, bookmarks and history urls.
+# A separator that will appear in between quickmarks, bookmarks and history URLs.
 _separator="----------"
 
 # Defining location of bookmarks file
@@ -33,7 +33,7 @@ _bookmark_file="$HOME/.config/qutebrowser/bookmarks/urls"
 _quickmarks_file="$HOME/.config/qutebrowser/quickmarks"
 
 # Do query against sqlite3 database expecting two columns (title, url)
-# args "file" "query"
+# ARGS: "file" "query"
 function cacheHistory() {
   sqlite_separator='=%='
   file=${1}
@@ -82,7 +82,7 @@ generateHistory() {
     done
   fi
 
-  # reverse each line and then sorting on url making sure they are uniq then restoring the lines
+  # reverse each line and then sorting on url making sure they are unique then restoring the lines
   rev "${_hist_cache_file}" | sort -u -t' ' -r -k1,1 |rev | sort  > "${_hist_cache_file}.sorted"
 }
 generateHistory
@@ -91,24 +91,24 @@ generateHistory
 readarray -t bmarks < "${_bookmark_file}"
 readarray -t qmarks < "${_quickmarks_file}"
 
-# Sort the bookmark and quickmark lists so that the url is the last field.
+# Sort the bookmark and quickmark lists so that the URL is the last field.
 # We will awk print the last field later.
-# History list is formed by grep'ing "http" from the history table.
+# History list is formed by using grep "http" from the history table.
 bmlist=$(printf '%s\n' "${bmarks[@]}" | awk '{print $2" - "$1}')
 qmlist=$(printf '%s\n' "${qmarks[@]}" | awk '{print "["$1"] - "$NF}' | sort)
 histlist=$(cat "${_hist_cache_file}.sorted" )
 
 # Piping the lists into dmenu.
 # We use "printf '%s\n'" to format the array one item to a line.
-# The urls are listed quickmarks first, then the _separator, and then bookmarks and lastly history
+# The URLs are listed quickmarks first, then the _separator, and then bookmarks and lastly history
 choice=$(printf '%s\n' "$qmlist" "$_separator" "$bmlist" "$_separator" "$histlist" | dmenu -i -l 20 -p 'Qutebrowser open:' "$@" ) || exit
 
 # What to do if the separator is chosen from the list.
-# We simply launch qutebrowser without any url arguments.
+# We simply launch qutebrowser without any URL arguments.
 # shellcheck disable=SC2154
 if [ "$choice" == "$_separator" ]; then
     nohup "${DMBROWSER}" >/dev/null 2>&1 &
-# What to do when/if we choose a url to view.
+# What to do when/if we choose a URL to view.
 elif [ "$choice" ]; then
   url=$(echo "${choice}" | awk '{print $NF}') || exit
   nohup "${DMBROWSER}" "$url" >/dev/null 2>&1 &
