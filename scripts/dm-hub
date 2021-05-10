@@ -17,6 +17,8 @@ source "${_path}/_dm-helper.sh"
 # shellcheck disable=SC1090
 source "$(get_config)"
 
+check_updated_config
+
 function dm-wall_main() {
     local _self
     declare -A _scripts

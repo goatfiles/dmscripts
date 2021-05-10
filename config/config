@@ -74,7 +74,6 @@ confedit_list[zsh]="$HOME/.zshrc"
 
 # dm-reddit config
 
-# Ensure you have a quit option at the bottom
 declare -a reddit_list=(
 "r/archlinux"
 "r/bash"
@@ -89,7 +88,6 @@ declare -a reddit_list=(
 "r/Ubuntu"
 "r/unixporn"
 "r/vim"
-"Quit"
 )
 
 # Search engine config 
@@ -137,9 +135,9 @@ websearch[stackoverflow]="https://stackoverflow.com/search?q="
 
 # dm-youtube config
 
-# Think of these as your "subscribed channels", name the channel in the square brackets then put the channel URL in the quotation marks
-# Syntax: channels[name]="https://www.youtube.com/link/to/channel"
 youtube_browser="brave"
+# Think of these as your "subscribed channels", name the channel in the square brackets then put the channel URL in the quotation marks
+# Syntax: youtube_channels[name]="https://www.youtube.com/link/to/channel"
 declare -A youtube_channels
 youtube_channels[distrotube]="https://www.youtube.com/c/DistroTube/featured"
 
@@ -157,4 +155,4 @@ colpick_list[white]="#f1f1f0"
 colpick_list[orange]="#ffb86c"
 colpick_list[purple]="#bd9cf9"
 
-
+_revision=10
