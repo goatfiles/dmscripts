@@ -31,11 +31,11 @@ source "$(get_config)"
 
 
 main() {
-  # shellcheck disable=SC1090
   # Produces a listing of the sound files.
-  # As this is loaded from other file it is technically not defined
   # shellcheck disable=SC2154
-  readarray -t _sounds_list < <(cd "${sounds_dir}"; find . -iname "*.mp3" -o -iname "*.m4a" -o -iname "*.ogg")
+  readarray -t _sounds_list < <(find "${sounds_dir}" \( -iname "*.mp3" -o -iname "*.m4a" -o -iname "*.ogg" \) -printf '%P\n')
+ 
+  echo "${_sounds_list[*]}"
 
   # An array of options to choose.
   local _options=(
