@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+# Script name: _dm-helper
+# Description: helper-script for the other scripts in the collection
+# Dependencies: 
+# GitLab: https://www.gitlab.com/dwt1/dmscripts
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
+# Contributors: Simon Ingelsson
+
+set -euo pipefail
+
+(return 0 2>/dev/null) && sourced=1 || sourced=0
+if [[ ${sourced} -eq 0 ]]; then
+    echo "This is a helper-script it does not do anything on its own."
+    exit 1
+fi
 
 get_config() {
   local config_dirs=() 
@@ -21,3 +35,4 @@ get_config() {
     fi
   done
 }
+

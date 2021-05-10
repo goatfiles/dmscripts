@@ -8,50 +8,52 @@ dmscripts - a collection of various dmenu scripts
 dmscripts are a collection of dmenu scripts written in bash.  each script is written and contributed by DT or viewers.
 
 * SCRIPTS
-** dmhub
+** dm-hub
 The hub script, allows easy access to other scripts.
-** dman
+** dm-man
 A manual page searcher, search a man page or randomly view one.
-** dmcolors
+** dm-colpick
 Find the hex value of a color you are searching for.
-** dmconf
+** dm-confedit
 A configuration manager, find and edit any config file you need.
-** dm-ip 
+** dm-ip
 Get IP of interface or external IP
-** dmkill
+** dm-kill
 Simple process killer, find and kill misbehaving processes.
-** dmlogout
+** dm-logout
 Simple logout menu, choose to lock, shutdown, reboot or logout of your computer.
 ** dm-music
 Dmenu based music player.
 ** dm-pacman
 Uses dmenu as a simple software store, only supports Arch based distros.
-** dmqute
+** dm-bookman
 A bookmark searching tool, search through all qutebrowser quickmarks and bookmarks.
-** dmred
+** dm-reddit
 A reddit viewer using dmenu, still a work in progress.
-** dmscrot
+** dm-maim
 A GUI to maim using dmenu.
-** dmsearch
+** dm-websearch
 Web searching utility using dmenu.
-** dmsounds
+** dm-sounds
 Choose a ambient background sound to play.
 ** dm-usbmount
-USB mounting done suckless, no need for bloated daemons. 
-** dmwall
+USB mounting done suckless, no need for bloated daemons.
+** dm-setbg
 Using dmenu, setup a wallpaper.
-** dmwifi
+** dm-wifi
 Connect to wifi using dmenu.
-** dmyoutube
+** dm-youtube
 Youtube subscriptions without an account or the API tying you down.
+** _dm-helper.sh 
+Helper scripts adding functionality to other scripts
 
 * USAGE
-** bash dmhub
-Runs the dmhub program which allows for easy access to the scripts.
+** bash dm-hub
+Runs the dm-hub program which allows for easy access to the scripts.
 ** bash path/to/script
-Runs the script specified without using dmhub. 
+Runs the script specified without using dmhub.
 ** ./path/to/script
 Same as bash path/to/script.
 
 * AUTHOR
-Derek Taylor (https://gitlab.com/dwt1/dmscripts) 
+Derek Taylor (https://gitlab.com/dwt1/dmscripts)
