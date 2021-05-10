@@ -12,7 +12,7 @@ set -euo pipefail
 (return 0 2>/dev/null) && sourced=1 || sourced=0
 _path=$(dirname "$(realpath "$0")")
 [[ ! -f "${_path}/_dm-helper.sh" ]] && echo "No helper-script found"
-# shellcheck disable=SC1090
+# shellcheck disable=SC1090,SC1091
 source "${_path}/_dm-helper.sh"
 # shellcheck disable=SC1090
 source "$(get_config)"
