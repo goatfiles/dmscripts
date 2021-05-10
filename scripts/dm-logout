@@ -32,10 +32,9 @@ _out="echo"
 if [[ ${TERM} == 'dumb' ]]; then
     _out="notify-send"
 fi
-_out
 
 output(){
-    ${_out} "dmlogout" "$@"
+    ${_out} "dm-logout" "$@"
 }
 
 main() {
