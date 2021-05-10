@@ -8,17 +8,19 @@
 # Contributors: Simon Ingelsson
 
 set -euo pipefail
-declare -A _ips
+main() {
+  declare -A _ips
 
-_external=$(dig +short myip.opendns.com @resolver1.opendns.com)
-_ips[external]="${_external}"
+  _external=$(dig +short myip.opendns.com @resolver1.opendns.com)
+  _ips[external]="${_external}"
 
-for _iface in $(ip -4 -j addr | jq -r '.[] |{ name: .ifname, ip: .addr_info[].local} | join(":")') ; do
-  _ips[${_iface%:*}]="${_iface##*:}"
-done
+  for _iface in $(ip -4 -j addr | jq -r '.[] |{ name: .ifname, ip: .addr_info[].local} | join(":")') ; do
+    _ips[${_iface%:*}]="${_iface##*:}"
+  done
 
+  selected="$(printf '%s\n' "${!_ips[@]}" | dmenu -i -l 20 -p "ips:" "$@")"
+  [ -z "${selected}" ] && exit
+  echo "${_ips["${selected}"]}" | xclip -r -selection clipboard
+}
 
-selected="$(printf '%s\n' "${!_ips[@]}" | dmenu -i -l 20 -p "ips:" "$@")"
-[ -z "${selected}" ] && exit
-echo "${_ips["${selected}"]}" | xclip -r -selection clipboard
-
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"

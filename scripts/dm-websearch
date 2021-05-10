@@ -28,16 +28,21 @@ fi
 # shellcheck disable=SC1090
 source "$(get_config)"
 
-# As this is loaded from other file it is technically not defined
-# shellcheck disable=SC2154 # Choosing  a search engine by name from array above.
-engine=$(printf '%s\n' "${!search_options[@]}" | sort | dmenu -i -l 20 -p 'Choose search engine:') "$@" || exit
 
-# Getting the URL of the search engine we chose.
-url="${search_options["${engine}"]}"
+main() {
+  # As this is loaded from other file it is technically not defined
+  # shellcheck disable=SC2154 # Choosing  a search engine by name from array above.
+  engine=$(printf '%s\n' "${!search_options[@]}" | sort | dmenu -i -l 20 -p 'Choose search engine:') "$@" || exit
 
-# Searching the chosen engine.
-query=$(echo "$engine" | dmenu -p 'Enter search query:')
+  # Getting the URL of the search engine we chose.
+  url="${search_options["${engine}"]}"
 
-# Display search results in web browser
-# shellcheck disable=SC2154
-${websearch_browser} "${url}${query}"
+  # Searching the chosen engine.
+  query=$(echo "$engine" | dmenu -p 'Enter search query:')
+
+  # Display search results in web browser
+  # shellcheck disable=SC2154
+  ${websearch_browser} "${url}${query}"
+}
+
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"

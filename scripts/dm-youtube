@@ -23,21 +23,25 @@ fi
 # shellcheck disable=SC1090
 source "$(get_config)"
 
-# Sorts the array and lets you select a channel with dmenu
-# As this is loaded from other file it is technically not defined
-# shellcheck disable=SC2154
-choice=$(printf '%s\n' "${!youtube_channels[@]}" | sort | dmenu -i -l 20 -p 'Select Channel:' "$@")
+main() {
+  # Sorts the array and lets you select a channel with dmenu
+  # As this is loaded from other file it is technically not defined
+  # shellcheck disable=SC2154
+  choice=$(printf '%s\n' "${!youtube_channels[@]}" | sort | dmenu -i -l 20 -p 'Select Channel:' "$@")
 
-# The "chosen" variable takes the choice variable, sets it back through the array, chooses the Youtube link and turns it into the RSS link
-chosen="$(curl -s "${youtube_channels[${choice}]}" | grep -i rss | sed '0,/^.*RSS/ s//RSS/' | cut -d'"' -f3)"
+  # The "chosen" variable takes the choice variable, sets it back through the array, chooses the Youtube link and turns it into the RSS link
+  chosen="$(curl -s "${youtube_channels[${choice}]}" | grep -i rss | sed '0,/^.*RSS/ s//RSS/' | cut -d'"' -f3)"
 
-# Takes the RSS link and prints out the titles and video links, then you pick your video with dmenu
-video_select=$(curl -s "$chosen" | grep "media:title\|media:content url="| cut -d'"' -f2 | cut -d'>' -f2 | cut -d'<' -f1 | dmenu -i -l 20 -p "Select Video:")
+  # Takes the RSS link and prints out the titles and video links, then you pick your video with dmenu
+  video_select=$(curl -s "$chosen" | grep "media:title\|media:content url="| cut -d'"' -f2 | cut -d'>' -f2 | cut -d'<' -f1 | dmenu -i -l 20 -p "Select Video:")
 
-# Until loop: until the video_select variable contains "http" in it, it doesn't even try to load it in a browser but instead it makes you reselect the video
-until [[ "$video_select" == http* ]]; do 
-  video_select=$(curl -s "$chosen" | grep "media:title\|media:content url="| cut -d'"' -f2 | cut -d'>' -f2 | cut -d'<' -f1 | dmenu -i -l 20 -p "Error! Please select the link not a title:")
-done
-# After the respective video is chosen, run it in your web browser
-# shellcheck disable=SC2154
-$youtube_browser "$video_select"
+  # Until loop: until the video_select variable contains "http" in it, it doesn't even try to load it in a browser but instead it makes you reselect the video
+  until [[ "$video_select" == http* ]]; do 
+    video_select=$(curl -s "$chosen" | grep "media:title\|media:content url="| cut -d'"' -f2 | cut -d'>' -f2 | cut -d'<' -f1 | dmenu -i -l 20 -p "Error! Please select the link not a title:")
+  done
+  # After the respective video is chosen, run it in your web browser
+  # shellcheck disable=SC2154
+  $youtube_browser "$video_select"
+}
+
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"

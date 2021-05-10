@@ -27,18 +27,21 @@ fi
 # shellcheck disable=SC1090
 source "$(get_config)"
 
-# Picking a subreddit from the above reddit_list.
-# As this is loaded from other file it is technically not defined
-# shellcheck disable=SC2154
-subreddit_list+=( "Quit" )
-_subreddit=$(printf '%s\n' "${subreddit_list[@]}" | dmenu -i -l 20 -p "Choose a subreddit:" "$@") || exit
+main() {
+  # Picking a subreddit from the above reddit_list.
+  # As this is loaded from other file it is technically not defined
+  # shellcheck disable=SC2154
+  subreddit_list+=( "Quit" )
+  _subreddit=$(printf '%s\n' "${subreddit_list[@]}" | dmenu -i -l 20 -p "Choose a subreddit:" "$@") || exit
 
-# Show the last 20 posts (titles and ids) from the chosen subreddit.
-post_title=$(bash reddio print -f '$num. $title $id$nl' -l 20 "$_subreddit" | \
-dmenu -i -l 20 -p 'Last 20 posts on '"$_subreddit" "$@")
+  # Show the last 20 posts (titles and ids) from the chosen subreddit.
+  post_title=$(bash reddio print -f '$num. $title $id$nl' -l 20 "$_subreddit" | \
+  dmenu -i -l 20 -p 'Last 20 posts on '"$_subreddit" "$@")
 
-# Display contents of chosen post in a zenity text box.
-post_id=$(printf '%s\n' "$post_title" | awk '{print $NF}')
-bash reddio print -f ' TITLE: $title$nl SUBMITTED: $created_pretty$nl AUTHOR: $author$nl$nl$text' by_id/"$post_id" | \
-zenity --text-info --height=600 --width=600 || exit
+  # Display contents of chosen post in a zenity text box.
+  post_id=$(printf '%s\n' "$post_title" | awk '{print $NF}')
+  bash reddio print -f ' TITLE: $title$nl SUBMITTED: $created_pretty$nl AUTHOR: $author$nl$nl$text' by_id/"$post_id" | \
+  zenity --text-info --height=600 --width=600 || exit
+}
 
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"

@@ -9,7 +9,7 @@
 #               Simon Ingelsson
 
 set -euo pipefail
-(return 0 2>/dev/null) && sourced=1 || sourced=0
+
 _path=$(dirname "$(realpath "$0")")
 [[ ! -f "${_path}/_dm-helper.sh" ]] && echo "No helper-script found"
 # shellcheck disable=SC1090,SC1091
@@ -19,7 +19,7 @@ source "$(get_config)"
 
 check_updated_config
 
-function dm-wall_main() {
+function main() {
     local _self
     declare -A _scripts
 
@@ -40,6 +40,4 @@ function dm-wall_main() {
     fi
 }
 
-if [[ ${sourced} -eq 0 ]]; then
-    dm-wall_main "$@"
-fi
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
