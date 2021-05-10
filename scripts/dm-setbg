@@ -43,6 +43,7 @@ source "$(get_config)"
 
 
 help() {
+    # shellcheck disable=SC2154
     printf '
     ## Usage
     run dmwall without any argument to select a wallpaper from %s\n

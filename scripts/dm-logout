@@ -71,7 +71,8 @@ case $choice in
         fi
         ;;
     'Lock screen')
-        ${LOCKER}
+        # shellcheck disable=SC2154
+        ${logout_locker}
         ;;
     'Reboot')
         if [[ "$(echo -e "No\nYes" | dmenu -i -p "${choice}?" "${@}" )" == "Yes" ]]; then

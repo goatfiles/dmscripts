@@ -35,10 +35,12 @@ _quickmarks_file="$HOME/.config/qutebrowser/quickmarks"
 # Do query against sqlite3 database expecting two columns (title, url)
 # ARGS: "file" "query"
 function cacheHistory() {
-  sqlite_separator='=%='
-  file=${1}
-  query=${2}
-  [[ ${DMBROWSER_SHOW} -eq 1 ]] && browser=${3-} || browser=""
+  local sqlite_separator='=%='
+  local file=${1}
+  local query=${2}
+  local
+  # shellcheck disable=SC2154
+  [[ ${bookman_show_source} -eq 1 ]] && browser=${3-} || browser=""
 
   sqlCmd="sqlite3 -separator ${sqlite_separator}"
   printf '%s\n' "$(${sqlCmd} "${file}" "${query}")" | \

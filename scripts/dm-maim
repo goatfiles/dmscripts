@@ -30,6 +30,7 @@ source "$(get_config)"
 # Defining our config location
 
 # Makes sure the directory exists.
+# shellcheck disable=SC2154
 mkdir -p "${maim_dir}"
 
 getStamp() {
@@ -84,7 +85,7 @@ declare -a destination=( "File" "Clipboard" "Both" )
 dest=$(printf '%s\n' "${destination[@]}" | dmenu -i -l 20 -p 'Destination:' "$@" ) || exit 1
 case "$dest" in
   'File')
-    # shellcheck disable=SC2086
+    # shellcheck disable=SC2086,SC2154
     maim ${_maim_args} "${maim_dir}/${maim_file_prefix}-${_file_type}-$(getStamp).png"
   ;;
   'Clipboard')

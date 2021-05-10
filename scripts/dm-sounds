@@ -57,7 +57,8 @@ if [ "$choice" == "Choose sound file" ]; then
   # Kill PID saved in cache file.
   kill "$(cat "$HOME/.cache/dmsounds")" || echo "ffplay was not running."
   # Play the chosen sound file.
-  ffplay -nodisp -loop 0 "$soundDir/$choice" &
+  # shellcheck disable=SC2154
+  ffplay -nodisp -loop 0 "$sounds_dir/$choice" &
   # Get PID for the above command and write to cache.
   _pid=$!
   echo "$_pid" > "$HOME/.cache/dmsounds"
@@ -67,7 +68,7 @@ elif [ "$choice" == "Play random sound" ]; then
   # Kill PID saved in cache file.
   kill "$(cat "$HOME/.cache/dmsounds")" || echo "ffplay was not running."
   # Play random sound file.
-  ffplay -nodisp -loop 0 "$soundDir/$getRand" &
+  ffplay -nodisp -loop 0 "$sounds_dir/$getRand" &
   # Get PID for the above command and write to cache.
   _pid=$!
   echo "$_pid" > "$HOME/.cache/dmsounds"

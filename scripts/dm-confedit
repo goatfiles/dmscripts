@@ -8,9 +8,6 @@
 # Contributors: Derek Taylor
 #               Simon Ingelsson
 #               HostGrady
-# Usage:
-# to use other editor than emacsclient set DMEDITOR accordingly
-#   Example: `DMEDITOR="alacritty -e nvim" ./dmconf`
 
 # Set with the flags "-e", "-u","-o pipefail" cause the script to fail
 # if certain things happen, which is a good thing.  Otherwise, we can
@@ -44,7 +41,8 @@ choice=$(printf '%s\n' "${!_clean_list[@]}" | sort | dmenu -i -l 20 -p 'Edit con
 # What to do when/if we choose a file to edit.
 if [ "$choice" ]; then
   cfg=$(printf '%s\n' "${_clean_list["${choice}"]}")
-  $DMEDITOR "$cfg"
+  # shellcheck disable=SC2154
+  $confedit_editor "$cfg"
 
 # What to do if we just escape without choosing anything.
 else

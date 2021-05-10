@@ -39,4 +39,5 @@ until [[ "$video_select" == http* ]]; do
   video_select=$(curl -s "$chosen" | grep "media:title\|media:content url="| cut -d'"' -f2 | cut -d'>' -f2 | cut -d'<' -f1 | dmenu -i -l 20 -p "Error! Please select the link not a title:")
 done
 # After the respective video is chosen, run it in your web browser
-$DMBROWSER "$video_select"
+# shellcheck disable=SC2154
+$youtube_browser "$video_select"

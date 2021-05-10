@@ -39,4 +39,5 @@ url="${search_options["${engine}"]}"
 query=$(echo "$engine" | dmenu -p 'Enter search query:')
 
 # Display search results in web browser
-${DMBROWSER} "${url}${query}"
+# shellcheck disable=SC2154
+${websearch_browser} "${url}${query}"

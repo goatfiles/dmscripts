@@ -6,12 +6,15 @@
 # `cp /etc/dmscripts/config ${HOME}/.config/dmscripts/config`
 
 # Defined variables, modify anything in quotes to your prefered software
-DMEDITOR="emacsclient -c -a emacs"
 DMBROWSER="brave"
-DMBROWSER_SHOW=1
 DMTERM="st -e"
-LOCKER='slock'
-NOTIFIER='notify-send'
+
+# dm-logout
+logout_locker='slock'
+
+# dm-bookman 
+bookman_show_source=1
+
 
 # dm-sounds
 sounds_dir="${HOME}/.config/dmscripts/dmsounds"
@@ -25,6 +28,7 @@ maim_file_prefix="maim"
 
 
 # dm-confedit
+confedit_editor="emacsclient -c -a emacs"
 declare -A confedit_list
 confedit_list[confedit]="$HOME/.config/dmscripts/config"
 confedit_list[alacritty]="$HOME/.config/alacritty/alacritty.yml"
@@ -90,6 +94,7 @@ declare -a reddit_list=(
 
 # Search engine config 
 
+websearch_browser="brave"
 declare -A websearch
 # Syntax:
 # websearch[name]="https://www.example.com/search?q="
@@ -134,6 +139,7 @@ websearch[stackoverflow]="https://stackoverflow.com/search?q="
 
 # Think of these as your "subscribed channels", name the channel in the square brackets then put the channel URL in the quotation marks
 # Syntax: channels[name]="https://www.youtube.com/link/to/channel"
+youtube_browser="brave"
 declare -A youtube_channels
 youtube_channels[distrotube]="https://www.youtube.com/c/DistroTube/featured"
 
