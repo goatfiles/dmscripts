@@ -32,10 +32,10 @@ source "$(get_config)"
 main() {
   # As this is loaded from other file it is technically not defined
   # shellcheck disable=SC2154 # Choosing  a search engine by name from array above.
-  engine=$(printf '%s\n' "${!search_options[@]}" | sort | dmenu -i -l 20 -p 'Choose search engine:') "$@" || exit
+  engine=$(printf '%s\n' "${!websearch[@]}" | sort | dmenu -i -l 20 -p 'Choose search engine:') "$@" || exit
 
   # Getting the URL of the search engine we chose.
-  url="${search_options["${engine}"]}"
+  url="${websearch["${engine}"]}"
 
   # Searching the chosen engine.
   query=$(echo "$engine" | dmenu -p 'Enter search query:')
