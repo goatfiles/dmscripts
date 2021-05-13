@@ -14,7 +14,10 @@
 	- [ ] Indentify and fix any other issues
 # Bugs and Script Specific Stuff
 - [ ] \_dm-helper.sh
-	- [ ] Refrence: [Merge Request 52](https://gitlab.com/dwt1/dmscripts/-/merge_requests/52). Error in AUR build, unclear if it is just an AUR issue, a makefile issue or an issue with the helper script altogether. More clarity and testing needed.
+	- [ ] Refrence: [Merge Request 52](https://gitlab.com/dwt1/dmscripts/-/merge_requests/52). 
+	
+	Error in AUR build, unclear if it is just an AUR issue, a makefile issue or an issue with the helper script altogether. More clarity and testing needed.
+
 ## Template
 - [ ] Script name
 	- [ ] Issue number plus brief description of the issue
