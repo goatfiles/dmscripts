@@ -17,6 +17,11 @@
 	- [ ] Refrence: [Merge Request 52](https://gitlab.com/dwt1/dmscripts/-/merge_requests/52). 
 	
 	Error in AUR build, unclear if it is just an AUR issue, a makefile issue or an issue with the helper script altogether. More clarity and testing needed.
+- [ ] dm-websearch
+	- [ ] Refrence: [Issue 20](https://gitlab.com/dwt1/dmscripts/-/issues/20). 
+	
+	Typing queries with spaces (seemingly) while using Chromium based browsers causes the script to behave incorrectly. This bug has not been reproduced by anyone so far, DT tried it in Brave and it didn't work.
+
 
 ## Template
 - [ ] Script name
