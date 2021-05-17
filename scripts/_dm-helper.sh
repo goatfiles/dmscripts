@@ -87,6 +87,7 @@ parse_rss() {
         'entry')
           title=''
           link=''
+          published=''
           ;;
         'media:title')
           title="$VALUE"
@@ -94,8 +95,11 @@ parse_rss() {
         'yt:videoId')
           link="$VALUE"
           ;;
+        'published')
+          published="$(date --date="${VALUE}" "+%Y-%m-%d %H:%M")"
+            ;;
         '/entry')
-          echo "${link} | ${title}"
+          echo " ${published} | ${link} | ${title}"
           ;;
         esac
   done
