@@ -18,11 +18,6 @@
 
 	A lot of scripts return 0 when failing or quitting, they should return 1 as 0 indicates success.
 
-- [ ] dm-bookman
-	- [ ] Refrence: NA
-
-	Important variables like ```_bookmark_file``` are not included in the config file. This also means that qutebrowser remains a hardcoded dependency. See lines 23-31 for an example.
-
 - [x] \_dm-helper.sh
 	- [x] Refrence: [Merge Request 52](https://gitlab.com/dwt1/dmscripts/-/merge_requests/52). 
 	
@@ -30,10 +25,15 @@
 
 	From my understanding, this was patched.
 
+- [ ] dm-bookman
+	- [ ] Refrence: NA
+
+	Important variables like ```_bookmark_file``` are not included in the config file. This also means that qutebrowser remains a hardcoded dependency. See lines 23-31 for an example.
+
 - [ ] dm-pacman
 	- [ ] Refrence: NA
 
-	dm-pacman has bad fail saves, this could lead the user to remove packages they don't want to or installing packages they don't want to. See lines 41 onward for examples.
+	dm-pacman has bad fail-saves, this could lead the user to remove packages they don't want to or installing packages they don't want to. See lines 41 onward for examples.
 
 - [ ] dm-sounds
 	- [ ] Refrence: NA
