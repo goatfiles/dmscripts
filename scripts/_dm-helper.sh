@@ -71,3 +71,32 @@ check_updated_config() {
     echo  "New revision of the configuration detected, please review and set ${_base_file_revision} in ${_config_file} when done"
   fi
 }
+
+
+
+xmlgetnext () {
+  local IFS='>'
+  # we need to mangle backslashes for this to work
+  # shellcheck disable=SC2162
+  read -d '<' TAG VALUE
+}
+
+parse_rss() {
+  echo "$1" | while xmlgetnext ; do
+    case $TAG in
+        'entry')
+          title=''
+          link=''
+          ;;
+        'media:title')
+          title="$VALUE"
+          ;;
+        'yt:videoId')
+          link="$VALUE"
+          ;;
+        '/entry')
+          echo "${link} | ${title}"
+          ;;
+        esac
+  done
+}
