@@ -37,10 +37,10 @@ main() {
   _feed_url="https://www.youtube.com/feeds/videos.xml?channel_id=${_channel_id}"
 
   # parse rss
-  _video_list=$(parse_rss "$(curl -s "${_feed_url}")")
+  _video_list=$(parse_rss "$(curl -s "${_feed_url}")" )
 
-  _video=$(printf '%s\n' "${_video_list}" | sort | dmenu -i -l 20 -p 'Select Video' "$@")
-  _video_id=$(echo "${_video}" | awk '{print $1}')
+  _video=$(printf '%s\n' "${_video_list}" | sort -r | dmenu -i -l 20 -p 'Select Video' "$@")
+  _video_id=$(echo "${_video}" | awk -F'|' '{print $2}' | sed -e 's/^[ \t]*//')
 
   if [[ -n ${_video_id} ]]; then
     # After the video is chosen, run it in your web browser
