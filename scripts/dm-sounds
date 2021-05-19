@@ -31,6 +31,9 @@ source "$(get_config)"
 
 
 main() {
+  # Check if sounds_dir is a real directory 
+  # shellcheck disable=SC2154
+  [ ! -d "${sounds_dir}" ] && err "The dm-sounds folder could not be found, place your sounds in ${sounds_dir}."
   # Produces a listing of the sound files.
   # shellcheck disable=SC2154
   readarray -t _sounds_list < <(find "${sounds_dir}" \( -iname "*.mp3" -o -iname "*.m4a" -o -iname "*.ogg" \) -printf '%P\n')
