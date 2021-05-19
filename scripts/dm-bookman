@@ -97,33 +97,33 @@ generateHistory() {
 }
 
 main() {
-  local bmlist='' 
-  local qmlist=''
   local list=""
-
   # History list is formed by using grep "http" from the history table.
   generateHistory
+  # reformat from csv format to make it look good (removing "" around titles with space)
   histlist=$( awk -F"," '{gsub(/[:"]/,"",$2)}1' OFS="," < "${_cache_file}.sorted" | awk -F, '{print $1" | "$2" - "$3}' )
 
   if [[ -f ${_quickmarks_file} ]]; then
+    local qmlist=''
     qmlist=$(awk '{print "["$1"] - "$NF}' "${_quickmarks_file}" | sort)
     [[ -n "${qmlist}" ]] && list="$(printf '%s\n' "${list}" "${qmlist}" "${_bookman_separator}")"
   fi
 
   if [[ -f ${_bookmark_file} ]]; then
+    local bmlist='' 
     bmlist=$(awk '{print $2" - "$1}' "${_bookmark_file}")
     [[ -n "${bmlist}" ]] && list="$(printf '%s\n' "${list}" "${bmlist}" "${_bookman_separator}")"
   fi
 
   # Piping the lists into dmenu.
   # We use "printf '%s\n'" to format the array one item to a line.
-  # The URLs are listed quickmarks first, then the _separator, and then bookmarks and lastly history
+  # The URLs are listed quickmarks, bookmarks and lastly history
+  local choice=
   choice=$( printf '%s\n' "${list}" "${histlist}" | sed '/^[[:space:]]*$/d' | dmenu -i -l 20 -p "${DMBROWSER} open:" "$@" )
 
   # What to do if the separator is chosen from the list.
   # We simply launch qutebrowser without any URL arguments.
-  # shellcheck disable=SC2154
-  if [ "$choice" ]; then
+  if [ -n "$choice" ]; then
     [[ "$choice" == "$_bookman_separator" ]] && exit
     # What to do when/if we choose a URL to view.
     url=$(echo "${choice}" | awk '{print $NF}') || exit
