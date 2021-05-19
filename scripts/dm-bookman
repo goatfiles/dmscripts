@@ -42,9 +42,7 @@ function cacheHistory() {
   # shellcheck disable=SC2154
   [[ ${bookman_show_source} -eq 1 ]] && browser=${3-} || browser=""
   [[ -f "${_file}" ]] || return
-  sqlCmd="sqlite3 -json "
-    ${sqlCmd} "${_file}" "${_query}"  | jq -r '.[]| [ "'"${browser^}"' | ", .title, " - ", .url  ]|@tsv' | sed "s/${_tab}//g"  > "${_cache_dir}/${browser}.data"
-
+  sqlite3 -separator ' | ' "${_file}" "${_query}" > "${_cache_dir}/${browser}.data"
 }
 
 # Wrap getting history so we can call it only if the cache is old
@@ -60,24 +58,24 @@ generateHistory() {
 
   _chromium_history="${HOME}/.config/chromium/Default/History"
   if [[ -f ${_chromium_history} ]]; then
-    SQL="SELECT title, url FROM urls where url like 'http%';"
+    SQL="SELECT 'Chromium', title, url FROM urls where url like 'http%';"
     cacheHistory "${_chromium_history}" "${SQL}" "chromium"
   fi
 
   _brave_history="${HOME}/.config/BraveSoftware/Brave-Browser/Default/History"
   if [[ -f ${_brave_history} ]]; then
-    SQL="SELECT title, url FROM urls where url like 'http%';"
+    SQL="SELECT 'Brave', title, url FROM urls where url like 'http%';"
     cacheHistory "${_brave_history}" "${SQL}" "brave"
   fi
 
   _qutebrowser_history="${HOME}/.local/share/qutebrowser/history.sqlite"
   if [[ -f ${_qutebrowser_history} ]]; then
-    SQL="SELECT title, url FROM history where url like 'http%';"
+    SQL="SELECT 'Qutebrowser', title, url FROM history where url like 'http%';"
     cacheHistory "${_qutebrowser_history}" "${SQL}" "qutebrowser"
   fi
 
   if [[ -d "${HOME}/.mozilla/firefox" ]]; then 
-    SQL="PRAGMA encoding='UTF-8'; select p.title,p.url from moz_historyvisits as h, moz_places as p where p.id == h.place_id order by url"
+    SQL="PRAGMA encoding='UTF-8'; select 'Firefox', p.title,p.url from moz_historyvisits as h, moz_places as p where p.id == h.place_id order by url"
     cd "${HOME}/.mozilla/firefox"
     for db in */places.sqlite; do
       DB=$(realpath "${db}")
