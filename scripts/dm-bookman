@@ -38,14 +38,13 @@ _quickmarks_file="$HOME/.config/qutebrowser/quickmarks"
 function cacheHistory() {
   local _file=${1}
   local _query=${2}
+  local _tab=$'\t'
   # shellcheck disable=SC2154
   [[ ${bookman_show_source} -eq 1 ]] && browser=${3-} || browser=""
   [[ -f "${_file}" ]] || return
+  sqlCmd="sqlite3 -json "
+    ${sqlCmd} "${_file}" "${_query}"  | jq -r '.[]| [ "'"${browser^}"' | ", .title, " - ", .url  ]|@tsv' | sed "s/${_tab}//g"  > "${_cache_dir}/${browser}.data"
 
-  sqlCmd="sqlite3 -csv "
-  if ${sqlCmd} "${_file}" "${_query}" > "${_cache_dir}/${browser}.csv" 2>/dev/null; then
-    return
-  fi
 }
 
 # Wrap getting history so we can call it only if the cache is old
@@ -57,6 +56,7 @@ generateHistory() {
   fi
   # Make sure cache is empty and exists
   echo -n "" > "${_cache_file}"
+  echo -n "" > "${_cache_file}.sorted"
 
   _chromium_history="${HOME}/.config/chromium/Default/History"
   if [[ -f ${_chromium_history} ]]; then
@@ -85,12 +85,8 @@ generateHistory() {
     done
   fi
 
-  while IFS= read -r browser; do
-    while read -r line; do 
-      local name=${browser^}
-      echo "${name%.*},${line}" >> "${_cache_file}" 
-    done < "${_cache_dir}/${browser}"
-  done < <( find "${_cache_dir}" -iname "*.csv" -printf '%P\n')
+  # Merge .data-files
+  find "${_cache_dir}" -iname "*.data" -print0 | xargs -0 cat > "${_cache_file}"
 
   # reverse each line and then sorting on url making sure they are unique then restoring the lines
   rev "${_cache_file}" | sort -u -t' ' -r -k1,1 |rev | sort  > "${_cache_file}.sorted"
@@ -100,8 +96,7 @@ main() {
   local list=""
   # History list is formed by using grep "http" from the history table.
   generateHistory
-  # reformat from csv format to make it look good (removing "" around titles with space)
-  histlist=$( awk -F"," '{gsub(/[:"]/,"",$2)}1' OFS="," < "${_cache_file}.sorted" | awk -F, '{print $1" | "$2" - "$3}' )
+  histlist=$(cat "${_cache_file}.sorted")
 
   if [[ -f ${_quickmarks_file} ]]; then
     local qmlist=''
@@ -127,7 +122,7 @@ main() {
     [[ "$choice" == "$_bookman_separator" ]] && exit
     # What to do when/if we choose a URL to view.
     url=$(echo "${choice}" | awk '{print $NF}') || exit
-    nohup "${DMBROWSER}" "$url" >/dev/null 2>&1 &
+    nohup "${DMBROWSER}" "${url}" >/dev/null 2>&1 &
   else
       # What to do if we just escape without choosing anything.
       echo "Program terminated." && exit 1
