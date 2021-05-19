@@ -72,7 +72,16 @@ check_updated_config() {
   fi
 }
 
+# Simple warn function
+warn () {
+  printf 'Warn: %s\n' "$1"
+}
 
+# Simple error function
+err () { 
+  printf 'Error: %s\n' "$1"
+  exit 1
+}
 
 xmlgetnext () {
   local IFS='>'
