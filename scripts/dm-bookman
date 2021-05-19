@@ -38,7 +38,6 @@ _quickmarks_file="$HOME/.config/qutebrowser/quickmarks"
 function cacheHistory() {
   local _file=${1}
   local _query=${2}
-  local _tab=$'\t'
   # shellcheck disable=SC2154
   [[ ${bookman_show_source} -eq 1 ]] && browser=${3-} || browser=""
   [[ -f "${_file}" ]] || return
