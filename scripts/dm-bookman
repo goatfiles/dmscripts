@@ -22,7 +22,9 @@ fi
 # shellcheck disable=SC1090
 source "$(get_config)"
 
-_cache_file="${HOME}/.cache/dmbrowserhistory"
+_cache_dir="${HOME}/.cache/dm-bookman"
+_cache_file="${_cache_dir}/cache"
+mkdir -p "${_cache_dir}"
 # A separator that will appear in between quickmarks, bookmarks and history URLs.
 _bookman_separator="----------"
 # Defining location of bookmarks file
@@ -34,21 +36,22 @@ _quickmarks_file="$HOME/.config/qutebrowser/quickmarks"
 # Do query against sqlite3 database expecting two columns (title, url)
 # ARGS: "file" "query"
 function cacheHistory() {
-  local _sqlite_separator='=%='
   local _file=${1}
   local _query=${2}
   # shellcheck disable=SC2154
   [[ ${bookman_show_source} -eq 1 ]] && browser=${3-} || browser=""
+  [[ -f "${_file}" ]] || return
 
-  sqlCmd="sqlite3 -separator ${_sqlite_separator}"
-  printf '%s\n' "$(${sqlCmd} "${_file}" "${_query}")" | \
-  awk -F "${_sqlite_separator}" -v browser="${browser} " '{print browser""$1" - "$NF}' >> "${_cache_file}"
+  sqlCmd="sqlite3 -csv "
+  if ${sqlCmd} "${_file}" "${_query}" > "${_cache_dir}/${browser}.csv" 2>/dev/null; then
+    return
+  fi
 }
 
 # Wrap getting history so we can call it only if the cache is old
 generateHistory() {
-  if [[ -f "${_cache_file}.sorted" ]]; then
-    if [ $(( $(date +%s) - $(date +%s -r "${_cache_file}.sorted") )) -lt 180 ]; then
+  if [[ -f "${_cache_file}" ]]; then
+    if [ $(( $(date +%s) - $(date +%s -r "${_cache_file}") )) -lt 180 ]; then
       return 0
     fi
   fi
@@ -58,19 +61,19 @@ generateHistory() {
   _chromium_history="${HOME}/.config/chromium/Default/History"
   if [[ -f ${_chromium_history} ]]; then
     SQL="SELECT title, url FROM urls where url like 'http%';"
-    cacheHistory "${_chromium_history}" "${SQL}" "(chromium)"
+    cacheHistory "${_chromium_history}" "${SQL}" "chromium"
   fi
 
   _brave_history="${HOME}/.config/BraveSoftware/Brave-Browser/Default/History"
   if [[ -f ${_brave_history} ]]; then
     SQL="SELECT title, url FROM urls where url like 'http%';"
-    cacheHistory "${_brave_history}" "${SQL}" "(brave)"
+    cacheHistory "${_brave_history}" "${SQL}" "brave"
   fi
 
   _qutebrowser_history="${HOME}/.local/share/qutebrowser/history.sqlite"
   if [[ -f ${_qutebrowser_history} ]]; then
     SQL="SELECT title, url FROM history where url like 'http%';"
-    cacheHistory "${_qutebrowser_history}" "${SQL}" "(qutebrowser)"
+    cacheHistory "${_qutebrowser_history}" "${SQL}" "qutebrowser"
   fi
 
   if [[ -d "${HOME}/.mozilla/firefox" ]]; then 
@@ -78,14 +81,20 @@ generateHistory() {
     cd "${HOME}/.mozilla/firefox"
     for db in */places.sqlite; do
       DB=$(realpath "${db}")
-      cacheHistory "${DB}" "${SQL}" "(firefox)"
+      cacheHistory "${DB}" "${SQL}" "firefox"
     done
   fi
+
+  while IFS= read -r browser; do
+    while read -r line; do 
+      local name=${browser^}
+      echo "${name%.*},${line}" >> "${_cache_file}" 
+    done < "${_cache_dir}/${browser}"
+  done < <( find "${_cache_dir}" -iname "*.csv" -printf '%P\n')
 
   # reverse each line and then sorting on url making sure they are unique then restoring the lines
   rev "${_cache_file}" | sort -u -t' ' -r -k1,1 |rev | sort  > "${_cache_file}.sorted"
 }
-
 
 main() {
   local bmlist='' 
@@ -94,24 +103,17 @@ main() {
 
   # History list is formed by using grep "http" from the history table.
   generateHistory
-  histlist=$(cat "${_cache_file}.sorted" )
+  histlist=$( awk -F"," '{gsub(/[:"]/,"",$2)}1' OFS="," < "${_cache_file}.sorted" | awk -F, '{print $1" | "$2" - "$3}' )
 
   if [[ -f ${_quickmarks_file} ]]; then
-      qmlist=$(awk '{print "["$1"] - "$NF}' "${_quickmarks_file}" | sort)
-    if [[ -n "${qmlist}" ]]; then
-      [[ -n "${list}" ]] && list="$(printf '%s\n' "${list}" "${qmlist}" "${_bookman_separator}")"
-      [[ -z "${list}" ]] && list="$(printf '%s\n' "${qmlist}" "${_bookman_separator}")"
-    fi
+    qmlist=$(awk '{print "["$1"] - "$NF}' "${_quickmarks_file}" | sort)
+    [[ -n "${qmlist}" ]] && list="$(printf '%s\n' "${list}" "${qmlist}" "${_bookman_separator}")"
   fi
 
   if [[ -f ${_bookmark_file} ]]; then
     bmlist=$(awk '{print $2" - "$1}' "${_bookmark_file}")
-    if [[ -n "${bmlist}" ]]; then
-      [[ -n "${list}" ]] && list="$(printf '%s\n' "${list}" "${bmlist}" "${_bookman_separator}")"
-      [[ -z "${list}" ]] && list="$(printf '%s\n' "${bmlist}" "${_bookman_separator}")"
-    fi
+    [[ -n "${bmlist}" ]] && list="$(printf '%s\n' "${list}" "${bmlist}" "${_bookman_separator}")"
   fi
-
 
   # Piping the lists into dmenu.
   # We use "printf '%s\n'" to format the array one item to a line.
