@@ -24,7 +24,7 @@ source "$(get_config)"
 
 _cache_file="${HOME}/.cache/dmbrowserhistory"
 # A separator that will appear in between quickmarks, bookmarks and history URLs.
-bookman_separator="----------"
+_bookman_separator="----------"
 # Defining location of bookmarks file
 _bookmark_file="$HOME/.config/qutebrowser/bookmarks/urls"
 # Defining location of quickmarks file
@@ -34,16 +34,15 @@ _quickmarks_file="$HOME/.config/qutebrowser/quickmarks"
 # Do query against sqlite3 database expecting two columns (title, url)
 # ARGS: "file" "query"
 function cacheHistory() {
-  local sqlite_separator='=%='
-  local file=${1}
-  local query=${2}
-  local
+  local _sqlite_separator='=%='
+  local _file=${1}
+  local _query=${2}
   # shellcheck disable=SC2154
   [[ ${bookman_show_source} -eq 1 ]] && browser=${3-} || browser=""
 
-  sqlCmd="sqlite3 -separator ${sqlite_separator}"
-  printf '%s\n' "$(${sqlCmd} "${file}" "${query}")" | \
-  awk -F "${sqlite_separator}" -v browser="${browser} " '{print browser""$1" - "$NF}' >> "${_cache_file}"
+  sqlCmd="sqlite3 -separator ${_sqlite_separator}"
+  printf '%s\n' "$(${sqlCmd} "${_file}" "${_query}")" | \
+  awk -F "${_sqlite_separator}" -v browser="${browser} " '{print browser""$1" - "$NF}' >> "${_cache_file}"
 }
 
 # Wrap getting history so we can call it only if the cache is old
@@ -56,27 +55,27 @@ generateHistory() {
   # Make sure cache is empty and exists
   echo -n "" > "${_cache_file}"
 
-  _chromium_history="$HOME/.config/chromium/Default/History"
+  _chromium_history="${HOME}/.config/chromium/Default/History"
   if [[ -f ${_chromium_history} ]]; then
     SQL="SELECT title, url FROM urls where url like 'http%';"
     cacheHistory "${_chromium_history}" "${SQL}" "(chromium)"
   fi
 
-  _brave_history="$HOME/.config/BraveSoftware/Brave-Browser/Default/History"
+  _brave_history="${HOME}/.config/BraveSoftware/Brave-Browser/Default/History"
   if [[ -f ${_brave_history} ]]; then
     SQL="SELECT title, url FROM urls where url like 'http%';"
     cacheHistory "${_brave_history}" "${SQL}" "(brave)"
   fi
 
-  _qutebrowser_history="$HOME/.local/share/qutebrowser/history.sqlite"
+  _qutebrowser_history="${HOME}/.local/share/qutebrowser/history.sqlite"
   if [[ -f ${_qutebrowser_history} ]]; then
     SQL="SELECT title, url FROM history where url like 'http%';"
     cacheHistory "${_qutebrowser_history}" "${SQL}" "(qutebrowser)"
   fi
 
-  if [[ -d ~/.mozilla/firefox ]]; then 
+  if [[ -d "${HOME}/.mozilla/firefox" ]]; then 
     SQL="PRAGMA encoding='UTF-8'; select p.title,p.url from moz_historyvisits as h, moz_places as p where p.id == h.place_id order by url"
-    cd ~/.mozilla/firefox ;
+    cd "${HOME}/.mozilla/firefox"
     for db in */places.sqlite; do
       DB=$(realpath "${db}")
       cacheHistory "${DB}" "${SQL}" "(firefox)"
@@ -89,35 +88,47 @@ generateHistory() {
 
 
 main() {
-  generateHistory
-  # Read array of options to choose.
-  readarray -t bmarks < "${_bookmark_file}"
-  readarray -t qmarks < "${_quickmarks_file}"
+  local bmlist='' 
+  local qmlist=''
+  local list=""
 
-  # Sort the bookmark and quickmark lists so that the URL is the last field.
-  # We will awk print the last field later.
   # History list is formed by using grep "http" from the history table.
-  bmlist=$(printf '%s\n' "${bmarks[@]}" | awk '{print $2" - "$1}')
-  qmlist=$(printf '%s\n' "${qmarks[@]}" | awk '{print "["$1"] - "$NF}' | sort)
+  generateHistory
   histlist=$(cat "${_cache_file}.sorted" )
+
+  if [[ -f ${_quickmarks_file} ]]; then
+      qmlist=$(awk '{print "["$1"] - "$NF}' "${_quickmarks_file}" | sort)
+    if [[ -n "${qmlist}" ]]; then
+      [[ -n "${list}" ]] && list="$(printf '%s\n' "${list}" "${qmlist}" "${_bookman_separator}")"
+      [[ -z "${list}" ]] && list="$(printf '%s\n' "${qmlist}" "${_bookman_separator}")"
+    fi
+  fi
+
+  if [[ -f ${_bookmark_file} ]]; then
+    bmlist=$(awk '{print $2" - "$1}' "${_bookmark_file}")
+    if [[ -n "${bmlist}" ]]; then
+      [[ -n "${list}" ]] && list="$(printf '%s\n' "${list}" "${bmlist}" "${_bookman_separator}")"
+      [[ -z "${list}" ]] && list="$(printf '%s\n' "${bmlist}" "${_bookman_separator}")"
+    fi
+  fi
+
 
   # Piping the lists into dmenu.
   # We use "printf '%s\n'" to format the array one item to a line.
   # The URLs are listed quickmarks first, then the _separator, and then bookmarks and lastly history
-  choice=$(printf '%s\n' "${qmlist}" "${bookman_separator}" "${bmlist}" "${bookman_separator}" "${histlist}" | dmenu -i -l 20 -p 'Qutebrowser open:' "$@" ) || exit
+  choice=$( printf '%s\n' "${list}" "${histlist}" | sed '/^[[:space:]]*$/d' | dmenu -i -l 20 -p "${DMBROWSER} open:" "$@" )
 
   # What to do if the separator is chosen from the list.
   # We simply launch qutebrowser without any URL arguments.
   # shellcheck disable=SC2154
-  if [ "$choice" == "$_separator" ]; then
-      nohup "${DMBROWSER}" >/dev/null 2>&1 &
-  # What to do when/if we choose a URL to view.
-  elif [ "$choice" ]; then
+  if [ "$choice" ]; then
+    [[ "$choice" == "$_bookman_separator" ]] && exit
+    # What to do when/if we choose a URL to view.
     url=$(echo "${choice}" | awk '{print $NF}') || exit
     nohup "${DMBROWSER}" "$url" >/dev/null 2>&1 &
-  # What to do if we just escape without choosing anything.
   else
-      echo "Program terminated." && exit 0
+      # What to do if we just escape without choosing anything.
+      echo "Program terminated." && exit 1
   fi
 }
 
