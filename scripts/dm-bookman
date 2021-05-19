@@ -33,8 +33,8 @@ _bookmark_file="$HOME/.config/qutebrowser/bookmarks/urls"
 _quickmarks_file="$HOME/.config/qutebrowser/quickmarks"
 
 
-# Do query against sqlite3 database expecting two columns (title, url)
-# ARGS: "file" "query"
+# Do query against sqlite3 database expecting three columns (browsername, title, url)
+# ARGS: "browsername" "file" "query"
 function cacheHistory() {
   local _file=${1}
   local _query=${2}
