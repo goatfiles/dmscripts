@@ -14,7 +14,6 @@ The scripts included in this repo are:
 + dm-maim - A GUI to maim using dmenu.
 + dm-man - Search for a manpage or get a random one.
 + dm-music - Dmenu as your music player
-+ dm-pacman - A software store using dmenu
 + dm-reddit - Dmenu as a reddit viewer using reddio. *STILL A WORK IN PROGRESS*
 + dm-setbg - A wallpaper setting utility using dmenu, xwallpaper and sxiv
 + dm-sounds - Choose an ambient background to play.
