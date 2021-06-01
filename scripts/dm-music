@@ -43,6 +43,19 @@
 # get hidden bugs that are hard to discover.
 set -euo pipefail
 
+_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd "$(dirname "$(readlink "${BASH_SOURCE[0]}" || echo ".")")" && pwd)"
+if [[  -f "${_path}/_dm-helper.sh" ]]; then
+  # shellcheck disable=SC1090,SC1091
+  source "${_path}/_dm-helper.sh"
+else
+  # shellcheck disable=SC1090
+  echo "No helper-script found"
+fi
+
+# script will not hit this if there is no config-file to load
+# shellcheck disable=SC1090
+source "$(get_config)"
+
 help(){
     printf "Run dm-music without any arguments for all available music\n
     dm-music [options]
@@ -59,7 +72,7 @@ help(){
 
 play(){
     mpc crop > /dev/null 2>&1
-    music="$(mpc listall | dmenu -i -l 10 -p "Music to play")" || exit
+    music="$(mpc listall | ${DMENU} -i -l 10 -p "Music to play")" || exit 1
     mpc -q add "$music"
     mpc del 0 > /dev/null 2>&1
     mpc play
@@ -67,7 +80,7 @@ play(){
 }
 
 queuePlaylist(){
-    playlist="$(mpc lsplaylists | dmenu -i -l 10 -p "Your playlists")" || exit
+    playlist="$(mpc lsplaylists | ${DMENU} -i -l 10 -p "Your playlists")" || exit 1
     mpc -q clear
     mpc load "$playlist"
     mpc -q play 1
@@ -77,7 +90,7 @@ queuePlaylist(){
 currentPlaylist(){
     playlist="$(cat "${HOME}/.cache/current_playlist")"
     music_list="$(mpc playlist "${playlist}")"
-    music="$(echo "${music_list}" | dmenu -i -l 10 -p "Music to play")" || exit
+    music="$(echo "${music_list}" | ${DMENU} -i -l 10 -p "Music to play")" || exit 1
     mpc -q clear
     mpc load "${playlist}" > /dev/null 2>&1
     mpc play "$(echo "${music_list}" | awk -v pattern="$music" '$0 ~ pattern { print NR; exit }')"

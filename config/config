@@ -6,12 +6,22 @@
 # `cp /etc/dmscripts/config ${HOME}/.config/dmscripts/config`
 
 # Defined variables, modify anything in quotes to your prefered software
+
+DMENU="dmenu"
+# DMENU="rofi -dmenu"
+
 DMBROWSER="brave"
+# DMBROWSER="qutebrowser"
+
 DMTERM="st -e"
+# DMTERM="alacritty -e"
+
 DMEDITOR="emacsclient -c -a emacs"
+# DMEDITOR="${DMTERM} -e nvim"
 
 # dm-logout
 logout_locker='slock'
+# logout_locker='dm-tool lock'
 
 # dm-bookman 
 bookman_show_source=1
@@ -151,4 +161,4 @@ colpick_list[white]="#f1f1f0"
 colpick_list[orange]="#ffb86c"
 colpick_list[purple]="#bd9cf9"
 
-_revision=11
+_revision=12
