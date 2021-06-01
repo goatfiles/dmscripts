@@ -32,7 +32,7 @@ main() {
   # As this is loaded from other file it is technically not defined
   # shellcheck disable=SC2154
   selected="$(printf '%s\n' "${!colpick_list[@]}" | ${DMENU} -p "color:" "$@")"
-  [ -z "${selected}" ] && exit
+  [ -z "${selected}" ] && exit 1
   echo "${colpick_list["${selected}"]}" | xclip -r -selection clipboard
 }
 

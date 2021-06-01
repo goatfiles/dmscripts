@@ -72,7 +72,7 @@ help(){
 
 play(){
     mpc crop > /dev/null 2>&1
-    music="$(mpc listall | ${DMENU} -i -l 10 -p "Music to play")" || exit
+    music="$(mpc listall | ${DMENU} -i -l 10 -p "Music to play")" || exit 1
     mpc -q add "$music"
     mpc del 0 > /dev/null 2>&1
     mpc play
@@ -80,7 +80,7 @@ play(){
 }
 
 queuePlaylist(){
-    playlist="$(mpc lsplaylists | ${DMENU} -i -l 10 -p "Your playlists")" || exit
+    playlist="$(mpc lsplaylists | ${DMENU} -i -l 10 -p "Your playlists")" || exit 1
     mpc -q clear
     mpc load "$playlist"
     mpc -q play 1
@@ -90,7 +90,7 @@ queuePlaylist(){
 currentPlaylist(){
     playlist="$(cat "${HOME}/.cache/current_playlist")"
     music_list="$(mpc playlist "${playlist}")"
-    music="$(echo "${music_list}" | ${DMENU} -i -l 10 -p "Music to play")" || exit
+    music="$(echo "${music_list}" | ${DMENU} -i -l 10 -p "Music to play")" || exit 1
     mpc -q clear
     mpc load "${playlist}" > /dev/null 2>&1
     mpc play "$(echo "${music_list}" | awk -v pattern="$music" '$0 ~ pattern { print NR; exit }')"
