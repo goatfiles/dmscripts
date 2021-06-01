@@ -31,7 +31,7 @@ source "$(get_config)"
 main() {
   # As this is loaded from other file it is technically not defined
   # shellcheck disable=SC2154
-  selected="$(printf '%s\n' "${!colpick_list[@]}" | dmenu -p "color:" "$@")"
+  selected="$(printf '%s\n' "${!colpick_list[@]}" | ${DMENU} -p "color:" "$@")"
   [ -z "${selected}" ] && exit
   echo "${colpick_list["${selected}"]}" | xclip -r -selection clipboard
 }

@@ -10,6 +10,19 @@
 # get hidden bugs that are hard to discover.
 set -euo pipefail
 
+_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd "$(dirname "$(readlink "${BASH_SOURCE[0]}" || echo ".")")" && pwd)"
+if [[  -f "${_path}/_dm-helper.sh" ]]; then
+  # shellcheck disable=SC1090,SC1091
+  source "${_path}/_dm-helper.sh"
+else
+  # shellcheck disable=SC1090
+  echo "No helper-script found"
+fi
+
+# script will not hit this if there is no config-file to load
+# shellcheck disable=SC1090
+source "$(get_config)"
+
 help(){
     printf 'dm-usbmount [options]\n
     -h\tDisplays this help menu
@@ -43,7 +56,7 @@ mount(){
     driveCount "$mountable"
     [ "$count" = "1" ] && options="$mountable" || options="$mountable\nall"
 
-    chosen="$(printf '%s' "$options" | dmenu -i -p "Drive to mount?")" || exit
+    chosen="$(printf '%s' "$options" | ${DMENU} -i -p "Drive to mount?")" || exit
     if [ "$chosen" = "all" ]; then
        mountAll 
     else 

@@ -111,7 +111,7 @@ main() {
   # We use "printf '%s\n'" to format the array one item to a line.
   # The URLs are listed quickmarks, bookmarks and lastly history
   local choice=
-  choice=$( printf '%s\n' "${list}" "${histlist}" | sed '/^[[:space:]]*$/d' | dmenu -i -l 20 -p "${DMBROWSER} open:" "$@" )
+  choice=$( printf '%s\n' "${list}" "${histlist}" | sed '/^[[:space:]]*$/d' | ${DMENU} -i -l 20 -p "${DMBROWSER} open:" "$@" )
 
   # What to do if the separator is chosen from the list.
   # We simply launch qutebrowser without any URL arguments.
