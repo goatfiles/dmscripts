@@ -14,6 +14,7 @@ The scripts included in this repo are:
 + dm-maim - A GUI to maim using dmenu.
 + dm-man - Search for a manpage or get a random one.
 + dm-music - Dmenu as your music player
++ dm-record - Records audio, video and webcam.
 + dm-reddit - Dmenu as a reddit viewer using reddio. *STILL A WORK IN PROGRESS*
 + dm-setbg - A wallpaper setting utility using dmenu, xwallpaper and sxiv
 + dm-sounds - Choose an ambient background to play.
@@ -86,6 +87,8 @@ $ yay -S dmscripts-git
 ```
 
 Once installed, the scripts should behave like any other command and can be run by typing the script's name.
+
+NOTE: When installing dmscripts-git, you will see a list of Haskell dependencies that will be installed.  Don't worry!  There is a Haskell program called pandoc that is a "make dependency" for dmscripts-git.  Yay will ask you if you want to "Remove make dependencies after install? y/N?"  Enter "y" and it will install pandoc during the make process and uninstall it later.
 
 ## Installation on Other Linux Distributions
 

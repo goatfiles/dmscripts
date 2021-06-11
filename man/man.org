@@ -26,6 +26,8 @@ Simple logout menu, choose to lock, shutdown, reboot or logout of your computer.
 Dmenu based music player.
 ** dm-bookman
 A bookmark searching tool, search through all qutebrowser quickmarks and bookmarks.
+** dm-record
+Records audio, video and webcam.
 ** dm-reddit
 A reddit viewer using dmenu, still a work in progress.
 ** dm-maim
