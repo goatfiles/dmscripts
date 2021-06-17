@@ -31,8 +31,8 @@ main() {
   # Picking a subreddit from the above reddit_list.
   # As this is loaded from other file it is technically not defined
   # shellcheck disable=SC2154
-  subreddit_list+=( "Quit" )
-  _subreddit=$(printf '%s\n' "${subreddit_list[@]}" | ${DMENU} -i -l 20 -p "Choose a subreddit:" "$@") || exit 1
+  reddit_list+=( "Quit" )
+  _subreddit=$(printf '%s\n' "${reddit_list[@]}" | ${DMENU} -i -l 20 -p "Choose a subreddit:" "$@") || exit 1
 
   # Show the last 20 posts (titles and ids) from the chosen subreddit.
   post_title=$(bash reddio print -f '$num. $title $id$nl' -l 20 "$_subreddit" | \
