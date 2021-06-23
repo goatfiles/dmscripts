@@ -1,7 +1,5 @@
 # Dmenu Scripts (dmscripts)
 
-![Screenshot of dmenu](https://gitlab.com/dwt1/dotfiles/raw/master/.screenshots/dmenu-distrotube01.png)
-
 The scripts included in this repo are:
 
 + dm-bookman - Search your qutebrowser bookmarks, quickmarks and history urls.
@@ -23,6 +21,16 @@ The scripts included in this repo are:
 + dm-wifi - Connect to wifi using dmenu.
 + dm-youtube - Youtube subscriptions without an account or the API tying you down.
 + \_dm-helper.sh Helper scripts adding functionality to other scripts
+
+![Screenshot of dmenu](https://gitlab.com/dwt1/dotfiles/raw/master/.screenshots/dmenu-distrotube01.png)
+
+# Table of Contents
+
+1. [Contributing](#contributing)	
+2. [Dependencies](#dependencies)
+3. [Installation](#installation)
+4. [Configuration](#configuration)
+	
 
 # Contributing
 
@@ -59,15 +67,13 @@ Finally, contributors are asked to look at our [TODO list](TODO.md) as well as t
 
 ## Additional advice
 
-Even though you do not have to do this to contribute, we recommend setting up a mirror repository of this repo if you wish to frequently contribute. New scripts are added almost daily, documentation is also frequently updated so there could be conflicts if your repo is left unupdated for long periods of time. We recommend you follow the [Gitlab documentation](https://docs.gitlab.com/ee/user/project/repository/repository_mirroring.html) for **pulling** from a remote repository.
+Even though you do not have to do this to contribute, we recommend setting up a mirror repository of this repo if you wish to frequently contribute. New scripts are added almost daily, documentation is also frequently updated so there could be conflicts if your repo is left unmaintained for long periods of time. We recommend you follow the [Gitlab documentation](https://docs.gitlab.com/ee/user/project/repository/repository_mirroring.html) for **pulling** from a remote repository.
 
 # Dependencies
 
 Of course, dmenu is a dependency for all of these scripts.  To see the dependencies of each individual script, check the top commented block of text in each script. For installing you will need pandoc and, of course, git.
 
 # Installation
-
-Note: No current install method supports the sample config files, please see the configuration guide below if you wish to use a custom config file.
 
 ## Installation on Arch
 
@@ -88,7 +94,7 @@ $ yay -S dmscripts-git
 
 Once installed, the scripts should behave like any other command and can be run by typing the script's name.
 
-NOTE: When installing dmscripts-git, you will see a list of Haskell dependencies that will be installed.  Don't worry!  There is a Haskell program called pandoc that is a "make dependency" for dmscripts-git.  Yay will ask you if you want to "Remove make dependencies after install? y/N?"  Enter "y" and it will install pandoc during the make process and uninstall it later.
+NOTE: When installing dmscripts-git, you will see a list of Haskell dependencies that will be installed. This is because one of the make dependencies, pandoc, is written in Haskell. Simply enter "y" on the prompt "Remove make dependencies after install" and those programs should go away. Alternatively, [this AUR package](https://aur.archlinux.org/packages/pandoc-bin/) can be downloaded and used as a drop-in replacement if you wish to use the program afterwards.
 
 ## Installation on Other Linux Distributions
 
@@ -101,7 +107,9 @@ $ sudo make clean build
 $ sudo make install
 ```
 
-Once installed, the scripts should behave like any other command and can be run by typing the script's name. It is important to note however that the dependencies are not installed by default, that is up to YOU to do before installing
+Once installed, the scripts should behave like any other command and can be run by typing the script's name. It is important to note however that the dependencies are not installed by default, that is up to YOU to do before installing.
+
+NOTE: Some distributions require the Haskell programming language to be installed as pandoc is a Haskell program. If you wish to use the software without installing Haskell, we recommend [downloading a static build](https://github.com/jgm/pandoc/releases). A guide for installation can be found [on the pandoc github](https://github.com/jgm/pandoc/blob/2.14.0.3/INSTALL.md).
 
 ## Non-installation
 
@@ -133,7 +141,6 @@ Currently, configuration can be done in a few ways:
 + copying config (from repo ./config/config or /etc/dmscripts/config if installed) to ~/.config/dmscripts/config (Recommended)
 + Via the global config file `/etc/dmscripts/config` (will cause diff when updating)
 	+ Maintenance
--+ Via /etc/profile-
 + Via editing the source code (not recommended)
 	+ Changing the Config Location
 
@@ -141,6 +148,7 @@ Currently, configuration can be done in a few ways:
 
 Currently only a "global" config is installed to `/etc/dmscripts/config`.
 To install a user-specific version of the config run the following command:
+
 ```bash
 $ cp -riv config/ "$HOME"/.config/dmscripts
 ```
@@ -166,4 +174,3 @@ config_dirs+=(
 "/etc/dmscripts/config"
 )
 ```
-
