@@ -106,6 +106,7 @@ declare -A websearch
 
 # Search Engines
 websearch[bing]="https://www.bing.com/search?q="
+websearch[brave]="https://search.brave.com/search?q="
 websearch[duckduckgo]="https://duckduckgo.com/?q="
 websearch[gemini search \(https\)]="https://portal.mozz.us/gemini/geminispace.info/search%3F"
 websearch[google]="https://www.google.com/search?q="
