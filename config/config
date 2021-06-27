@@ -17,7 +17,7 @@ DMTERM="st -e"
 # DMTERM="alacritty -e"
 
 DMEDITOR="emacsclient -c -a emacs"
-# DMEDITOR="${DMTERM} -e nvim"
+# DMEDITOR="${DMTERM} vim"
 
 # dm-logout
 logout_locker='slock'
@@ -70,10 +70,9 @@ confedit_list[stumpwm]="$HOME/.config/stumpwm/config"
 confedit_list[surf]="$HOME/surf-distrotube/config.def.h"
 confedit_list[sxhkd]="$HOME/.config/sxhkd/sxhkdrc"
 confedit_list[tabbed]="$HOME/tabbed-distrotube/config.def.h"
-# confedit_list[termite]="$HOME/.config/termite/config" # Termite is deprecated, you should be using alacritty or another terminal emulator
 confedit_list[vifm]="$HOME/.config/vifm/vifmrc"
 confedit_list[vim]="$HOME/.vimrc"
-confedit_list[xmobar mon1 ]="$HOME/.config/xmobar/xmobarrc0"
+confedit_list[xmobar mon1]="$HOME/.config/xmobar/xmobarrc0"
 confedit_list[xmobar mon2]="$HOME/.config/xmobar/xmobarrc1"
 confedit_list[xmobar mon3]="$HOME/.config/xmobar/xmobarrc2"
 confedit_list[xmonad]="$HOME/.xmonad/README.org"
