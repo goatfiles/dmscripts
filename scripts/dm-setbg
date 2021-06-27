@@ -61,7 +61,7 @@ change() {
 
 shuffle() {
     wallpaper=$(find "${setbg_dir}" -type f | shuf -n 1)
-    echo "${setbg_dir}/$wallpaper"
+    echo "$wallpaper"
 }
 
 setbg() {
