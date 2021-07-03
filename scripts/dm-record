@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+# Script name: dm-record
+# Description: Dmenu script to record video,audio,webcam.
+# Dependencies: dmenu, ffmpeg, pulseaudio, alsa, slop (for recording a specific area)
+# GitLab: https://www.gitlab.com/dwt1/dmscripts
+# License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
+# Contributors: ashincoder
+#               HostGrady
+
 # Usage:
 # `$0`: Ask for recording type via dmenu
 # `$0 screencast`: Record both audio and screen
