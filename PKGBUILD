@@ -24,6 +24,7 @@ optdepends=(
   'sxiv: used by dm-setbg'
   'xwallpaper: used by dm-setbg'
   'udisks2: used by dm-usbmount'
+  'python3: used by dm-translate'
   )
 provides=(dmscripts)
 conflicts=(dmscripts)

@@ -2,7 +2,7 @@
 #
 # Script name: dm-translate
 # Description: Translate using Google Translate (through SimplyTranslate)
-# Dependencies: dmenu, python, and curl
+# Dependencies: dmenu, python3, and curl
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: ifrendas
