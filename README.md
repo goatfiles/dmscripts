@@ -20,6 +20,7 @@ The scripts included in this repo are:
 + dm-websearch - Search various search engines (inspired by surfraw).
 + dm-wifi - Connect to wifi using dmenu.
 + dm-youtube - Youtube subscriptions without an account or the API tying you down.
++ dm-translate - Translate using Google Translate (through SimplyTranslate)
 + \_dm-helper.sh Helper scripts adding functionality to other scripts
 
 ![Screenshot of dmenu](https://gitlab.com/dwt1/dotfiles/raw/master/.screenshots/dmenu-distrotube01.png)
