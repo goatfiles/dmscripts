@@ -161,8 +161,6 @@ colpick_list[white]="#f1f1f0"
 colpick_list[orange]="#ffb86c"
 colpick_list[purple]="#bd9cf9"
 
-_revision=13
-
 # dm-translate
 declare -A translate_list
 translate_list[autodetect]="auto"
@@ -274,3 +272,5 @@ translate_list[xhosa]="xh"
 translate_list[yiddish]="yi"
 translate_list[yoruba]="yo"
 translate_list[zulu]="zu"
+
+_revision=13

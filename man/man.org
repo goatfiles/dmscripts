@@ -44,6 +44,8 @@ Using dmenu, setup a wallpaper.
 Connect to wifi using dmenu.
 ** dm-youtube
 Youtube subscriptions without an account or the API tying you down.
+** dm-translate
+Translate using Google Translate (through SimplyTranslate)
 ** _dm-helper.sh 
 Helper scripts adding functionality to other scripts
 

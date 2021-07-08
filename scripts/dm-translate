@@ -26,6 +26,7 @@ fi
 source "$(get_config)"
 
 main() {
+  # shellcheck disable=SC2154
   # Get input and output languages
   from_name=$(printf '%s\n' "${!translate_list[@]}" | sort | ${DMENU} -i -l 20 -p 'Translate from:') "$@" || exit 1
   to_name=$(printf '%s\n' "${!translate_list[@]}" | sort | ${DMENU} -i -l 20 -p 'Translate to:') "$@" || exit 1
