@@ -43,9 +43,10 @@ main() {
 
   # Get the translation
   translation=$(curl -Ss "https://translate.metalune.xyz/?engine=google&text=${query}&sl=${from}&tl=${to}" |
-  	grep "<div><pre id=\"translated_text_container\">" |
-  	sed "s/            <div><pre id=\"translated_text_container\">//" |
-  	sed "s/<\/pre><\/div>//")
+    grep "translation item" |
+    sed -e 's/^[ \t]*//' |
+    sed "s/<textarea class=\"translation item\" placeholder=\"Translation\" readonly>//" |
+    sed "s/<\/textarea>//")
 
   # Copy translation to clipboard and send notification
   echo "$translation" | xclip -r -selection clipboard
