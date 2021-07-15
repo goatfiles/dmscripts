@@ -36,6 +36,7 @@ These are established scripts in our reposiotry. Each is fairly self explanatory
 + dm-reddit
 + dm-setbg
 + dm-sounds
++ dm-translate
 + dm-usbmount
 + dm-websearch
 + dm-wifi
