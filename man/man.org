@@ -37,7 +37,7 @@ Web searching utility using dmenu.
 ** dm-sounds
 Choose a ambient background sound to play.
 ** dm-translate
-Translate using Google Translate (through SimplyTranslate)
+Translate using Google Translate (through Lingva Translate)
 ** dm-usbmount
 USB mounting done suckless, no need for bloated daemons.
 ** dm-setbg
