@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Script name: dm-translate
-# Description: Translate using Google Translate (through SimplyTranslate)
+# Description: Translate using Google Translate (through Lingva Translate)
 # Dependencies: dmenu, python3, and curl
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
@@ -42,10 +42,9 @@ main() {
   query=$(python3 -c "import sys, urllib.parse as ul; print (ul.quote_plus(sys.argv[1]))" "$query")
 
   # Get the translation
-  translation=$(curl -Ss "https://translate.metalune.xyz/?engine=google&text=${query}&sl=${from}&tl=${to}" |
-  	grep "<div><pre id=\"translated_text_container\">" |
-  	sed "s/            <div><pre id=\"translated_text_container\">//" |
-  	sed "s/<\/pre><\/div>//")
+  translation=$(curl -Ss "https://lingva.ml/api/v1/${from}/${to}/${query}" |
+    sed 's/{"translation":"//' |
+    sed 's/"}//')
 
   # Copy translation to clipboard and send notification
   echo "$translation" | xclip -r -selection clipboard
