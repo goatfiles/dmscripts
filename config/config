@@ -161,4 +161,12 @@ colpick_list[white]="#f1f1f0"
 colpick_list[orange]="#ffb86c"
 colpick_list[purple]="#bd9cf9"
 
-_revision=13
+# dm-translate config
+# Uncomment to manually set the languages dm-translate will show
+# Get language codes from here: https://github.com/TheDavidDelta/lingva-translate/blob/main/utils/languages.json
+
+# translate_list="manual"
+# lang_names=("English" "Autodetect")
+# lang_codes=("en" "auto")
+
+_revision=14
