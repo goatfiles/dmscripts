@@ -2,7 +2,7 @@
 #
 # Script name: dm-translate
 # Description: Translate using Google Translate (through Lingva Translate)
-# Dependencies: dmenu, python3, and curl
+# Dependencies: dmenu, python3, curl, and jq
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: ifrendas
@@ -26,25 +26,65 @@ fi
 source "$(get_config)"
 
 main() {
+  # If $translate_list is not set to "manual", automatically get languages
+  if [[ "${translate_list:-auto}" != "manual" ]]; then
+    # Put language names in "lang_names" array
+    mapfile -t lang_names < <(curl -Ss https://raw.githubusercontent.com/TheDavidDelta/lingva-translate/main/utils/languages.json |
+        jq ".languages" |
+        sed '1d;$d' |
+        awk -F":" '{print $2}' |
+        tr -d '",' |
+        cut -c 2-)
+
+    # Put language codes in "lang_codes" array
+    mapfile -t lang_codes < <(curl -Ss https://raw.githubusercontent.com/TheDavidDelta/lingva-translate/main/utils/languages.json |
+        jq ".languages" |
+        sed '1d;$d' |
+        awk -F":" '{print $1}' |
+        tr -d '",' |
+        cut -c 3-)
+
+    # Add "Autodetect" option to lists
+    lang_names+=("Autodetect")
+    lang_codes+=("auto")
+  fi
+
+  # Warn user and exit if "lang_names" is unset
+  if [[ -z ${lang_names+x} ]]; then
+    echo "The 'lang_names' array must be set to manually set languages!"
+    exit 1
+  fi
+
+  # Warn user and exit if "lang_codes" is unset
+  if [[ -z ${lang_codes+x} ]]; then
+    echo "The 'lang_codes' array must be set to manually set languages!"
+    exit 1
+  fi
+
+  # Get the languages to translate from and to
+  from_name=$(IFS=$'\n'; echo "${lang_names[*]}" | sort | ${DMENU} -i -l 20 -p 'Translate from:') "$@" || exit 1
+  to_name=$(IFS=$'\n'; echo "${lang_names[*]}" | sort | ${DMENU} -i -l 20 -p 'Translate to:') "$@" || exit 1
+
   # shellcheck disable=SC2154
-  # Get input and output languages
-  from_name=$(printf '%s\n' "${!translate_list[@]}" | sort | ${DMENU} -i -l 20 -p 'Translate from:') "$@" || exit 1
-  to_name=$(printf '%s\n' "${!translate_list[@]}" | sort | ${DMENU} -i -l 20 -p 'Translate to:') "$@" || exit 1
+  # Get the matching language codes for the languages selected
+  for ((i=0; i < ${#lang_names[@]}; ++i)); do
+    if [ "$from_name" = "${lang_names[$i]}" ]; then
+      from_code=${lang_codes[$i]}
+    fi
 
-  # Get the short names of the lanuguages chosen
-  from="${translate_list["${from_name}"]}"
-  to="${translate_list["${to_name}"]}"
+    if [ "$to_name" = "${lang_names[$i]}" ]; then
+      to_code=${lang_codes[$i]}
+    fi
+  done
 
-  # Get the text to translate
+  # Get text to translate
   query=$(echo "" | ${DMENU} -p 'Translate:')
 
   # Encode to url encoding
   query=$(python3 -c "import sys, urllib.parse as ul; print (ul.quote_plus(sys.argv[1]))" "$query")
 
   # Get the translation
-  translation=$(curl -Ss "https://lingva.ml/api/v1/${from}/${to}/${query}" |
-    sed 's/{"translation":"//' |
-    sed 's/"}//')
+  translation=$(curl -Ss https://lingva.ml/api/v1/"${from_code}"/"${to_code}"/"${query}" | jq ".translation" | tr -d '"')
 
   # Copy translation to clipboard and send notification
   echo "$translation" | xclip -r -selection clipboard
