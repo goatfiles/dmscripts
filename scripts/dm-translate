@@ -78,7 +78,7 @@ main() {
   done
 
   # Get text to translate
-  query=$(echo "" | ${DMENU} -p 'Translate:')
+  query=$(echo "" | ${DMENU} -p "Translate (${from_code} -> ${to_code}):")
 
   # Encode to url encoding
   query=$(python3 -c "import sys, urllib.parse as ul; print (ul.quote_plus(sys.argv[1]))" "$query")
