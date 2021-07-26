@@ -166,7 +166,9 @@ colpick_list[purple]="#bd9cf9"
 # Get language codes from here: https://github.com/TheDavidDelta/lingva-translate/blob/main/utils/languages.json
 
 # translate_list="manual"
-# lang_names=("English" "Autodetect")
-# lang_codes=("en" "auto")
+# declare -A lang_map
+# lang_map[Swedish]=sv
+# lang_map[English]=en
+# lang_map[Automatic]=auto
 
-_revision=14
+_revision=15
