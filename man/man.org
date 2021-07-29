@@ -34,8 +34,10 @@ A reddit viewer using dmenu, still a work in progress.
 A GUI to maim using dmenu.
 ** dm-websearch
 Web searching utility using dmenu.
+** dm-weather 
+Simple graphical weather app
 ** dm-sounds
-Choose a ambient background sound to play.
+Choose an ambient background sound to play.
 ** dm-translate
 Translate using Google Translate (through Lingva Translate)
 ** dm-usbmount
