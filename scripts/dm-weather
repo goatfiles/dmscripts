@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 #
-# Script name: dm-reddit
-# Description: Dmenu as a reddit viewer using reddio.
-# Dependencies: dmenu, reddio, yad
+# Script name: dm-weather
+# Description: Simple graphical weather app
+# Dependencies: dmenu, curl, yad
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
-# Contributors: Derek Taylor
-#               HostGrady
-#               Simon Ingelsson
+# Contributors: HostGrady
 
 # Set with the flags "-e", "-u","-o pipefail" cause the script to fail
 # if certain things happen, which is a good thing.  Otherwise, we can
@@ -28,20 +26,13 @@ fi
 source "$(get_config)"
 
 main() {
-  # Picking a subreddit from the above reddit_list.
+  # Here we obtain the location from the list in the config
   # As this is loaded from other file it is technically not defined
   # shellcheck disable=SC2154
-  reddit_list+=( "Quit" )
-  _subreddit=$(printf '%s\n' "${reddit_list[@]}" | ${DMENU} -i -l 20 -p "Choose a subreddit:" "$@") || exit 1
-
-  # Show the last 20 posts (titles and ids) from the chosen subreddit.
-  post_title=$(bash reddio print -f '$num. $title $id$nl' -l 20 "$_subreddit" | \
-  ${DMENU} -i -l 20 -p 'Last 20 posts on '"$_subreddit" "$@")
-
-  # Display contents of chosen post in a yad text box.
-  post_id=$(printf '%s\n' "$post_title" | awk '{print $NF}')
-  bash reddio print -f ' TITLE: $title$nl SUBMITTED: $created_pretty$nl AUTHOR: $author$nl$nl$text' by_id/"$post_id" | \
-  yad --text-info --height=600 --width=600 || exit 1
+  _location="$(printf '%s\n' "${!weather_location[@]}" | ${DMENU} -l 20 -i -p  "Where do you want to see the weather?")"
+  # Curl wttr.in, a CLI weather app.
+  # TODO: Replace YAD with some simplified notification
+  curl -s "https://wttr.in/\"${weather_location[${_location}]}\"?T" | yad --text-info
 }
 
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
