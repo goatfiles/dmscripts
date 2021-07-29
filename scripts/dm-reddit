@@ -2,7 +2,7 @@
 #
 # Script name: dm-reddit
 # Description: Dmenu as a reddit viewer using reddio.
-# Dependencies: dmenu, reddio, zenity
+# Dependencies: dmenu, reddio, yad
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
@@ -38,10 +38,10 @@ main() {
   post_title=$(bash reddio print -f '$num. $title $id$nl' -l 20 "$_subreddit" | \
   ${DMENU} -i -l 20 -p 'Last 20 posts on '"$_subreddit" "$@")
 
-  # Display contents of chosen post in a zenity text box.
+  # Display contents of chosen post in a yad text box.
   post_id=$(printf '%s\n' "$post_title" | awk '{print $NF}')
   bash reddio print -f ' TITLE: $title$nl SUBMITTED: $created_pretty$nl AUTHOR: $author$nl$nl$text' by_id/"$post_id" | \
-  zenity --text-info --height=600 --width=600 || exit 1
+  yad --text-info --height=600 --width=600 || exit 1
 }
 
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
