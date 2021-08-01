@@ -174,6 +174,7 @@ colpick_list[purple]="#bd9cf9"
 # dm-weather
 declare -A weather_location
 # weather_location[New York]="New+York"
+# weather_opts="m"
 # see: https://github.com/chubin/wttr.in
 
 _revision=16
