@@ -30,9 +30,13 @@ main() {
   # As this is loaded from other file it is technically not defined
   # shellcheck disable=SC2154
   _location="$(printf '%s\n' "${!weather_location[@]}" | ${DMENU} -l 20 -i -p  "Where do you want to see the weather?")"
+
+  # If $weather_opts is unset, give it an empty value
+  weather_opts+=''
+
   # Curl wttr.in, a CLI weather app.
   # TODO: Replace YAD with some simplified notification
-  curl -s "https://wttr.in/\"${weather_location[${_location}]}\"?T" | yad --text-info
+  curl -s "https://wttr.in/\"${weather_location[${_location}]}\"?T&${weather_opts}" | yad --text-info
 }
 
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
