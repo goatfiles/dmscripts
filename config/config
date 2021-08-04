@@ -189,7 +189,8 @@ declare -A weather_location
 
 declare -A currencies
 # currencies[Dollar]="USD"
-# currencies[Euro]="EUR"
+# currencies[Pound]="GBP"
+# currencies[Monero]="XMR"
 # see: https://rate.sx/:currencies and https://rate.sx/:coins
 
 _revision=17
