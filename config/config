@@ -171,11 +171,25 @@ colpick_list[purple]="#bd9cf9"
 # lang_map[English]=en
 # lang_map[Automatic]=auto
 
-# dm-weather
+# dm-weather config
 declare -A weather_location
 # weather_location[New York]="New+York"
 # weather_opts="m" # Always use metric units (celsius)
 # weather_opts="u" # Always use US units (fahrenheit)
 # see: https://github.com/chubin/wttr.in
 
-_revision=16
+# dm-currencies config
+
+# Chose how you want to display the currencies (default: "names")
+# currency_names="codes"
+
+# "auto" will get currencies dynamically, "manual" will only use the currencies you define (default: "auto")
+# defined currencies will still be included when set to auto
+# currency_method="manual"
+
+declare -A currencies
+# currencies[Dollar]="USD"
+# currencies[Euro]="EUR"
+# see: https://rate.sx/:currencies and https://rate.sx/:coins
+
+_revision=17
