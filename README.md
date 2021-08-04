@@ -5,6 +5,7 @@ The scripts included in this repo are:
 + dm-bookman - Search your qutebrowser bookmarks, quickmarks and history urls.
 + dm-colpick - Copy a color's hex value to your clipboard
 + dm-confedit - Choose from a list of configuration files to edit.
++ dm-currencies - Convert prices between currencies.
 + dm-hub - A hub from where you can run all the scripts from.
 + dm-ip - Get IP of interface or external IP
 + dm-kill - Search for a process to kill.

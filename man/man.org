@@ -16,6 +16,8 @@ A manual page searcher, search a man page or randomly view one.
 Find the hex value of a color you are searching for.
 ** dm-confedit
 A configuration manager, find and edit any config file you need.
+** dm-currencies
+Convert prices between currencies.
 ** dm-ip
 Get IP of interface or external IP
 ** dm-kill
@@ -34,7 +36,7 @@ A reddit viewer using dmenu, still a work in progress.
 A GUI to maim using dmenu.
 ** dm-websearch
 Web searching utility using dmenu.
-** dm-weather 
+** dm-weather
 Simple graphical weather app
 ** dm-sounds
 Choose an ambient background sound to play.
@@ -48,7 +50,7 @@ Using dmenu, setup a wallpaper.
 Connect to wifi using dmenu.
 ** dm-youtube
 Youtube subscriptions without an account or the API tying you down.
-** _dm-helper.sh 
+** _dm-helper.sh
 Helper scripts adding functionality to other scripts
 
 * USAGE
