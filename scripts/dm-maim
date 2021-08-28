@@ -47,17 +47,34 @@ main() {
   "Selected region"
   )
   # Get monitors and their settings for maim
-  _displays=$(xrandr --listactivemonitors | grep '+' | awk '{print $4, $3}' | awk -F'[x/+* ]' '{print $1,$2"x"$4"+"$6"+"$7}')
-
+  
+  # Grepping with awk here, /+/ means return only lines with +, ie grep
+  # On that note, this could probably be written more efficiently in one awk
+  # command as opposed to two however I am not an awk guru soo...
+  _displays=$(xrandr --listactivemonitors | awk '/+/ {print $4, $3}' | awk -F'[x/+* ]' '{print $1,$2"x"$4"+"$6"+"$7}')
 
   # Add monitor data
+
+  # If I'm understanding correctly this should work however bear in mind I run
+  # a single monitor setup so some testing is needed before this is merged
   IFS=$'\n'
   declare -A _display_mode
   for i in ${_displays}; do
-    name=$(echo "${i}" | awk '{print $1}')
-    rest="$(echo "${i}" | awk '{print $2}')"
-    modes[${#modes[@]}]="${name}"
-    _display_mode[${name}]="${rest}"
+  # These lines are commented because I believe it can be done faster with
+  # some different syntax. Luke smith has done a video about this efficiency
+  # and it has been used in earlier scripts
+
+  # name=$(echo "${i}" | awk '{print $1}')
+  # rest="$(echo "${i}" | awk '{print $2}')"
+
+  # Think of "i%% *" as awk '{print $1}' in this case, it isn't a 1 to 1 but
+  # for this example it does the same thing, same applies for "i##* " but for
+  # awk '{print $2}'. Using two of the % or # symbols means "greedy", it will
+  # only leave 1 word remaining (so if we had var="apple orange pear" and did
+  # echo "${var%% *}, it would return apple where as "${var% *}" returns all
+  # but the very last word.
+    modes[${#modes[@]}]="${i%% *}" 
+    _display_mode[${i%% *}]="${i##* }"
   done
   unset IFS
 

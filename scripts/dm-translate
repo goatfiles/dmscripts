@@ -35,7 +35,7 @@ main() {
 
     for ((i=0; i < ${#data[@]}; ++i)); do
       # shellcheck disable=SC2086
-      lang_map[$(echo ${data[$i]} | awk -F"'" '{print $4}')]="$(echo ${data[$i]} | awk -F"'" '{print $2}')"
+      lang_map[$(echo ${data[$i]} | cut -d"'" -f4)]="$(echo ${data[$i]} | cut -d"'" -f2)"
     done
     unset data
   fi
