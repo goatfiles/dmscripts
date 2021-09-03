@@ -25,6 +25,12 @@ get_local_config() {
   )"
 }
 
+if [ -z $XDG_SESSION_TYPE ]
+then
+    DISPLAY_SERVER=xorg
+else
+    DISPLAY_SERVER=wayland
+fi
 
 
 get_config() {
