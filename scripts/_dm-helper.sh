@@ -25,13 +25,11 @@ get_local_config() {
   )"
 }
 
-if [ -z $XDG_SESSION_TYPE ]
-then
-    DISPLAY_SERVER=xorg
-else
-    DISPLAY_SERVER=wayland
-fi
-
+case "$XDG_SESSION_TYPE" in
+    'x11') SERVER=xorg;;
+    'wayland') SERVER=wayland;;
+    *) error!;;
+esac
 
 get_config() {
   local _config_files=()
