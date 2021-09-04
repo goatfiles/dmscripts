@@ -31,6 +31,12 @@ case "$XDG_SESSION_TYPE" in
     *) echo Not running supported Display Server, exiting... && exit 1;;
 esac
 
+case "$SERVER" in
+    'xorg') CLIPBOARD_CMD='xclip -r -selection clipboard;;
+    'wayland') CLIPBOARD_CMD-'wl-copy -n';;
+    *) echo Not running supported Display Server, exiting... && exit 1;;
+esac
+
 get_config() {
   local _config_files=()
   local _local_conf
