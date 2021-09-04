@@ -33,7 +33,7 @@ main() {
   # shellcheck disable=SC2154
   selected="$(printf '%s\n' "${!colpick_list[@]}" | ${DMENU} -p "color:" "$@")"
   [ -z "${selected}" ] && exit 1
-  echo "${colpick_list["${selected}"]}" | $CLIPBOARD_CMD
+  echo "${colpick_list["${selected}"]}" | cp2cb
 }
 
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
