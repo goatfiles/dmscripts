@@ -28,7 +28,7 @@ get_local_config() {
 case "$XDG_SESSION_TYPE" in
     'x11') SERVER=xorg;;
     'wayland') SERVER=wayland;;
-    *) error!;;
+    *) echo Not running supported Display Server, exiting... && exit 1;;
 esac
 
 get_config() {
