@@ -26,6 +26,8 @@ Simple process killer, find and kill misbehaving processes.
 Simple logout menu, choose to lock, shutdown, reboot or logout of your computer.
 ** dm-music
 Dmenu based music player.
+** dm-note
+Stores one line texts or codes to copy them at later time. 
 ** dm-bookman
 A bookmark searching tool, search through all qutebrowser quickmarks and bookmarks.
 ** dm-record
