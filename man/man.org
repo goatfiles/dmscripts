@@ -27,7 +27,7 @@ Simple logout menu, choose to lock, shutdown, reboot or logout of your computer.
 ** dm-music
 Dmenu based music player.
 ** dm-note
-Stores one line texts or codes to copy them at later time. 
+Store multiple one-line texts or codes and copy one of them when needed.
 ** dm-bookman
 A bookmark searching tool, search through all qutebrowser quickmarks and bookmarks.
 ** dm-record
