@@ -36,6 +36,9 @@ setbg_dir="${HOME}/Pictures/Wallpapers"
 maim_dir="${HOME}/Screenshots"
 maim_file_prefix="maim"
 
+# dm-note
+note_dir="${HOME}/.config/dmscripts/dmnote"
+
 # dm-confedit
 confedit_editor="$DMEDITOR"
 declare -A confedit_list
@@ -193,4 +196,4 @@ declare -A currencies
 # currencies[Monero]="XMR"
 # see: https://rate.sx/:currencies and https://rate.sx/:coins
 
-_revision=17
+_revision=18
