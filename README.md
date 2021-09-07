@@ -104,7 +104,7 @@ NOTE: When installing dmscripts-git, you will see a list of Haskell dependencies
 ```bash
 $ eselect repository add misc-overlay git https://gitlab.com/0ae/misc-overlay
 $ emaint sync -r misc-overlay
-$ emerge app-misc/bescripts
+$ emerge app-misc/dmscripts
 ```
 
 ## Installation on Other Linux Distributions
