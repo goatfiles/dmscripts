@@ -24,6 +24,7 @@ optdepends=(
   'sxiv: used by dm-setbg'
   'xwallpaper: used by dm-setbg'
   'udisks2: used by dm-usbmount'
+  'wl-clipboard: wayland alternative to xclip'
   )
 provides=(dmscripts)
 conflicts=(dmscripts)

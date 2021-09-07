@@ -6,6 +6,8 @@
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Simon Ingelsson
+#               HostGrady
+#               aryak1
 
 set -euo pipefail
 
@@ -13,6 +15,10 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     echo "This is a helper-script it does not do anything on its own."
     exit 1
 fi
+
+###########################
+#   Configuration stuff   #
+###########################
 
 get_local_config() {
   # Do some subshell magic finding out where the script we are running 
@@ -24,8 +30,6 @@ get_local_config() {
     fi
   )"
 }
-
-
 
 get_config() {
   local _config_files=()
@@ -72,6 +76,10 @@ check_updated_config() {
   fi
 }
 
+######################
+#   Error handling   #
+######################
+
 # Simple warn function
 warn () {
   printf 'Warn: %s\n' "$1"
@@ -82,6 +90,34 @@ err () {
   printf 'Error: %s\n' "$1"
   exit 1
 }
+
+############################
+#   Dislay server checks   #
+############################
+
+# Boiler code for if you want to do something with display servers
+
+#function() {
+#  case "$XDG_SESSION_TYPE" in
+#    'x11') something with x;;
+#    'wayland') something with wayland;;
+#    *) echo "error"; exit 1;; 
+#  esac
+#}
+
+# Function to copy to clipboard with different tools depending on the display server
+
+cp2cb() {
+  case "$XDG_SESSION_TYPE" in
+    'x11') xclip -r -selection clipboard;;
+    'wayland') wl-copy -n;; 
+    *) err "Unknown display server";; 
+  esac
+}
+
+###############
+#   Parsing   #
+###############
 
 xmlgetnext () {
   local IFS='>'

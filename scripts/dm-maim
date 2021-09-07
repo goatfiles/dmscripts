@@ -33,6 +33,15 @@ get_timestamp() {
   date '+%Y%m%d-%H%M%S'
 }
 
+# local version of cp2cb is needed to account for dm-maim's specific usage
+
+cp2cb-maim() {
+  case "$XDG_SESSION_TYPE" in
+    'x11') xclip -selection clipboard -t image/png;;
+    'wayland') wl-copy -t image/png;;
+    *) err "Unknown display server";;
+  esac
+}
 
 main() {
   local _maim_args=""
@@ -109,12 +118,12 @@ main() {
     ;;
     'Clipboard')
       # shellcheck disable=SC2086
-      maim ${_maim_args} | xclip -selection clipboard -t image/png
+      maim ${_maim_args} | cp2cb-maim
       notify-send "Saved Screenshot" "Clipboard"
     ;;
     'Both')
       # shellcheck disable=SC2086
-      maim ${_maim_args} | tee "${maim_dir}/${maim_file_prefix}-${_file_type}-$(get_timestamp).png" | xclip -selection clipboard -t image/png
+      maim ${_maim_args} | tee "${maim_dir}/${maim_file_prefix}-${_file_type}-$(get_timestamp).png" | cp2cb-maim
       notify-send "Saved Screenshot" "${maim_dir}/${maim_file_prefix}-${_file_type}-$(get_timestamp).png And Clipboard"
     ;;
     *)
