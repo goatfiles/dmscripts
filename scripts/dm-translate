@@ -30,6 +30,7 @@ main() {
   if [[ "${translate_list:-auto}" != "manual" ]]; then
     declare -A lang_map
     # shellcheck disable=SC2086
+    # shellcheck disable=SC2154
     if [[ "${translate_service}" == "lingva" ]]; then
       mapfile -t data < <(curl -Ss "${lingva_instance}/api/v1/languages/source" | \
         jq -cr ".languages | to_entries[] | .value | [.code,.name] | @sh")
@@ -70,7 +71,7 @@ main() {
 
   # Get the translation
   if [[ "${translate_service}" == "lingva" ]]; then
-    translation=$(curl -Ss ${lingva_instance}/api/v1/"${from_code}"/"${to_code}"/"${query}" | jq -r ".translation")
+    translation=$(curl -Ss "${lingva_instance}"/api/v1/"${from_code}"/"${to_code}"/"${query}" | jq -r ".translation")
   elif [[ "${translate_service}" == "libre" ]]; then
     translation=$(curl -X POST -Ss "${libretranslate_instance}/translate?q=${query}&source=${from_code}&target=${to_code}" | jq -r ".translatedText")
   fi
