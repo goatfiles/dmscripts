@@ -173,6 +173,7 @@ colpick_list[purple]="#bd9cf9"
 # lang_map[Swedish]=sv
 # lang_map[English]=en
 # lang_map[Automatic]=auto
+lingva_instance="https://lingva.ml"
 
 # dm-weather config
 declare -A weather_location
@@ -196,4 +197,4 @@ declare -A currencies
 # currencies[Monero]="XMR"
 # see: https://rate.sx/:currencies and https://rate.sx/:coins
 
-_revision=18
+_revision=19
