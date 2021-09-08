@@ -30,8 +30,17 @@ main() {
   if [[ "${translate_list:-auto}" != "manual" ]]; then
     declare -A lang_map
     # shellcheck disable=SC2086
-    mapfile -t data < <(curl -Ss "${lingva_instance}/api/v1/languages/source" | \
-      jq -cr ".languages | to_entries[] | .value |[.code,.name] | @sh")
+    if [[ "${translate_service}" == "lingva" ]]; then
+      mapfile -t data < <(curl -Ss "${lingva_instance}/api/v1/languages/source" | \
+        jq -cr ".languages | to_entries[] | .value | [.code,.name] | @sh")
+    elif [[ "${translate_service}" == "libre" ]]; then
+      mapfile -t data < <(curl -Ss "${libretranslate_instance}/languages" | \
+        jq -cr "to_entries[] | .value | [.code,.name] | @sh")
+    else
+      echo "Invalid language service"
+      echo "Valid options are: 'lingva' and 'libre'"
+      exit 1
+    fi
 
     for ((i=0; i < ${#data[@]}; ++i)); do
       # shellcheck disable=SC2086
@@ -60,7 +69,11 @@ main() {
   query="$(echo "${query}" | jq -s -R -r @uri)"
 
   # Get the translation
-  translation=$(curl -Ss ${lingva_instance}/api/v1/"${from_code}"/"${to_code}"/"${query}" | jq ".translation" | tr -d '"')
+  if [[ "${translate_service}" == "lingva" ]]; then
+    translation=$(curl -Ss ${lingva_instance}/api/v1/"${from_code}"/"${to_code}"/"${query}" | jq -r ".translation")
+  elif [[ "${translate_service}" == "libre" ]]; then
+    translation=$(curl -X POST -Ss "${libretranslate_instance}/translate?q=${query}&source=${from_code}&target=${to_code}" | jq -r ".translatedText")
+  fi
 
   # Copy translation to clipboard and send notification
   echo "$translation" | cp2cb 
