@@ -51,12 +51,12 @@ main() {
 
   # Piping the _options array into dmenu.
   # We use "printf '%s\n'" to format the array one item to a line.
-  choice=$(printf '%s\n' "${_options[@]}" | ${DMENU} -i -p 'Ambient sounds:' "${@}")
+  choice=$(printf '%s\n' "${_options[@]}" | ${DMENU} 'Ambient sounds:' "${@}")
 
   if [ "$choice" == "Choose sound file" ]; then
     # Piping the soundList array into dmenu.
     # We use "printf '%s\n'" to format the array one item to a line.
-    choice=$(printf '%s\n' "${_sounds_list[@]}" | sort | ${DMENU} -i -l 20 -p 'Choose sound file:' "$@")
+    choice=$(printf '%s\n' "${_sounds_list[@]}" | sort | ${DMENU} 'Choose sound file:' "$@")
     # Kill PID saved in cache file.
     kill "$(cat "$HOME/.cache/dmsounds")" || echo "ffplay was not running."
     # Play the chosen sound file.

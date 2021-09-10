@@ -92,7 +92,7 @@ goInsane() {
 # dmenu menu
 menu() {
     # options="set background\nrandom\ngo insane"
-    input=$(printf "set background\nrandom\ngo insane" | ${DMENU} -i -l 3) || exit 1
+    input=$(printf "set background\nrandom\ngo insane" | ${DMENU} "Select an option:") || exit 1
     case "$input" in
         "set background") setbg ;;
         "random") random ;;

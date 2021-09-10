@@ -56,7 +56,7 @@ mount(){
     driveCount "$mountable"
     [ "$count" = "1" ] && options="$mountable" || options="$mountable\nall"
 
-    chosen="$(printf '%s' "$options" | ${DMENU} -i -p "Drive to mount?")" || exit 1
+    chosen="$(printf '%s' "$options" | ${DMENU} "Drive to mount?")" || exit 1
     if [ "$chosen" = "all" ]; then
        mountAll 
     else 

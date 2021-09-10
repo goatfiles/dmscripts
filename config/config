@@ -7,7 +7,7 @@
 
 # Defined variables, modify anything in quotes to your prefered software
 
-DMENU="dmenu"
+DMENU="dmenu -i -l 20 -p"
 # DMENU="rofi -dmenu"
 
 DMBROWSER="brave"
@@ -196,4 +196,4 @@ declare -A currencies
 # currencies[Monero]="XMR"
 # see: https://rate.sx/:currencies and https://rate.sx/:coins
 
-_revision=18
+_revision=19

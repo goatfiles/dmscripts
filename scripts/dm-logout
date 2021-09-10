@@ -57,12 +57,12 @@ main() {
 
     # Piping the above array into dmenu.
     # We use "printf '%s\n'" to format the array one item to a line.
-    choice=$(printf '%s\n' "${options[@]}" | ${DMENU} -i -p 'Shutdown menu:' "${@}")
+    choice=$(printf '%s\n' "${options[@]}" | ${DMENU} 'Shutdown menu:' "${@}")
 
     # What to do when/if we choose one of the options.
     case $choice in
         'Logout')
-            if [[ "$(echo -e "No\nYes" | ${DMENU} -i -p "${choice}?" "${@}" )" == "Yes" ]]; then
+            if [[ "$(echo -e "No\nYes" | ${DMENU} "${choice}?" "${@}" )" == "Yes" ]]; then
                 for manager in "${MANAGERS[@]}"; do 
                     killall "${manager}" || output "Process ${manager} was not running."
                 done
@@ -75,21 +75,21 @@ main() {
             ${logout_locker}
             ;;
         'Reboot')
-            if [[ "$(echo -e "No\nYes" | ${DMENU} -i -p "${choice}?" "${@}" )" == "Yes" ]]; then
+            if [[ "$(echo -e "No\nYes" | ${DMENU} "${choice}?" "${@}" )" == "Yes" ]]; then
                 systemctl reboot
             else
                 output "User chose not to reboot." && exit 0
             fi
             ;;
         'Shutdown')
-            if [[ "$(echo -e "No\nYes" | ${DMENU} -i -p "${choice}?" "${@}" )" == "Yes" ]]; then
+            if [[ "$(echo -e "No\nYes" | ${DMENU} "${choice}?" "${@}" )" == "Yes" ]]; then
                 systemctl poweroff
             else
                 output "User chose not to shutdown." && exit 0
             fi
             ;;
         'Suspend')
-            if [[ "$(echo -e "No\nYes" | ${DMENU} -i -p "${choice}?" "${@}" )" == "Yes" ]]; then
+            if [[ "$(echo -e "No\nYes" | ${DMENU} "${choice}?" "${@}" )" == "Yes" ]]; then
                 systemctl suspend
             else
                 output "User chose not to suspend." && exit 0
