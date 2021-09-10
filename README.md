@@ -35,6 +35,27 @@ The scripts included in this repo are:
 3. [Installation](#installation)
 4. [Configuration](#configuration)
 	
+# IMPORTANT!
+
+When we write scripts, we test with a default dmenu configuration (or DT's config). This means 
+potential issues with other patches or dmenu alternatives may be missed by us. Please feel free to
+patch the program yourself or see if you can figure out why the patch/program is incompatible and
+either take it upstream or fix your version.
+
+That being said, we are making an effort to improve compatibility with new software and technology
+like Wayland and dmenu alternatives however we need testers. Please write issues about Wayland
+support and support for dmenu alternatives or comment on existing issues releated. 
+
+## Patches to avoid:
+
++ Case insensitive 
+
+Case insensitive is a patch that removes the -i flag and makes insensitive casing the default
+behaviour, this needs to be reverted if you wish to use dmscripts in the default configuration.
+
+## Programs to avoid:
+
+Currently, none.
 
 # Contributing
 

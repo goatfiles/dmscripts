@@ -34,7 +34,7 @@ main() {
     'Copy note')
       # shellcheck disable=SC2154
       note_pick=$(${DMENU} 'Copy:' "$@" < "${note_dir}")
-      [ -n "${note_pick}" ] && echo "${note_pick}" | xclip -r -selection clipboard && notify-send -u normal "Note copied" "${note_pick}"
+      [ -n "${note_pick}" ] && echo "${note_pick}" | cp2cb && notify-send -u normal "Note copied" "${note_pick}"
       ;;
     'New note')
       note_new=$(echo "" | ${DMENU} 'Enter new note:' "$@")
