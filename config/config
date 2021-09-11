@@ -229,4 +229,4 @@ declare -A currencies
 # currencies[Monero]="XMR"
 # see: https://rate.sx/:currencies and https://rate.sx/:coins
 
-_revision=19
+_revision=20
