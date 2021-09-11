@@ -7,8 +7,40 @@
 
 # Defined variables, modify anything in quotes to your prefered software
 
-DMENU="dmenu -i -l 20 -p"
+# This case statement lets you change what the DMENU variable is for different scripts, so if you
+# want a unique variable for each script you can
+# syntax is as follows:
+# "<ending-of-script>") DMENU="your variable here"
+# *) means anything that isn't defined above, basically think of it as a fallback or a default
+
+# include -p in standard dmenu as we use prompts by default
+case "${0##*-}" in
+# "colpick") DMENU="dmenu -i -p";;
+# "confedit") DMENU="dmenu -i -l 30 -p";;
+# *) DMENU="rofi -dmenu";;
+ *) DMENU="dmenu -i -l 20 -p";;
+esac
+
+# "${0##*-}" means grab the 0th argument (which is always the path to the program) starting from the
+# last dash. This gives us the word after the - which is what we are searching for in the case
+# statement. ie dm-man -> man
+
+# An awk equivalent is: 
+# awk -F"-" '{print $NF}'
+# Sadly cut has no easy equivalent
+
+# Alternatively, use one of these lines if you just use 1 dmenu variable for all the scripts
+
+# DMENU="dmenu -i -l 20 -p"
 # DMENU="rofi -dmenu"
+
+# This case statement can be used in similar situations with other variables, this commented out
+# one would set a unique browser for the dm-bookman program
+
+# case "${0##*-}" in
+# "bookman") DMBROWSER="qutebrowser";;
+# *) DMBROWSER="brave";;
+# esac
 
 DMBROWSER="brave"
 # DMBROWSER="qutebrowser"
@@ -40,6 +72,7 @@ maim_file_prefix="maim"
 note_dir="${HOME}/.config/dmscripts/dmnote"
 
 # dm-confedit
+# TODO: Deprecate variables like this in favour of new extensible format
 confedit_editor="$DMEDITOR"
 declare -A confedit_list
 confedit_list[confedit]="$HOME/.config/dmscripts/config"
