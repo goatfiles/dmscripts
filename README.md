@@ -100,12 +100,12 @@ Once installed, the scripts should behave like any other command and can be run 
 
 NOTE: When installing dmscripts-git, you will see a list of Haskell dependencies that will be installed. This is because one of the make dependencies, pandoc, is written in Haskell. Simply enter "y" on the prompt "Remove make dependencies after install" and those programs should go away. Alternatively, [this AUR package](https://aur.archlinux.org/packages/pandoc-bin/) can be downloaded and used as a drop-in replacement if you wish to use the program afterwards.
 
-# Installation on Gentoo
+## Installation on Gentoo
 
 ```bash
 $ eselect repository add misc-overlay git https://gitlab.com/0ae/misc-overlay
 $ emaint sync -r misc-overlay
-$ emerge app-misc/bescripts
+$ emerge app-misc/dmscripts
 ```
 
 ## Installation on Other Linux Distributions
