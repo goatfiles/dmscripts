@@ -165,12 +165,27 @@ colpick_list[orange]="#ffb86c"
 colpick_list[purple]="#bd9cf9"
 
 # dm-translate config
-# Uncomment to manually set the languages dm-translate will show
-# Get language codes from here: https://github.com/TheDavidDelta/lingva-translate/blob/main/utils/languages.json
 
+# dm-translate currently supports two translation services, LibreTranslate and Lingva Translate.
+# LibreTranslate uses the free software (Expat/MIT licensed) Argos Translate library for translation.
+# Lingva Translate uses the Google Translate (dis)service for translation, but this is fully server-side and Google will not see your IP.
+# Both are free software services that can be self-hosted.
+# If you want more languages (or need a specific language not in the Argos library) you should chose Lingva Translate.
+# If you want to get away from Google and/or want a fully free software implementation you should use LibreTranslate.
+# The choice is yours...
+translate_service="libre"
+# translate_service="lingva"
+libretranslate_instance="https://libretranslate.de"
+lingva_instance="https://lingva.ml"
+
+# Uncomment to manually set the languages dm-translate will show
+# LibreTranslate languages:
+#   - `curl -Ss "https://libretranslate.de/languages" | jq`
+# Lingva Translate languages:
+#   - `curl -Ss "https://lingva.ml/api/v1/languages/source" | jq`
 # translate_list="manual"
 # declare -A lang_map
-# lang_map[Swedish]=sv
+# lang_map[Spanish]=es
 # lang_map[English]=en
 # lang_map[Automatic]=auto
 
@@ -196,4 +211,4 @@ declare -A currencies
 # currencies[Monero]="XMR"
 # see: https://rate.sx/:currencies and https://rate.sx/:coins
 
-_revision=18
+_revision=19
