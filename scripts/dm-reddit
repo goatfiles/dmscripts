@@ -32,11 +32,11 @@ main() {
   # As this is loaded from other file it is technically not defined
   # shellcheck disable=SC2154
   reddit_list+=( "Quit" )
-  _subreddit=$(printf '%s\n' "${reddit_list[@]}" | ${DMENU} -i -l 20 -p "Choose a subreddit:" "$@") || exit 1
+  _subreddit=$(printf '%s\n' "${reddit_list[@]}" | ${DMENU} "Choose a subreddit:" "$@") || exit 1
 
   # Show the last 20 posts (titles and ids) from the chosen subreddit.
   post_title=$(bash reddio print -f '$num. $title $id$nl' -l 20 "$_subreddit" | \
-  ${DMENU} -i -l 20 -p 'Last 20 posts on '"$_subreddit" "$@")
+  ${DMENU} 'Last 20 posts on '"$_subreddit" "$@")
 
   # Display contents of chosen post in a yad text box.
   post_id=$(printf '%s\n' "$post_title" | awk '{print $NF}')

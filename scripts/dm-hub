@@ -31,7 +31,7 @@ function main() {
         _scripts[${script_name}]="${script}"
     done< <(find "${_path}" -type f -regex ".*/dm-.*" -print0)
 
-    choice=$(printf '%s\n' "${!_scripts[@]}" | sort | ${DMENU} -i -l 20 -p 'Run Script:' "$@")
+    choice=$(printf '%s\n' "${!_scripts[@]}" | sort | ${DMENU} 'Run Script:' "$@")
 
     if [ "${choice}" ]; then
         bash "$(printf '%s\n' "${_scripts["${choice}"]}")" "$@"

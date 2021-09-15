@@ -87,7 +87,7 @@ main() {
   done
   unset IFS
 
-  target=$(printf '%s\n' "${modes[@]}" | ${DMENU} -i -l 20 -p 'Take screenshot of:' "$@") || exit 1
+  target=$(printf '%s\n' "${modes[@]}" | ${DMENU} 'Take screenshot of:' "$@") || exit 1
   case "$target" in
     'Fullscreen')
       _file_type="full"
@@ -109,7 +109,7 @@ main() {
 
   _maim_args="${_maim_args} -qd 0.5"
   local destination=( "File" "Clipboard" "Both" )
-  dest=$(printf '%s\n' "${destination[@]}" | ${DMENU} -i -l 20 -p 'Destination:' "$@" ) || exit 1
+  dest=$(printf '%s\n' "${destination[@]}" | ${DMENU} 'Destination:' "$@" ) || exit 1
   case "$dest" in
     'File')
       # shellcheck disable=SC2086,SC2154

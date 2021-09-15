@@ -30,7 +30,7 @@ main() {
   # Sorts the array and lets you select a channel with dmenu
   # As this is loaded from other file it is technically not defined
   # shellcheck disable=SC2154
-  _channel=$(printf '%s\n' "${!youtube_channels[@]}" | sort | ${DMENU} -i -l 20 -p 'Select Channel:' "$@")
+  _channel=$(printf '%s\n' "${!youtube_channels[@]}" | sort | ${DMENU} 'Select Channel:' "$@")
 
   # The way it's done here is most effective, it searchs for "=" then it takes
   # everything before the = sign and leaves us with our variable used in the
@@ -40,7 +40,7 @@ main() {
   # parse rss
   _video_list=$(parse_rss "$(curl -s "${_feed_url}")" )
 
-  _video=$(printf '%s\n' "${_video_list}" | sort -r | ${DMENU} -i -l 20 -p 'Select Video' "$@")
+  _video=$(printf '%s\n' "${_video_list}" | sort -r | ${DMENU} 'Select Video' "$@")
   _video_id=$(echo "${_video}" | cut -d'|' -f2 | sed -e 's/^[ \t]*//')
 
   if [[ -n ${_video_id} ]]; then
