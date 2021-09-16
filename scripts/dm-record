@@ -29,11 +29,12 @@ killrecording() {
 	exit
 	}
 
+# -s "$(xdpyinfo | grep dimensions | awk '{print $2;}')" \
 screencast() { \
 	ffmpeg -y \
 	-f x11grab \
 	-framerate 60 \
-	-s "$(xdpyinfo | grep dimensions | awk '{print $2;}')" \
+	-s "$(xdpyinfo | awk '/dimensions/ {print $2;}')" \
 	-i "$DISPLAY" \
 	-f pulse -i default \
 	-r 30 \
@@ -44,7 +45,7 @@ screencast() { \
 
 video() { ffmpeg \
 	-f x11grab \
-	-s "$(xdpyinfo | grep dimensions | awk '{print $2;}')" \
+	-s "$(xdpyinfo | awk '/dimensions/ {print $2;}')" \
 	-i "$DISPLAY" \
  	-c:v libx264 -qp 0 -r 30 \
 	"$HOME/video-$(date '+%y%m%d-%H%M-%S').mkv" &
@@ -75,6 +76,9 @@ audio() { \
 	"$HOME/audio-$(date '+%y%m%d-%H%M-%S').flac" &
 	echo $! > /tmp/recordingpid
 	}
+
+# the dmenu portions of this script are broken
+# TODO: deprecate or rewrite
 
 askrecording() { \
 	choice=$(printf "screencast\\nvideo\\nvideo selected\\naudio\\nwebcam\\nwebcam (hi-def)" | ${DMENU} "Select recording style:")
