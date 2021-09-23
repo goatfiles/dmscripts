@@ -71,7 +71,7 @@ unmount(){
     driveCount "$mounted"
     [ "$count" = "1" ] && options="$mounted" || options="$mounted\nall"
 
-    chosen="$(printf '%s' "${options}" | dmenu -i -p "Drive to unmount?")"
+    chosen="$(printf '%s' "${options}" | ${DMENU} "Drive to unmount?")"
     if [ "$chosen" = "all" ] ; then 
        unmountAll 
    else
