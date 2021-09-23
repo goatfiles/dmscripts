@@ -20,7 +20,8 @@ fi
 source "$(get_config)"
 
 main() {
-  bssid=$(nmcli device wifi list | sed -n '1!p' | cut -b 9- | ${DMENU} "Select Wifi  :" -l 20 | cut -d' ' -f1)
+  # TODO: Fix cut line at some point
+  bssid=$(nmcli device wifi list | sed -n '1!p' | cut -b 9- | ${DMENU} "Select Wifi  :" | cut -d' ' -f1)
   pass=$(echo "" | ${DMENU} "Enter Password  :")
   nmcli device wifi connect "$bssid" password "$pass"
   sleep 10
