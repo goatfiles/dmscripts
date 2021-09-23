@@ -31,7 +31,7 @@ main() {
     mapfile -t data < <(curl -Ss rate.sx/:currencies)
     data+=("USD United States dollar")
     for ((i=0; i < ${#data[@]}; ++i)); do
-      currencies[$(echo "${data[$i]}" | awk '{print substr($0, index($0, $2))}')]="$(echo "${data[$i]}" | awk '{print $1}')"
+      currencies[$(echo "${data[$i]}" | awk '{print substr($0, index($0, $2))}')]="$(echo "${data[$i]}" | cut -d' ' -f1)"
       done
     unset data
   fi

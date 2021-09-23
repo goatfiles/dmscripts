@@ -46,7 +46,8 @@ unmountAll(){
     while IFS= read -r drive
     do
         udisksctl unmount -b "$drive"
-    done < <(printf '%s\n' "$mounted")
+    # done < <(printf '%s\n' "$mounted")
+    done < <(printf '%s\n' "${mounted%%* }")
 }
 
 mount(){
@@ -65,11 +66,14 @@ mount(){
 }
 
 unmount(){
-    mounted="$(lsblk -lp | awk '/run/ { print $1 }')"
+    # mounted="$(lsblk -lp | awk '/run/ { print $1 }')"
+    mounted="$(lsblk -lp | grep 'run' )"
     [ "$mounted" = "" ] && exit 1
 
-    driveCount "$mounted"
-    [ "$count" = "1" ] && options="$mounted" || options="$mounted\nall"
+    # driveCount "$mounted"
+    driveCount "${mounted%%* }"
+    # [ "$count" = "1" ] && options="$mounted" || options="$mounted\nall"
+    [ "$count" = "1" ] && options="${mounted%%* }" || options="${mounted%%* }\nall"
 
     chosen="$(printf '%s' "${options}" | ${DMENU} "Drive to unmount?")"
     if [ "$chosen" = "all" ] ; then 

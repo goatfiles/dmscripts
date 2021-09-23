@@ -118,8 +118,8 @@ main() {
   if [ -n "$choice" ]; then
     [[ "$choice" == "$_bookman_separator" ]] && exit 1
     # What to do when/if we choose a URL to view.
-    url=$(echo "${choice}" | awk '{print $NF}') || exit 1
-    nohup "${DMBROWSER}" "${url}" >/dev/null 2>&1 &
+    # url=$(echo "${choice}" | awk '{print $NF}') || exit 1
+    nohup "${DMBROWSER}" "${choice##* }" >/dev/null 2>&1 &
   else
       # What to do if we just escape without choosing anything.
       echo "Program terminated." && exit 1
