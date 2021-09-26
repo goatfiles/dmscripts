@@ -14,11 +14,11 @@ DMENU="dmenu -i -l 20 -p"
 DMBROWSER="brave"
 # DMBROWSER="qutebrowser"
 
-DMEDITOR="emacsclient -c -a emacs"
-# DMEDITOR="${DMTERM} vim"
-
 DMTERM="st -e"
 # DMTERM="alacritty -e"
+
+DMEDITOR="emacsclient -c -a emacs"
+# DMEDITOR="${DMTERM} vim"
 
 # TODO: Rename this variable to something more traditional
 logout_locker='slock'
