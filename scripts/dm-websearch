@@ -43,7 +43,7 @@ main() {
   query="$(echo "${query}" | jq -s -R -r @uri)"
   # Display search results in web browser
   # shellcheck disable=SC2154
-  ${websearch_browser} "${url}${query}"
+  ${DMBROWSER} "${url}${query}"
 }
 
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"

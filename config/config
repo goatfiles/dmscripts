@@ -7,40 +7,9 @@
 
 # Defined variables, modify anything in quotes to your prefered software
 
-# This case statement lets you change what the DMENU variable is for different scripts, so if you
-# want a unique variable for each script you can
-# syntax is as follows:
-# "<ending-of-script>") DMENU="your variable here"
-# *) means anything that isn't defined above, basically think of it as a fallback or a default
+# -p is needed as we use prompts, alternative programs have to handle prompts well.
 
-# include -p in standard dmenu as we use prompts by default
-case "${0##*-}" in
-# "colpick") DMENU="dmenu -i -p";;
-# "confedit") DMENU="dmenu -i -l 30 -p";;
-# *) DMENU="rofi -dmenu";;
- *) DMENU="dmenu -i -l 20 -p";;
-esac
-
-# "${0##*-}" means grab the 0th argument (which is always the path to the program) starting from the
-# last dash. This gives us the word after the - which is what we are searching for in the case
-# statement. ie dm-man -> man
-
-# An awk equivalent is: 
-# awk -F"-" '{print $NF}'
-# Sadly cut has no easy equivalent
-
-# Alternatively, use one of these lines if you just use 1 dmenu variable for all the scripts
-
-# DMENU="dmenu -i -l 20 -p"
-# DMENU="rofi -dmenu"
-
-# This case statement can be used in similar situations with other variables, this commented out
-# one would set a unique browser for the dm-bookman program
-
-# case "${0##*-}" in
-# "bookman") DMBROWSER="qutebrowser";;
-# *) DMBROWSER="brave";;
-# esac
+DMENU="dmenu -i -l 20 -p"
 
 DMBROWSER="brave"
 # DMBROWSER="qutebrowser"
@@ -51,9 +20,35 @@ DMTERM="st -e"
 DMEDITOR="emacsclient -c -a emacs"
 # DMEDITOR="${DMTERM} vim"
 
-# dm-logout
+# TODO: Rename this variable to something more traditional
 logout_locker='slock'
 # logout_locker='dm-tool lock'
+
+# This case statement lets you change what the DMENU variable is for different scripts, so if you
+# want a unique variable for each script you can
+# syntax is as follows:
+# "<ending-of-script>") DMENU="your variable here"
+# *) should be left blank, global variables are defined above
+
+# include -p in standard dmenu as we use prompts by default
+case "${0##*-}" in
+#  "colpick") DMENU="dmenu -i -p";;
+#  "confedit") DMENU="dmenu -i -l 30 -p";;
+#  "youtube") DMBROWSER="firefox";;
+  *);;
+esac
+
+# "${0##*-}" means grab the 0th argument (which is always the path to the program) starting from the
+# last dash. This gives us the word after the - which is what we are searching for in the case
+# statement. ie dm-man -> man
+
+# An awk equivalent is: 
+# awk -F"-" '{print $NF}'
+# Sadly cut has no easy equivalent
+
+# TODO: Move almost all of these variables into the case statement
+# TODO: Make some of the more useful ones general variables
+# IE a pictures directory, an audio directory, config locations, etc
 
 # dm-bookman 
 bookman_show_source=1
@@ -72,8 +67,6 @@ maim_file_prefix="maim"
 note_dir="${HOME}/.config/dmscripts/dmnote"
 
 # dm-confedit
-# TODO: Deprecate variables like this in favour of new extensible format
-confedit_editor="$DMEDITOR"
 declare -A confedit_list
 confedit_list[confedit]="$HOME/.config/dmscripts/config"
 confedit_list[alacritty]="$HOME/.config/alacritty/alacritty.yml"
@@ -134,7 +127,6 @@ declare -a reddit_list=(
 )
 
 # Search engine config 
-websearch_browser="$DMBROWSER"
 declare -A websearch
 # Syntax:
 # websearch[name]="https://www.example.com/search?q="
@@ -177,7 +169,6 @@ websearch[stackoverflow]="https://stackoverflow.com/search?q="
 # Etc
 
 # dm-youtube config
-youtube_browser="$DMBROWSER"
 # Think of these as your "subscribed channels", name the channel in the square brackets then put the channel URL in the quotation marks
 # Syntax: youtube_channels[name]="https://www.youtube.com/link/to/channel"
 
@@ -244,4 +235,4 @@ declare -A currencies
 # currencies[Monero]="XMR"
 # see: https://rate.sx/:currencies and https://rate.sx/:coins
 
-_revision=20
+_revision=21

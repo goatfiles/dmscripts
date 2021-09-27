@@ -43,7 +43,7 @@ main() {
   if [ "$choice" ]; then
     cfg=$(printf '%s\n' "${_clean_list["${choice}"]}")
     # shellcheck disable=SC2154
-    $confedit_editor "$cfg"
+    $DMEDITOR "$cfg"
   # What to do if we just escape without choosing anything.
   else
       echo "Program terminated." && exit 0
