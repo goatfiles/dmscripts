@@ -31,9 +31,10 @@ The scripts included in this repo are:
 # Table of Contents
 
 1. [Contributing](#contributing)	
-2. [Dependencies](#dependencies)
-3. [Installation](#installation)
-4. [Configuration](#configuration)
+2. [Issues](#issues)	
+3. [Dependencies](#dependencies)
+4. [Installation](#installation)
+5. [Configuration](#configuration)
 	
 # IMPORTANT!
 
@@ -59,40 +60,11 @@ Currently, none.
 
 # Contributing
 
-This is a collection of dmenu scripts that I have found useful in my day-to-day activities as a desktop Linux user.  Although initially this was just for my personal scripts, this project is now open to the community.  If you would like to contribute your own scripts or improve any existing scripts, I would be happy to review your merge requests.  All scripts submitted should meet the following guidelines:
+See [CONTRIBUTING.md](CONTRIBUTING.md)
 
-Scripts should be named in the format `dm-[scriptname]`
+# Issues
 
-Scripts should be written in Bash and use the following shebang line:
-
-```bash
-#!/usr/bin/env bash
-```    
-
-To avoid unintended errors, scripts should include the line: 
-
-```bash
-set -euo pipefail
-```
-
-Before submitting, please run your script through shellcheck to check for potential errors.  Sometimes, you may get a shellcheck warning that you cannot fix because the "fix" would actually break the script.  If so, leave a comment in the script that will disable the shellcheck warning in the future.
-
-For example, to disable the SC2154 warning about referencing http_proxy:
-
-```bash
-# shellcheck disable=SC2154
-echo "proxy=$http_proxy" | ...
-```
-
-Please use consistent indentation, preferably TWO spaces rather than tabs.  
-
-Please update the manual pages, documentation and README.md to include your script if you know how to. **Scripts are sorted in alphabetical order**
-
-Finally, contributors are asked to look at our [TODO list](TODO.md) as well as the [issues page](https://gitlab.com/dwt1/dmscripts/-/issues) since we would like to ensure all scripts are stable and secure.
-
-## Additional advice
-
-Even though you do not have to do this to contribute, we recommend setting up a mirror repository of this repo if you wish to frequently contribute. New scripts are added almost daily, documentation is also frequently updated so there could be conflicts if your repo is left unmaintained for long periods of time. We recommend you follow the [Gitlab documentation](https://docs.gitlab.com/ee/user/project/repository/repository_mirroring.html) for **pulling** from a remote repository.
+See [ISSUES.md](ISSUES.md)
 
 # Dependencies
 
