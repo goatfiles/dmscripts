@@ -23,7 +23,7 @@ optdepends=(
   'slock: used by dm-logout'
   'imv: used by dm-setbg'
   'xwallpaper: used by dm-setbg in x11'
-  'swaybg': used by dm-setbg in wayland'
+  'swaybg: used by dm-setbg in wayland'
   'udisks2: used by dm-usbmount'
   'wl-clipboard: wayland alternative to xclip'
   )
