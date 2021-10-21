@@ -21,7 +21,7 @@ optdepends=(
   'reddio: used by dm-reddit'
   'yad: used by dm-reddit and dm-weather'
   'slock: used by dm-logout'
-  'sxiv: used by dm-setbg'
+  'imv: used by dm-setbg'
   'xwallpaper: used by dm-setbg'
   'udisks2: used by dm-usbmount'
   'wl-clipboard: wayland alternative to xclip'
