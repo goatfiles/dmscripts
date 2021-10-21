@@ -55,7 +55,7 @@ main() {
       pidof "swaybg" && killall "swaybg" 
       pidof "xwallpaper" && killall "xwallpaper" 
       wallpaper="$(find "${setbg_dir}" -type f | shuf -n 1)"
-      setbg "$wallpaper"
+      setbg "$wallpaper" &
       cp "$wallpaper" "$HOME/.cache/wall"
       valid_paper="$(printf "Yes\nNo" | ${DMENU} "Do you like the new wallpaper?")"
     done
