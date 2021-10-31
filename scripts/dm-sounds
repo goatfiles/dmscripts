@@ -58,10 +58,10 @@ main() {
     # We use "printf '%s\n'" to format the array one item to a line.
     choice=$(printf '%s\n' "${_sounds_list[@]}" | sort | ${DMENU} 'Choose sound file:' "$@")
     # Kill PID saved in cache file.
-    kill "$(cat "$HOME/.cache/dmsounds")" || echo "ffplay was not running."
+    kill "$(cat "$HOME/.cache/dmsounds")" || echo "mpv was not running."
     # Play the chosen sound file.
     # shellcheck disable=SC2154
-    ffplay -nodisp -loop 0 "$sounds_dir/$choice" &
+    mpv --no-video --loop "$sounds_dir/$choice" &
     # Get PID for the above command and write to cache.
     _pid=$!
     echo "$_pid" > "$HOME/.cache/dmsounds"
@@ -69,15 +69,16 @@ main() {
   elif [ "$choice" == "Play random sound" ]; then
     getRand=$(printf '%s\n' "${_sounds_list[@]}" | shuf -n 1)
     # Kill PID saved in cache file.
-    kill "$(cat "$HOME/.cache/dmsounds")" || echo "ffplay was not running."
+    kill "$(cat "$HOME/.cache/dmsounds")" || echo "mpv was not running."
     # Play random sound file.
-    ffplay -nodisp -loop 0 "$sounds_dir/$getRand" &
+    mpv --no-video --loop "$sounds_dir/$getRand" &
+    # ffplay -nodisp -loop 0 "$sounds_dir/$getRand" &
     # Get PID for the above command and write to cache.
     _pid=$!
     echo "$_pid" > "$HOME/.cache/dmsounds"
 
   elif [ "$choice" == "Stop sound player" ]; then
-    kill "$(cat "$HOME/.cache/dmsounds")" || echo "ffplay was not running."
+    kill "$(cat "$HOME/.cache/dmsounds")" || echo "mpv was not running."
 
   else
     echo "Program terminated." && exit 0
