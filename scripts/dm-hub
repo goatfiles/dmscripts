@@ -17,7 +17,7 @@ source "${_path}/_dm-helper.sh"
 # shellcheck disable=SC1090
 source "$(get_config)"
 
-check_updated_config
+#check_updated_config
 
 function main() {
     local _self

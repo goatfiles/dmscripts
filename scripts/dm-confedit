@@ -32,7 +32,8 @@ main() {
   # As this is loaded from other file it is technically not defined
   # shellcheck disable=SC2154
   for i in "${!confedit_list[@]}"; do
-    [[ -f ${confedit_list["${i}"]} ]] && _clean_list["${i}"]=${confedit_list["${i}"]}
+    # [[ -f ${confedit_list["${i}"]} ]] && _clean_list["${i}"]=${confedit_list["${i}"]}
+    _clean_list["${i}"]=${confedit_list["${i}"]}
   done
 
   # Piping the above array (cleaned) into dmenu.
