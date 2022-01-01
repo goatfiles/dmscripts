@@ -3,7 +3,7 @@
 # script name: dm-usbmount
 # Description: mount/unmount usb drives using dmenu. No fancy daemon required
 # Dependencies : dmenu, udisks2
-# Author: Murtaza Udaipurwala
+
 
 # Set with the flags "-e", "-u","-o pipefail" cause the script to fail
 # if certain things happen, which is a good thing.  Otherwise, we can
@@ -79,15 +79,33 @@ unmount(){
     if [ "$chosen" = "all" ] ; then 
        unmountAll 
    else
-       udisksctl unmount -b "$chosen"
+       udisksctl unmount -b "${chosen%% *}"
     fi
 }
+main() {
+  # Picking our options.
+  choice=$(printf 'mount a drive\nunmount a drive' | ${DMENU} 'USB drives:' "$@")
 
-while getopts "hmu" arg 2>/dev/null; do
-    case "${arg}" in
-        h) help ;;
-        m) mount ;;
-        u) unmount ;;
-        *) printf "invalid option\nType dm-usbmount -h for help" ;;
-    esac
-done
+  # Choose what we should do with our choice.
+  case "$choice" in
+    'mount a drive')
+      mount
+      ;;
+    'unmount a drive')
+      unmount
+      ;;
+    *)
+      exit 0
+    ;;
+  esac
+}
+
+# while getopts "hmu" arg 2>/dev/null; do
+#     case "${arg}" in
+#         h) help ;;
+#         m) mount ;;
+#         u) unmount ;;
+#         *) printf "invalid option\nType dm-usbmount -h for help" ;;
+#     esac
+# done
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
