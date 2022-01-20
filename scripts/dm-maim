@@ -107,6 +107,11 @@ main() {
     ;;
   esac
 
+  delay=$(printf '%s\n' "$(seq 0 5)" | ${DMENU} 'Delay (in seconds):' "$@" ) || exit 1
+  if [ ! "${delay}" -eq "0" ]; then
+    _maim_args="${_maim_args} --delay=${delay}"
+  fi
+
   _maim_args="${_maim_args} -qd 0.5"
   local destination=( "File" "Clipboard" "Both" )
   dest=$(printf '%s\n' "${destination[@]}" | ${DMENU} 'Destination:' "$@" ) || exit 1
