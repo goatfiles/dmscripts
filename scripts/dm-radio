@@ -2,7 +2,7 @@
 #
 # Script name: dm-radio
 # Description: Choose between online radio stations with dmenu.
-# Dependencies: dmenu, mpv, dunst
+# Dependencies: dmenu, mpv, notify-send
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor
@@ -25,37 +25,40 @@ fi
 # shellcheck disable=SC1090
 source "$(get_config)"
 
-# The menu of radio station choices
-# shellcheck disable=SC2154
 menu() {
   printf '%s\n' "Quit"
-  printf '%s\n' "${!radio_stations[@]}"
+  # As this is loaded from other file it is technically not defined.
+  # shellcheck disable=SC2154
+  printf '%s\n' "${!radio_stations[@]}" | sort
 }
 
 # Functions for sending notification messages
 start_radio() {
-  dunstify "Starting dm-radio" "Playing station: $1. 🎶"
+  notify-send "Starting dm-radio" "Playing station: $1. 🎶"
 }
 
 end_radio() {
-  dunstify "Stopping dm-radio" "You have quit dm-radio. 🎶"
+  notify-send "Stopping dm-radio" "You have quit dm-radio. 🎶"
 }
 
-# Main function. Pipes the menu() function into DMENU.
-choice=$(menu | ${DMENU} "Choose radio station:" | cut -d. -f1) || exit
+main() {
+  # Choosing a radio station from array sourced in 'config'.
+  choice=$(menu | ${DMENU} 'Choose radio station:' "$@") || exit 1
 
-# Case statement for making our station choice.
-# We only need the number thanks to the cut command above.
-case $choice in
-  Quit)
-    end_radio ;
-    pkill -f http
-    exit
-    ;;
-  *)
-    pkill -f http || echo "mpv not running."
-    start_radio "$choice" ;
-    mpv "${radio_stations[${choice}]}"
-    return
-   ;;
-esac
+  case $choice in
+    Quit)
+      end_radio ;
+      pkill -f http
+      exit
+      ;;
+    *)
+      pkill -f http || echo "mpv not running."
+      start_radio "$choice" ;
+      mpv "${radio_stations["${choice}"]}"
+      return
+      ;;
+  esac
+
+}
+
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
