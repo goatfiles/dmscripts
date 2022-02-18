@@ -14,6 +14,7 @@ The scripts included in this repo are:
 + dm-man - Search for a manpage or get a random one.
 + dm-music - Dmenu as your music player
 + dm-note - Store multiple one-line texts or codes and copy one of them when needed.
++ dm-radio - Choose between online radio stations with dmenu.
 + dm-record - Records audio, video and webcam.
 + dm-reddit - Dmenu as a reddit viewer using reddio. *STILL A WORK IN PROGRESS*
 + dm-setbg - A wallpaper setting utility using dmenu, xwallpaper and sxiv

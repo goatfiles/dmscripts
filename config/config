@@ -178,6 +178,28 @@ websearch[stackoverflow]="https://stackoverflow.com/search?q="
 declare -A youtube_channels
 youtube_channels[distrotube]="https://www.youtube.com/c/DistroTube/featured"
 
+# dm-radio config
+# Your list of online radio stations for the dm-radio script.
+# Syntax: radio_stations[name]="https://www.zeno.fm/radio/your-station"
+
+declare -A radio_stations
+radio_stations[50s Rewind]="https://zeno.fm/radio/50s-rewind/"
+radio_stations[60s Rewind]="https://zeno.fm/radio/60s-rewind/"
+radio_stations[70s Rewind]="https://zeno.fm/radio/70s-rewind/"
+radio_stations[80s Rewind]="https://zeno.fm/radio/80s-rewind/"
+radio_stations[90s Rock]="https://zeno.fm/radio/90s-rock/"
+radio_stations[The 2000s]="https://zeno.fm/radio/the-2000s/"
+radio_stations[Classical Radio]="https://zeno.fm/radio/classical-radio/"
+radio_stations[Classical Relaxation]="https://zeno.fm/radio/radio-christmas-non-stop-classical/"
+radio_stations[Classic Rock]="https://zeno.fm/radio/classic-rockdnb2sav8qs8uv/"
+radio_stations[Gangsta49]="https://zeno.fm/radio/gangsta49/"
+radio_stations[HipHop49]="https://zeno.fm/radio/hiphop49/"
+radio_stations[Madhouse Country Radio]="https://zeno.fm/radio/madhouse-country-radio/"
+radio_stations[PopMusic]="https://zeno.fm/radio/popmusic74vyurvmug0uv/"
+radio_stations[PopStars]="https://zeno.fm/radio/popstars/"
+radio_stations[RadioMetal]="https://zeno.fm/radio/radio-metal/"
+radio_stations[RocknRoll Radio]="https://zeno.fm/radio/rocknroll-radio994c7517qs8uv/"
+
 # dm-colpick config
 declare -A colpick_list
 colpick_list[black]="#282a36"
