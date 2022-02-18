@@ -40,6 +40,8 @@ Store multiple one-line texts or codes and copy one of them when needed.
 A bookmark searching tool, search through all qutebrowser quickmarks and bookmarks.
 ** dm-record
 Records audio, video and webcam.
+** dm-radio
+Listen to online radio stations.
 ** dm-reddit
 A reddit viewer using dmenu, still a work in progress.
 ** dm-maim
