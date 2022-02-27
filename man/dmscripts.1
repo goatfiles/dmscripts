@@ -1,102 +1,144 @@
-#+TITLE: dmscripts
-#+AUTHOR: Derek Taylor (https://gitlab.com/dwt1/dmscripts)
+.TH "dmscripts" "1" 
 
-* NAME
+.SH "NAME"
+.PP
 dmscripts - a collection of various dmenu scripts
 
-* DESCRIPTION
+.SH "DESCRIPTION"
+.PP
 dmscripts are a collection of dmenu scripts written in bash.  each script is written and contributed by DT or viewers.
 
-* USAGE
-** bash dm-hub
+.SH "USAGE"
+.SS "bash dm-hub"
+.PP
 Runs the dm-hub program which allows for easy access to the scripts.
-** bash path/to/script
+.SS "bash path/to/script"
+.PP
 Runs the script specified without using dmhub.
-** ./path/to/script
+.SS "./path/to/script"
+.PP
 Same as bash path/to/script.
 
-* SCRIPTS
-** dm-hub
+.SH "SCRIPTS"
+.SS "dm-hub"
+.PP
 The hub script, allows easy access to other scripts.
-** dm-bookman
+.SS "dm-bookman"
+.PP
 A bookmark searching tool, search through all qutebrowser quickmarks and bookmarks.
-** dm-colpick
+.SS "dm-colpick"
+.PP
 Find the hex value of a color you are searching for.
-** dm-confedit
+.SS "dm-confedit"
+.PP
 A configuration manager, find and edit any config file you need.
-** dm-currencies
+.SS "dm-currencies"
+.PP
 Convert prices between currencies.
-** dm-ip
+.SS "dm-ip"
+.PP
 Get IP of interface or external IP
-** dm-kill
+.SS "dm-kill"
+.PP
 Simple process killer, find and kill misbehaving processes.
-** dm-logout
+.SS "dm-logout"
+.PP
 Simple logout menu, choose to lock, shutdown, reboot or logout of your computer.
-** dm-maim
+.SS "dm-maim"
+.PP
 A GUI to maim using dmenu.
-** dm-man
+.SS "dm-man"
+.PP
 A manual page searcher, search a man page or randomly view one.
-** dm-music
+.SS "dm-music"
+.PP
 Dmenu based music player.
-** dm-note
+.SS "dm-note"
+.PP
 Store multiple one-line texts or codes and copy one of them when needed.
-** dm-radio
+.SS "dm-radio"
+.PP
 Listen to online radio stations.
-** dm-record
+.SS "dm-record"
+.PP
 Records audio, video and webcam.
-** dm-reddit
+.SS "dm-reddit"
+.PP
 A reddit viewer using dmenu, still a work in progress.
-** dm-setbg
+.SS "dm-setbg"
+.PP
 Using dmenu, setup a wallpaper.
-** dm-sounds
+.SS "dm-sounds"
+.PP
 Choose an ambient background sound to play.
-** dm-translate
+.SS "dm-translate"
+.PP
 Translate using Google Translate (through Lingva Translate)
-** dm-usbmount
+.SS "dm-usbmount"
+.PP
 USB mounting done suckless, no need for bloated daemons.
-** dm-websearch
+.SS "dm-websearch"
+.PP
 Web searching utility using dmenu.
-** dm-weather
+.SS "dm-weather"
+.PP
 Simple graphical weather app
-** dm-wifi
+.SS "dm-wifi"
+.PP
 Connect to wifi using dmenu.
-** dm-youtube
+.SS "dm-youtube"
+.PP
 Youtube subscriptions without an account or the API tying you down.
-** _dm-helper.sh
+.SS "_dm-helper.sh"
+.PP
 Helper scripts adding functionality to other scripts
 
-* CONFIG FILES
-** /etc/dmscripts/config
-This is considered the official global config file and we do not recommend you editing it. It will be overwritten if we change the configuration so you'll need to back it up if you modify it
-** ~/.config/dmscripts/config
+.SH "CONFIG FILES"
+.SS "/etc/dmscripts/config"
+.PP
+This is considered the official global config file and we do not recommend you editing it. It will be overwritten if we change the configuration so you’ll need to back it up if you modify it
+.SS "~/.config/dmscripts/config"
+.PP
 The first local config file is found here, this is free to modify and it is the recommended way to change the config file as it does not get overwritten. It is worth noting however that the config is still regularly modified so you will have to keep up to date on our gitlab page and read the diffs.
-** Using the repo configuration
-The repo can be used as is and provides a local config file. You can change it but it's change at your own risk. If you want to update the repo, for example, there may be merge conflicts. And when commiting, we expect a default config unless you are intentionally making changes to fix a bug or make an update and not to simply change something in a way you prefer.
-** Using global variables
-While we don't recommend it, you can choose to set some variables in other places such as the bashrc or the /etc/profile file. 
-** Modifying the source
-Finally, you can modify the source code to add more files to modify or to customize dmscripts to your heart's content, please report any bugs along the way however. Confirm it on an unmodified version first and read the issues.
+.SS "Using the repo configuration"
+.PP
+The repo can be used as is and provides a local config file. You can change it but it’s change at your own risk. If you want to update the repo, for example, there may be merge conflicts. And when commiting, we expect a default config unless you are intentionally making changes to fix a bug or make an update and not to simply change something in a way you prefer.
+.SS "Using global variables"
+.PP
+While we don’t recommend it, you can choose to set some variables in other places such as the bashrc or the /etc/profile file. 
+.SS "Modifying the source"
+.PP
+Finally, you can modify the source code to add more files to modify or to customize dmscripts to your heart’s content, please report any bugs along the way however. Confirm it on an unmodified version first and read the issues.
 
-* CONFIGURATION
-** DMENU variable
+.SH "CONFIGURATION"
+.SS "DMENU variable"
+.PP
 DMENU is the default variable used in dmscripts, we expect all scripts to use DMENU in substitution of the dmenu command as we want our scripts to be accessible without modifying the source code. Currently DMENU is defined in a case statement which is used to define DMENU differently depending on the script.
-** Other variables
+.SS "Other variables"
+.PP
 A lot of the other variables are simply program names or directories and are not worth going into further details.
-** Lists
+.SS "Lists"
+.PP
 Some our config is done in a list like format. There are two syntaxes, -A and -a. 
 
+.PP
 -A uses the format of:
-#+begin_example
+.RS
+.nf
 variable[name-displayed-in-dmenu]=what-it-actually-means
-#+end_example
 
+.fi
+.RE
+
+.PP
 -a uses:
-#+begin_example
+.RS
+.nf
 variable=(
 "thing1"
 "thing2"
 ...
 )
-#+end_example
 
-
+.fi
+.RE
