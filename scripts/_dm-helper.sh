@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Script name: _dm-helper
-# Description: helper-script for the other scripts in the collection
+# Description: A helper script for the other scripts in the collection.
 # Dependencies:
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE

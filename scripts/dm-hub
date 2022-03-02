@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Script name: dm-hub
-# Description: a hub that you can execute all the other scripts from
+# Description: A hub that you can execute all the other scripts from.
 # Dependencies: dmenu, executable dmscripts, all the dependancies from dmscripts
 # GitLab: https://www.gitlab.com/dwt1/hub
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
@@ -19,25 +19,23 @@ source "$(get_config)"
 
 check_updated_config
 
-function main() {
-    local _self
-    declare -A _scripts
+# Listings will be in format: "filename - the description pulled from the header of the script."
+# This is done with awk (based on colons).
+listings=$(grep -r '^# Description: ' "${_path}" | awk -F ':' '{print $1 " -" $3}' | cut -d / -f3-)
 
-    _self=$(basename "$0")
+# Declaring "listings" as an array
+declare -a listings
 
-    while IFS= read -r -d '' script; do
-        script_name="$(basename "${script}")"
-        [[ "${script_name}" == "${_self}" ]] && continue
-        _scripts[${script_name}]="${script}"
-    done< <(find "${_path}" -type f -regex ".*/dm-.*" -print0)
+# Piping "listings" into awk to get the filename without path (based on slashes).
+# Then sorting.  Then piping everything into dmenu.
+choice=$(printf '%s\n' "${listings[@]}" | awk -F '/'  '{print $NF}' | sort | ${DMENU} 'Run Script:' "$@")
 
-    choice=$(printf '%s\n' "${!_scripts[@]}" | sort | ${DMENU} 'Run Script:' "$@")
-
-    if [ "${choice}" ]; then
-        bash "$(printf '%s\n' "${_scripts["${choice}"]}")" "$@"
-    else
-        echo "Program terminated." && exit 0
-    fi
-}
+# If we select a "choice" then we execute: bash name-of-file
+# We get name-of-file without the description with awk (based on dashes).
+if [ "${choice}" ]; then
+    bash "$(printf '%s\n' "${choice}" | awk -F ' - ' '{print $1}')" "$@"
+else
+    echo "Program terminated." && exit 0
+fi
 
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && main "$@"
