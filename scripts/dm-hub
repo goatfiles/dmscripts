@@ -10,18 +10,22 @@
 
 set -euo pipefail
 
-_path=$(dirname "$(realpath "$0")")
-[[ ! -f "${_path}/_dm-helper.sh" ]] && echo "No helper-script found"
-# shellcheck disable=SC1090,SC1091
-source "${_path}/_dm-helper.sh"
+_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd "$(dirname "$(readlink "${BASH_SOURCE[0]}" || echo ".")")" && pwd)"
+if [[  -f "${_path}/_dm-helper.sh" ]]; then
+  # shellcheck disable=SC1090,SC1091
+  source "${_path}/_dm-helper.sh"
+else
+  # shellcheck disable=SC1090
+  echo "No helper-script found"
+fi
+
+# script will not hit this if there is no config-file to load
 # shellcheck disable=SC1090
 source "$(get_config)"
 
-check_updated_config
-
 # Listings will be in format: "filename - the description pulled from the header of the script."
 # This is done with awk (based on colons).
-listings=$(grep -r '^# Description: ' "${_path}" | awk -F ':' '{print $1 " -" $3}' | cut -d / -f3-)
+listings=$(grep -r '^# Description: ' $(find "${_path}" -type f -name "dm-*") | awk -F ':' '{print $1 " -" $3}' | cut -d / -f3-)
 
 # Declaring "listings" as an array
 declare -a listings
