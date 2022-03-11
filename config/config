@@ -60,7 +60,7 @@ sounds_dir="${HOME}/.config/dmscripts/dmsounds"
 setbg_dir="${HOME}/Pictures/Wallpapers"
 # Set this to 1 if you want to use imv and wayland, 0 if you want to use sxiv
 # Note that sxiv is X11 only, you need to mark the image you want to use.
-use_imv=1 
+use_imv=0 
 
 # dm-maim
 maim_dir="${HOME}/Screenshots"
