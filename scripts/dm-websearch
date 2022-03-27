@@ -40,7 +40,7 @@ main() {
   # Searching the chosen engine.
   query=$(echo "$engine" | ${DMENU} 'Enter search query:')
 
-  query="$(echo "${query}" | jq -s -R -r @uri)"
+  query="$(echo -n "${query}" | jq -s -R -r @uri)"
   # Display search results in web browser
   # shellcheck disable=SC2154
   ${DMBROWSER} "${url}${query}"
