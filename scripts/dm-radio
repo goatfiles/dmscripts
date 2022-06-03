@@ -2,7 +2,7 @@
 #
 # Script name: dm-radio
 # Description: Choose between online radio stations with dmenu.
-# Dependencies: dmenu, mpv, notify-send
+# Dependencies: dmenu, mpv, notify-send, youtube-dl
 # GitLab: https://www.gitlab.com/dwt1/dmscripts
 # License: https://www.gitlab.com/dwt1/dmscripts/LICENSE
 # Contributors: Derek Taylor

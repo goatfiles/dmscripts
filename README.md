@@ -24,6 +24,7 @@ The scripts included in this repo are:
 + dm-weather - Simple graphical weather app
 + dm-websearch - Search various search engines (inspired by surfraw).
 + dm-wifi - Connect to wifi using dmenu.
++ dm-wiki - Search an offline copy of the Arch Wiki.
 + dm-youtube - Youtube subscriptions without an account or the API tying you down.
 + \_dm-helper.sh Helper scripts adding functionality to other scripts
 
