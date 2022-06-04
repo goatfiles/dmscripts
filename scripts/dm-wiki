@@ -36,14 +36,14 @@ languages() {
 
     if [ "$choice" ]; then
         lang=$(printf '%s\n' "${choice}/")
-        wikipages
+        wikipages "$@"
     else
         echo "Program terminated." && exit 0
     fi
 }
 
 wikipages() {
-    wikidocs="$(find ${wikidir}${lang} -iname "*.html")"
+    wikidocs="$(find ${wikidir}"${lang}" -iname "*.html")"
     choice=$(printf '%s\n' "${wikidocs[@]}" | \
            cut -d '/' -f8- | \
            sed -e 's/_/ /g' -e 's/.html//g' | \
