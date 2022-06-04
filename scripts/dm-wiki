@@ -32,7 +32,7 @@ main() {
     choice=$(printf '%s\n' "${wikidocs[@]}" | \
            cut -d '/' -f8- | \
            sed -e 's/_/ /g' -e 's/.html//g' | \
-           sort | \
+           sort -g | \
            ${DMENU} 'Arch Wiki Docs: ' "$@") || exit 1
 
     if [ "$choice" ]; then
